@@ -10,36 +10,18 @@
               </i><span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a>
             </li>
 
-          @if (Request::segment(1) == "profile" )
+          @if (Request::segment(1) == "data-tryout" )
             <li class="active nav-item">
           @else
             <li class=" nav-item">
           @endif
-              <a href="{{ route('profile.index') }}"><i class="icon-note"></i><span class="menu-title" data-i18n="nav.templates.main">Data Sekolah</span></a>
+              <a href="#"><i class="icon-note"></i><span class="menu-title" data-i18n="nav.templates.main">Data Try Out</span></a>
               <ul class="menu-content">
-                <li><a class="menu-item" href="{{ route('profile.index') }}" data-i18n="nav.templates.vert.main">1</a>
+                <li><a class="menu-item" href="{{ route('data-tryout.index') }}" data-i18n="nav.templates.vert.main">List Try Out</a>
                 </li>
                 <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">2</a>
                 </li>
                 <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">3</a>
-                </li>
-            </ul>
-          </li>
-
-          @if (Request::segment(1) == "administrasi" )
-            <li class="active nav-item">
-          @else
-            <li class=" nav-item">
-          @endif
-              <a href=""><i class="icon-note"></i><span class="menu-title" data-i18n="nav.templates.main">Administrasi</span></a>
-              <ul class="menu-content">
-                <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">Daftar Kelas</a>
-                </li>
-                <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">Mata Pelajaran</a>
-                </li>
-                <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">Daftar Siswa</a>
-                </li>
-                <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">Daftar Nama Ujian</a>
                 </li>
             </ul>
           </li>
@@ -49,7 +31,7 @@
           @else
             <li class=" nav-item">
           @endif
-              <a href=""><i class="icon-note"></i><span class="menu-title" data-i18n="nav.templates.main">Bank Soal</span></a>
+              <a href="#"><i class="icon-note"></i><span class="menu-title" data-i18n="nav.templates.main">Bank Soal</span></a>
               <ul class="menu-content">
                 <li><a class="menu-item" href="../../soal/kategori/tps" data-i18n="nav.templates.vert.main">TPS</a>
                 </li>

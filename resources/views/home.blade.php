@@ -29,7 +29,7 @@
             <div class="card-content">
                 <div class="card-body">
                     <div class="row ml-1 mr-1 text-center">
-                    <a href="{{ route('to.index') }}" class="col-xl-5 border-grey border-lighten-3">
+                    <a href="list-to" class="col-xl-5 border-grey border-lighten-3">
                             <div class="card-header border-2">
                                 <span class="text-400"><b>TRY OUT UTBK 2021 PART 1</b></span>
                             </div>

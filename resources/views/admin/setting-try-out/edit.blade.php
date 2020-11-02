@@ -4,8 +4,6 @@
     @if (Auth::user()->level == 'admin')
         @include('admin.include')
 
-
-    
     <div class="app-content content">
         <div class="content-wrapper">
             <div class="content-header row">
@@ -19,62 +17,58 @@
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <h3>
-                                            <span class="text-bold-300">Tambah Try Out</span>
+                                            <span class="text-bold-300">Edit Soal</span>
                                         </h3> 
                                     </div>
-                                    {{-- <div class="col-xl-6 text-right">
-                                        <a href="{{ route('soal.create') }}" class="btn btn-info"><i class="ft-plus"></i> Tambah Soal</a>
-                                    </div> --}}
                                 </div>
                             </div>
-                            <hr>
                             <div class="card-content">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                    <form class="form" action="{{ route('soal.store') }}" method="POST">
+                                    <form class="form" action="{{ route('soal.update', $data[0]->id_soal) }}" method="POST">
                                         @csrf
+                                        @method('PUT')
                                             <div class="form-body">
                                                 <div class="form-group">
                                                     <label for="kategori">Kategori Soal</label>
                                                     <select id="kategori" name="kategori" class="form-control">
-                                                        <option required value="" selected="" disabled="">Pilih kategori</option>
-                                                        <option value="TPS">TPS</option>
-                                                        <option value="SAINTEK">SAINTEK</option>
-                                                        <option value="SOSHUM">SOSHUM</option>
+                                                        <option @if($data[0]->kategori == 'TPS') {{ 'selected' }} @endif value="TPS">TPS</option>
+                                                        <option @if($data[0]->kategori == 'SAINTEK') {{ 'selected' }} @endif value="SAINTEK">SAINTEK</option>
+                                                        <option @if($data[0]->kategori == 'SOSHUM') {{ 'selected' }} @endif value="SOSHUM">SOSHUM</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="subtes">Subtes</label>
                                                     <select id="subtes" name="subtes" class="form-control">
-                                                        <option required value="" selected="" disabled="">Pilih Subtes</option>
+                                                        <option required value="{{ $data[0]->subtes}}" selected="" disabled="">{{ $data[0]->subtes}}</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="deskripsi">Deskripsi Soal</label>
-                                                    <textarea required id="deskripsi" rows="5" class="form-control" name="deskripsi" placeholder="..."></textarea>
+                                                    <textarea value="" required id="deskripsi" rows="5" class="form-control" name="deskripsi" placeholder="...">{{ $data[0]->deskripsi }}</textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="jawaban_benar">Opsi 1 (Benar)</label>
-                                                    <input id="jawaban_benar" type="text" class="form-control" name="jawaban_benar">
+                                                    <input required value="{{ $data[0]->jawaban_benar }}" id="jawaban_benar" type="text" class="form-control" name="jawaban_benar">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="jawaban_salah_1">Opsi 2</label>
-                                                    <input id="jawaban_salah_1" type="text" class="form-control" name="jawaban_salah_1">
+                                                    <input required value="{{ $data[0]->jawaban_salah_1 }}" id="jawaban_salah_1" type="text" class="form-control" name="jawaban_salah_1">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="jawaban_salah_2">Opsi 3</label>
-                                                    <input id="jawaban_salah_2" type="text" class="form-control" name="jawaban_salah_2">
+                                                    <input required value="{{ $data[0]->jawaban_salah_2 }}" id="jawaban_salah_2" type="text" class="form-control" name="jawaban_salah_2">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="jawaban_salah_3">Opsi 4</label>
-                                                    <input id="jawaban_salah_3" type="text" class="form-control" name="jawaban_salah_3">
+                                                    <input required value="{{ $data[0]->jawaban_salah_3 }}" id="jawaban_salah_3" type="text" class="form-control" name="jawaban_salah_3">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="jawaban_salah_4">Opsi 5</label>
-                                                    <input id="jawaban_salah_4" type="text" class="form-control" name="jawaban_salah_4">
+                                                    <input required value="{{ $data[0]->jawaban_salah_4 }}" id="jawaban_salah_4" type="text" class="form-control" name="jawaban_salah_4">
                                                 </div>
                                                 <div class="form-actions">
-                                                    <a href="../" type="button" class="btn btn-warning mr-1">
+                                                    <a href="../../" type="button" class="btn btn-warning mr-1">
                                                         <i class="ft-x"></i> Cancel
                                                     </a>
                                                     <button type="submit" class="btn btn-primary">
@@ -95,35 +89,16 @@
 </div>
 
 <script>
+    $(document).ready(function() {
+        var kat = $('#kategori').val();
+
+        subtes(kat);
+    });
+
     $('#kategori').change(function(){
         var kat = $('#kategori').val();
 
-        if(kat == 'TPS'){
-            $('#subtes').html(`
-                <option value="none" selected="" disabled="">Pilih Subtes</option>
-                <option value="PENALARAN UMUM">PENALARAN UMUM</option>
-                <option value="PEMAHAMAN BACAAN DAN MENULIS">PEMAHAMAN BACAAN DAN MENULIS</option>
-                <option value="PENGETAHUAN DAN PEMAHAMAN UMUM">PENGETAHUAN DAN PEMAHAMAN UMUM</option>
-                <option value="PENGETAHUAN KUANTITATIF">PENGETAHUAN KUANTITATIF</option>
-                <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
-            `);
-        } else if (kat == 'SAINTEK') {
-            $('#subtes').html(`
-                <option value="none" selected="" disabled="">Pilih Subtes</option>
-                <option value="MATEMATIKA SAINTEK">MATEMATIKA SAINTEK</option>
-                <option value="FISIKA">FISIKA</option>
-                <option value="KIMIA">KIMIA</option>
-                <option value="BIOLOGI">BIOLOGI</option>
-            `);
-        } else {
-            $('#subtes').html(`
-                <option value="none" selected="" disabled="">Pilih Subtes</option>
-                <option value="MATEMATIKA SOSHUM">MATEMATIKA SOSHUM</option>
-                <option value="EKONOMI">EKONOMI</option>
-                <option value="GEOGRAFI">GEOGRAFI</option>
-                <option value="SOSIOLOGI DAN SEJARAH">SOSIOLOGI DAN SEJARAH</option>
-            `);
-        }
+        subtes(kat);
 
         // $.ajax({
         //     url: '../../soal/get_subtes/'+kat,
@@ -137,6 +112,35 @@
         //     }
         // });
     });
+
+    function subtes(kat){
+        if(kat == 'TPS'){
+            $('#subtes').html(`
+                <option value="none" selected="" disabled="">Pilih Subtes</option>
+                <option @if($data[0]->subtes == 'PENALARAN UMUM') {{ 'selected' }} @endif value="PENALARAN UMUM">PENALARAN UMUM</option>
+                <option @if($data[0]->subtes == 'PEMAHAMAN BACAAN DAN MENULIS') {{ 'selected' }} @endif value="PEMAHAMAN BACAAN DAN MENULIS">PEMAHAMAN BACAAN DAN MENULIS</option>
+                <option @if($data[0]->subtes == 'PENGETAHUAN DAN PEMAHAMAN UMUM') {{ 'selected' }} @endif value="PENGETAHUAN DAN PEMAHAMAN UMUM">PENGETAHUAN DAN PEMAHAMAN UMUM</option>
+                <option @if($data[0]->subtes == 'PENGETAHUAN KUANTITATIF') {{ 'selected' }} @endif value="PENGETAHUAN KUANTITATIF">PENGETAHUAN KUANTITATIF</option>
+                <option @if($data[0]->subtes == 'BAHASA INGGRIS') {{ 'selected' }} @endif value="BAHASA INGGRIS">BAHASA INGGRIS</option>
+            `);
+        } else if (kat == 'SAINTEK') {
+            $('#subtes').html(`
+                <option value="none" selected="" disabled="">Pilih Subtes</option>
+                <option @if($data[0]->subtes == 'MATEMATIKA SAINTEK') {{ 'selected' }} @endif value="MATEMATIKA SAINTEK">MATEMATIKA SAINTEK</option>
+                <option @if($data[0]->subtes == 'FISIKA') {{ 'selected' }} @endif value="FISIKA">FISIKA</option>
+                <option @if($data[0]->subtes == 'KIMIA') {{ 'selected' }} @endif value="KIMIA">KIMIA</option>
+                <option @if($data[0]->subtes == 'BIOLOGI') {{ 'selected' }} @endif value="BIOLOGI">BIOLOGI</option>
+            `);
+        } else {
+            $('#subtes').html(`
+                <option value="none" selected="" disabled="">Pilih Subtes</option>
+                <option @if($data[0]->subtes == 'MATEMATIKA SOSHUM') {{ 'selected' }} @endif value="MATEMATIKA SOSHUM">MATEMATIKA SOSHUM</option>
+                <option @if($data[0]->subtes == 'EKONOMI') {{ 'selected' }} @endif value="EKONOMI">EKONOMI</option>
+                <option @if($data[0]->subtes == 'GEOGRAFI') {{ 'selected' }} @endif value="GEOGRAFI">GEOGRAFI</option>
+                <option @if($data[0]->subtes == 'SOSIOLOGI DAN SEJARAH') {{ 'selected' }} @endif value="SOSIOLOGI DAN SEJARAH">SOSIOLOGI DAN SEJARAH</option>
+            `);
+        }
+    }
 </script>
 
     @endif

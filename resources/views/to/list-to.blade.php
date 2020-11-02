@@ -51,10 +51,10 @@
                 <div class="mt-2 mb-2">
                     <div class="ml-2 mr-2">
                         <div class="form-group">
-                            <a href="to/{{'penalaran-umum'}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">PENALARAN UMUM <i class="ft-arrow-right"></i></a>
-                            <a href="to/{{'pengetahuan-dan-pemahaman-umum'}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">PENGETAHUAN DAN PEMAHAMAN UMUM <i class="ft-arrow-right"></i></a>
-                            <a href="to/{{'pemahaman-bacaan-dan-menulis'}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">PEMAHAMAN BACAAN DAN MENULIS <i class="ft-arrow-right"></i></a>
-                            <a href="to/{{'pengetahuan-kuantitatif'}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">PENGETAHUAN KUANTITATIF <i class="ft-arrow-right"></i></a>
+                            <a href="list-to/{{'penalaran-umum'}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">PENALARAN UMUM <i class="ft-arrow-right"></i></a>
+                            <a href="list-to/{{'pengetahuan-dan-pemahaman-umum'}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">PENGETAHUAN DAN PEMAHAMAN UMUM <i class="ft-arrow-right"></i></a>
+                            <a href="list-to/{{'pemahaman-bacaan-dan-menulis'}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">PEMAHAMAN BACAAN DAN MENULIS <i class="ft-arrow-right"></i></a>
+                            <a href="list-to/{{'pengetahuan-kuantitatif'}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">PENGETAHUAN KUANTITATIF <i class="ft-arrow-right"></i></a>
                         </div>
                         </div>
                 </div>

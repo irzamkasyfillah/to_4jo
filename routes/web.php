@@ -23,9 +23,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('/profile', 'App\Http\Controllers\UserProfileController');
 
-Route::resource('/to', 'App\Http\Controllers\TryoutController');
+Route::resource('/data-tryout', 'App\Http\Controllers\TryoutController');
 
-Route::get('to/{subtes}/{id}', [App\Http\Controllers\TryoutController::class, 'showSoal'])->name('to/subtes');
+Route::get('list-to/{subtes}/{id}', [App\Http\Controllers\TryoutController::class, 'showSoal'])->name('to/subtes');
+
+Route::get('list-to', [App\Http\Controllers\TryoutController::class, 'listTO'])->name('to/list-to');
 
 Route::get('soal/kategori/{kategori}', [App\Http\Controllers\SoalController::class, 'showCategory']);
 

@@ -17,58 +17,153 @@
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <h3>
-                                            <span class="text-bold-300">Edit Soal</span>
+                                            <span class="text-bold-300">Edit Try Out</span>
                                         </h3> 
                                     </div>
                                 </div>
                             </div>
+                            <hr>
                             <div class="card-content">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                    <form class="form" action="{{ route('soal.update', $data[0]->id_soal) }}" method="POST">
+                                    <form class="form" action="{{ route('data-tryout.update', $data_tryout->id) }}" method="POST">
                                         @csrf
-                                        @method('PUT')
                                             <div class="form-body">
                                                 <div class="form-group">
-                                                    <label for="kategori">Kategori Soal</label>
-                                                    <select id="kategori" name="kategori" class="form-control">
-                                                        <option @if($data[0]->kategori == 'TPS') {{ 'selected' }} @endif value="TPS">TPS</option>
-                                                        <option @if($data[0]->kategori == 'SAINTEK') {{ 'selected' }} @endif value="SAINTEK">SAINTEK</option>
-                                                        <option @if($data[0]->kategori == 'SOSHUM') {{ 'selected' }} @endif value="SOSHUM">SOSHUM</option>
-                                                    </select>
+                                                    <label for="nama">Nama Try Out</label>
+                                                    <input type="text" id="nama" name="nama" value="{{ $data_tryout->nama }}" class="form-control" placeholder="contoh: TRY OUT UTBK 2020 PART 1">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="subtes">Subtes</label>
-                                                    <select id="subtes" name="subtes" class="form-control">
-                                                        <option required value="{{ $data[0]->subtes}}" selected="" disabled="">{{ $data[0]->subtes}}</option>
-                                                    </select>
+                                                    <label for="harga">Harga (dalam rupiah)</label>
+                                                    <input id="harga" type="number" value="{{ $data_tryout->harga }}" class="form-control" name="harga" placeholder="contoh: 9000">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="deskripsi">Deskripsi Soal</label>
-                                                    <textarea value="" required id="deskripsi" rows="5" class="form-control" name="deskripsi" placeholder="...">{{ $data[0]->deskripsi }}</textarea>
+                                                    <label for="waktu">Waktu Pelaksanaan</label>
+                                                    <input id="waktu" type="datetime-local" value="{{ date_format(date_create($data_tryout->waktu), "Y-m-d") . "T" . date_format(date_create($data_tryout->waktu), "H:i") }}" class="form-control" name="waktu">
                                                 </div>
+                                                <hr>
+                                                <label for="soal">Pilih Soal</label>
                                                 <div class="form-group">
-                                                    <label for="jawaban_benar">Opsi 1 (Benar)</label>
-                                                    <input required value="{{ $data[0]->jawaban_benar }}" id="jawaban_benar" type="text" class="form-control" name="jawaban_benar">
+                                                    <label for="soal"><i class="fa fa-caret-right"></i><b> TPS</b></label><br>
+                                                    <label for="soal" class="mb-1"> PENALARAN UMUM</label>
+                                                    <fieldset class="checkboxsas">
+                                                        @foreach ($soal_pu as $data_soal_pu)
+                                                            {{-- @foreach ($soal_pu as $soal_pu) --}}
+                                                                <div class="col-12 mb-1">
+                                                                    <input 
+                                                                    {{-- @if ($data_soal_pu->id == $soal_pu->id) {{'checked'}} @endif   --}}
+                                                                    name="soal[]" class="mr-1" type="checkbox" value="{{ $data_soal_pu->id}}">{{ $data_soal_pu->deskripsi }}
+                                                                </div>
+                                                            {{-- @endforeach --}}
+                                                        @endforeach
+                                                    </fieldset>
+                                                    <label for="soal" class="mt-1 mb-1"> PEMAHAMAN BACAAN DAN MENULIS</label>
+                                                    <fieldset class="checkboxsas">
+                                                        @foreach ($data_soal_pbm as $data_soal_pbm)
+                                                        <div class="col-12 mb-1">
+                                                            <input name="soal[]" class="mr-1" type="checkbox" value="{{ $data_soal_pbm->id}}">{{ $data_soal_pbm->deskripsi }}
+                                                        </div>
+                                                        @endforeach
+                                                    </fieldset>
+                                                    <label for="soal" class="mt-1 mb-1"> PENGETAHUAN DAN PEMAHAMAN UMUM</label>
+                                                    <fieldset class="checkboxsas">
+                                                        @foreach ($data_soal_ppu as $data_soal_ppu)
+                                                        <div class="col-12 mb-1">
+                                                            <input name="soal[]" class="mr-1" type="checkbox" value="{{ $data_soal_ppu->id}}">{{ $data_soal_ppu->deskripsi }}
+                                                        </div>
+                                                        @endforeach
+                                                    </fieldset>
+                                                    <label for="soal" class=" mt-1 mb-1"> PENGETAHUAN KUANTITATIF</label>
+                                                    <fieldset class="checkboxsas">
+                                                        @foreach ($data_soal_pk as $data_soal_pk)
+                                                        <div class="col-12 mb-1">
+                                                            <input name="soal[]" class="mr-1" type="checkbox" value="{{ $data_soal_pk->id}}">{{ $data_soal_pk->deskripsi }}
+                                                        </div>
+                                                        @endforeach
+                                                    </fieldset>
+                                                    <label for="soal" class="mt-1 mb-1"> BAHASA INGGRIS</label>
+                                                    <fieldset class="checkboxsas">
+                                                        @foreach ($data_soal_bi as $data_soal_bi)
+                                                        <div class="col-12 mb-1">
+                                                            <input name="soal[]" class="mr-1" type="checkbox" value="{{ $data_soal_bi->id}}">{{ $data_soal_bi->deskripsi }}
+                                                        </div>
+                                                        @endforeach
+                                                    </fieldset>
                                                 </div>
+                                                <hr>
                                                 <div class="form-group">
-                                                    <label for="jawaban_salah_1">Opsi 2</label>
-                                                    <input required value="{{ $data[0]->jawaban_salah_1 }}" id="jawaban_salah_1" type="text" class="form-control" name="jawaban_salah_1">
+                                                    <label for="soal"><i class="fa fa-caret-right"></i><b> TKA SAINTEK</b></label><br>
+                                                    <label for="soal" class="mb-1"> MATEMATIKA SAINTEK</label>
+                                                    <fieldset class="checkboxsas">
+                                                        @foreach ($data_soal_msa as $data_soal_msa)
+                                                        <div class="col-12 mb-1">
+                                                            <input name="soal[]" class="mr-1" type="checkbox" value="{{ $data_soal_msa->id}}">{{ $data_soal_msa->deskripsi }}
+                                                        </div>
+                                                        @endforeach
+                                                    </fieldset>
+                                                    <label for="soal" class=" mt-1 mb-1"> FISIKA</label>
+                                                    <fieldset class="checkboxsas">
+                                                        @foreach ($data_soal_f as $data_soal_f)
+                                                        <div class="col-12 mb-1">
+                                                            <input name="soal[]" class="mr-1" type="checkbox" value="{{ $data_soal_f->id}}">{{ $data_soal_f->deskripsi }}
+                                                        </div>
+                                                        @endforeach
+                                                    </fieldset>
+                                                    <label for="soal" class=" mt-1 mb-1"> KIMIA</label>
+                                                    <fieldset class="checkboxsas">
+                                                        @foreach ($data_soal_k as $data_soal_k)
+                                                        <div class="col-12 mb-1">
+                                                            <input name="soal[]" class="mr-1" type="checkbox" value="{{ $data_soal_k->id}}">{{ $data_soal_k->deskripsi }}
+                                                        </div>
+                                                        @endforeach
+                                                    </fieldset>
+                                                    <label for="soal" class="mt-1 mb-1"> BIOLOGI</label>
+                                                    <fieldset class="checkboxsas">
+                                                        @foreach ($data_soal_b as $data_soal_b)
+                                                        <div class="col-12 mb-1">
+                                                            <input name="soal[]" class="mr-1" type="checkbox" value="{{ $data_soal_b->id}}">{{ $data_soal_b->deskripsi }}
+                                                        </div>
+                                                        @endforeach
+                                                    </fieldset>
                                                 </div>
+                                                <hr>
                                                 <div class="form-group">
-                                                    <label for="jawaban_salah_2">Opsi 3</label>
-                                                    <input required value="{{ $data[0]->jawaban_salah_2 }}" id="jawaban_salah_2" type="text" class="form-control" name="jawaban_salah_2">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="jawaban_salah_3">Opsi 4</label>
-                                                    <input required value="{{ $data[0]->jawaban_salah_3 }}" id="jawaban_salah_3" type="text" class="form-control" name="jawaban_salah_3">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="jawaban_salah_4">Opsi 5</label>
-                                                    <input required value="{{ $data[0]->jawaban_salah_4 }}" id="jawaban_salah_4" type="text" class="form-control" name="jawaban_salah_4">
+                                                    <label for="soal"><i class="fa fa-caret-right"></i><b> TKA SOSHUM</b></label><br>
+                                                    <label for="soal" class="mb-1"> MATEMATIKA SOSHUM</label>
+                                                    <fieldset class="checkboxsas">
+                                                        @foreach ($data_soal_mso as $data_soal_mso)
+                                                        <div class="col-12 mb-1">
+                                                            <input name="soal[]" class="mr-1" type="checkbox" value="{{ $data_soal_mso->id}}">{{ $data_soal_mso->deskripsi }}
+                                                        </div>
+                                                        @endforeach
+                                                    </fieldset>
+                                                    <label for="soal" class="mt-1 mb-1"> EKONOMI</label>
+                                                    <fieldset class="checkboxsas">
+                                                        @foreach ($data_soal_e as $data_soal_e)
+                                                        <div class="col-12 mb-1">
+                                                            <input name="soal[]" class="mr-1" type="checkbox" value="{{ $data_soal_e->id}}">{{ $data_soal_e->deskripsi }}
+                                                        </div>
+                                                        @endforeach
+                                                    </fieldset>
+                                                    <label for="soal" class="mt-1 mb-1"> GEOGRAFI</label>
+                                                    <fieldset class="checkboxsas">
+                                                        @foreach ($data_soal_g as $data_soal_g)
+                                                        <div class="col-12 mb-1">
+                                                            <input name="soal[]" class="mr-1" type="checkbox" value="{{ $data_soal_g->id}}">{{ $data_soal_g->deskripsi }}
+                                                        </div>
+                                                        @endforeach
+                                                    </fieldset>
+                                                    <label for="soal" class=" mt-1 mb-1"> SOSIOLOGI DAN SEJARAH</label>
+                                                    <fieldset class="checkboxsas">
+                                                        @foreach ($data_soal_ss as $data_soal_ss)
+                                                        <div class="col-12 mb-1">
+                                                            <input name="soal[]" class="mr-1" type="checkbox" value="{{ $data_soal_ss->id}}">{{ $data_soal_ss->deskripsi }}
+                                                        </div>
+                                                        @endforeach
+                                                    </fieldset>
                                                 </div>
                                                 <div class="form-actions">
-                                                    <a href="../../" type="button" class="btn btn-warning mr-1">
+                                                    <a href="../../data-tryout" type="button" class="btn btn-warning mr-1">
                                                         <i class="ft-x"></i> Cancel
                                                     </a>
                                                     <button type="submit" class="btn btn-primary">
@@ -89,16 +184,35 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        var kat = $('#kategori').val();
-
-        subtes(kat);
-    });
-
     $('#kategori').change(function(){
         var kat = $('#kategori').val();
 
-        subtes(kat);
+        if(kat == 'TPS'){
+            $('#subtes').html(`
+                <option value="none" selected="" disabled="">Pilih Subtes</option>
+                <option value="PENALARAN UMUM">PENALARAN UMUM</option>
+                <option value="PEMAHAMAN BACAAN DAN MENULIS">PEMAHAMAN BACAAN DAN MENULIS</option>
+                <option value="PENGETAHUAN DAN PEMAHAMAN UMUM">PENGETAHUAN DAN PEMAHAMAN UMUM</option>
+                <option value="PENGETAHUAN KUANTITATIF">PENGETAHUAN KUANTITATIF</option>
+                <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
+            `);
+        } else if (kat == 'SAINTEK') {
+            $('#subtes').html(`
+                <option value="none" selected="" disabled="">Pilih Subtes</option>
+                <option value="MATEMATIKA SAINTEK">MATEMATIKA SAINTEK</option>
+                <option value="FISIKA">FISIKA</option>
+                <option value="KIMIA">KIMIA</option>
+                <option value="BIOLOGI">BIOLOGI</option>
+            `);
+        } else {
+            $('#subtes').html(`
+                <option value="none" selected="" disabled="">Pilih Subtes</option>
+                <option value="MATEMATIKA SOSHUM">MATEMATIKA SOSHUM</option>
+                <option value="EKONOMI">EKONOMI</option>
+                <option value="GEOGRAFI">GEOGRAFI</option>
+                <option value="SOSIOLOGI DAN SEJARAH">SOSIOLOGI DAN SEJARAH</option>
+            `);
+        }
 
         // $.ajax({
         //     url: '../../soal/get_subtes/'+kat,
@@ -112,35 +226,6 @@
         //     }
         // });
     });
-
-    function subtes(kat){
-        if(kat == 'TPS'){
-            $('#subtes').html(`
-                <option value="none" selected="" disabled="">Pilih Subtes</option>
-                <option @if($data[0]->subtes == 'PENALARAN UMUM') {{ 'selected' }} @endif value="PENALARAN UMUM">PENALARAN UMUM</option>
-                <option @if($data[0]->subtes == 'PEMAHAMAN BACAAN DAN MENULIS') {{ 'selected' }} @endif value="PEMAHAMAN BACAAN DAN MENULIS">PEMAHAMAN BACAAN DAN MENULIS</option>
-                <option @if($data[0]->subtes == 'PENGETAHUAN DAN PEMAHAMAN UMUM') {{ 'selected' }} @endif value="PENGETAHUAN DAN PEMAHAMAN UMUM">PENGETAHUAN DAN PEMAHAMAN UMUM</option>
-                <option @if($data[0]->subtes == 'PENGETAHUAN KUANTITATIF') {{ 'selected' }} @endif value="PENGETAHUAN KUANTITATIF">PENGETAHUAN KUANTITATIF</option>
-                <option @if($data[0]->subtes == 'BAHASA INGGRIS') {{ 'selected' }} @endif value="BAHASA INGGRIS">BAHASA INGGRIS</option>
-            `);
-        } else if (kat == 'SAINTEK') {
-            $('#subtes').html(`
-                <option value="none" selected="" disabled="">Pilih Subtes</option>
-                <option @if($data[0]->subtes == 'MATEMATIKA SAINTEK') {{ 'selected' }} @endif value="MATEMATIKA SAINTEK">MATEMATIKA SAINTEK</option>
-                <option @if($data[0]->subtes == 'FISIKA') {{ 'selected' }} @endif value="FISIKA">FISIKA</option>
-                <option @if($data[0]->subtes == 'KIMIA') {{ 'selected' }} @endif value="KIMIA">KIMIA</option>
-                <option @if($data[0]->subtes == 'BIOLOGI') {{ 'selected' }} @endif value="BIOLOGI">BIOLOGI</option>
-            `);
-        } else {
-            $('#subtes').html(`
-                <option value="none" selected="" disabled="">Pilih Subtes</option>
-                <option @if($data[0]->subtes == 'MATEMATIKA SOSHUM') {{ 'selected' }} @endif value="MATEMATIKA SOSHUM">MATEMATIKA SOSHUM</option>
-                <option @if($data[0]->subtes == 'EKONOMI') {{ 'selected' }} @endif value="EKONOMI">EKONOMI</option>
-                <option @if($data[0]->subtes == 'GEOGRAFI') {{ 'selected' }} @endif value="GEOGRAFI">GEOGRAFI</option>
-                <option @if($data[0]->subtes == 'SOSIOLOGI DAN SEJARAH') {{ 'selected' }} @endif value="SOSIOLOGI DAN SEJARAH">SOSIOLOGI DAN SEJARAH</option>
-            `);
-        }
-    }
 </script>
 
     @endif

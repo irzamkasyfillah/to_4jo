@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSoalTable extends Migration
+class CreateSubtesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateSoalTable extends Migration
      */
     public function up()
     {
-        Schema::create('soal', function (Blueprint $table) {
+        Schema::create('subtes', function (Blueprint $table) {
             $table->id();
+            $table->string('nama');
             $table->string('kategori');
-            $table->integer('subtes');
-            $table->text('deskripsi');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateSoalTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('soal');
+        Schema::dropIfExists('subtes');
     }
 }

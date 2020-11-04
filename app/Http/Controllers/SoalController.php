@@ -84,7 +84,7 @@ class SoalController extends Controller
 
     public function getSubtes($kategori)
     {
-        $data = DB::table('soal')->where('kategori', $kategori);
+        $data = DB::table('subtes')->where('kategori', $kategori)->get()->all();
         echo json_encode($data);
     }
 
@@ -98,9 +98,12 @@ class SoalController extends Controller
     {
         $data = DB::table('soal')
         ->where('soal.id', $id)
-        ->join('jawaban', 'soal.id', '=', 'jawaban.id_soal')
-        ->select('soal.*', 'jawaban.*', 'soal.id as id_soal', 'jawaban.id as id_jawaban')
+        ->leftJoin('subtes', 'subtes.id', '=', 'soal.subtes')
+        ->leftJoin('jawaban', 'soal.id', '=', 'jawaban.id_soal')
+        ->select('soal.*', 'jawaban.*', 'soal.id as id_soal', 'jawaban.id as id_jawaban', 'subtes.nama as nama_subtes')
         ->get();
+
+        // dd($data);
 
         return view('admin/bank-soal/edit', ['data' => $data]);
     }
@@ -170,9 +173,10 @@ class SoalController extends Controller
     public function showCategory($kategori)
     {   
         $data = DB::table('soal')
-            ->where('kategori', $kategori)
-            ->join('jawaban', 'soal.id', '=', 'jawaban.id_soal')
-            ->select('soal.*', 'jawaban.*', 'soal.id as id_soal', 'jawaban.id as id_jawaban')
+            ->where('soal.kategori', $kategori)
+            ->leftJoin('subtes', 'subtes.id', '=', 'soal.subtes')
+            ->leftJoin('jawaban', 'soal.id', '=', 'jawaban.id_soal')
+            ->select('soal.*', 'jawaban.*', 'soal.id as id_soal', 'jawaban.id as id_jawaban', 'subtes.nama as nama_subtes')
             ->get();
 
         return view('admin/bank-soal/index', [

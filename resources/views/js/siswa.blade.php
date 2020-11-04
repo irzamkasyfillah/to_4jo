@@ -9,7 +9,6 @@
 <script src="/app-assets/vendors/js/forms/icheck/icheck.min.js"></script>
 <script src="/app-assets/vendors/js/extensions/jquery.knob.min.js"></script>
 <script src="/app-assets/vendors/js/charts/raphael-min.js"></script>
-{{-- <script src="/app-assets/vendors/js/charts/morris.min.js"></script> --}}
 <script src="/app-assets/vendors/js/extensions/unslider-min.js"></script>
 <script src="/app-assets/vendors/js/charts/echarts/echarts.js"></script>
 <!-- END PAGE VENDOR JS-->

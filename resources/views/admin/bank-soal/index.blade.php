@@ -50,7 +50,7 @@
                                             <tbody>
                                                 @foreach ($data as $data)
                                                 <tr>
-                                                    <td>{{ $data->subtes }}</td>
+                                                    <td>{{ $data->nama_subtes }}</td>
                                                     <td>{{ $data->deskripsi }}</td>
                                                     <td>
                                                     <!-- Icon Button dropdowns -->

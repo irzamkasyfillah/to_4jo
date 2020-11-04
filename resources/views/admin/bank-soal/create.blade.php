@@ -19,7 +19,7 @@
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <h3>
-                                            <span class="text-bold-300">Tambah Try Out</span>
+                                            <span class="text-bold-300">Tambah Soal</span>
                                         </h3> 
                                     </div>
                                     {{-- <div class="col-xl-6 text-right">
@@ -98,44 +98,26 @@
     $('#kategori').change(function(){
         var kat = $('#kategori').val();
 
-        if(kat == 'TPS'){
-            $('#subtes').html(`
-                <option value="none" selected="" disabled="">Pilih Subtes</option>
-                <option value="PENALARAN UMUM">PENALARAN UMUM</option>
-                <option value="PEMAHAMAN BACAAN DAN MENULIS">PEMAHAMAN BACAAN DAN MENULIS</option>
-                <option value="PENGETAHUAN DAN PEMAHAMAN UMUM">PENGETAHUAN DAN PEMAHAMAN UMUM</option>
-                <option value="PENGETAHUAN KUANTITATIF">PENGETAHUAN KUANTITATIF</option>
-                <option value="BAHASA INGGRIS">BAHASA INGGRIS</option>
-            `);
-        } else if (kat == 'SAINTEK') {
-            $('#subtes').html(`
-                <option value="none" selected="" disabled="">Pilih Subtes</option>
-                <option value="MATEMATIKA SAINTEK">MATEMATIKA SAINTEK</option>
-                <option value="FISIKA">FISIKA</option>
-                <option value="KIMIA">KIMIA</option>
-                <option value="BIOLOGI">BIOLOGI</option>
-            `);
-        } else {
-            $('#subtes').html(`
-                <option value="none" selected="" disabled="">Pilih Subtes</option>
-                <option value="MATEMATIKA SOSHUM">MATEMATIKA SOSHUM</option>
-                <option value="EKONOMI">EKONOMI</option>
-                <option value="GEOGRAFI">GEOGRAFI</option>
-                <option value="SOSIOLOGI DAN SEJARAH">SOSIOLOGI DAN SEJARAH</option>
-            `);
-        }
-
-        // $.ajax({
-        //     url: '../../soal/get_subtes/'+kat,
-        //     datatype: 'json',
-        //     success: function(data){
-        //         alert('berhasil');
-        //         var obj = JSON.parse(data);
-        //     },
-        //     error: function(data){
-        //         console.log(data);
-        //     }
-        // });
+        $.ajax({
+            url: '../../soal/get_subtes/'+kat,
+            datatype: 'json',
+            success: function(data){
+                var obj = JSON.parse(data);
+                console.log(obj);
+                $('#subtes').empty();
+                $('#subtes').append(`
+                        <option required value="" selected="" disabled="">Pilih Subtes</option>
+                    `);
+                for (i=0; i<=obj.length; i++) {
+                    $('#subtes').append(`
+                        <option required value="`+obj[i]['id']+`">`+obj[i]['nama']+`</option>
+                    `);
+                }
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
     });
 </script>
 

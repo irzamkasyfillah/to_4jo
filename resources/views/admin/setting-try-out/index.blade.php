@@ -53,203 +53,23 @@
                                                 <tr>
                                                     <td>{{ $data->nama }}</td>
                                                     <td>{{ date_format(date_create($data->waktu), "l, j F Y - H:i:s") }}</td>
-                                                    <td>Rp. {{ $data->harga }}</td>
+                                                    <td>Rp. 
+                                                        {{-- {{ dd($data) }} --}}
+                                                        @foreach ($data->soal as $soal)
+                                                            {{$soal . ", "}}
+                                                        @endforeach
+                                                    </td>
                                                     <td>
                                                     <!-- Icon Button dropdowns -->
                                                     <div class="btn-group mr-1 mb-1">
                                                         <button type="button" class="btn btn-icon btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-info"></i></button>
                                                         <div class="dropdown-menu">
                                                             <button class="dropdown-item" href="#" data-toggle="modal" data-target="#detail{{$data->id}}"><i class="fa mr-1 ml-1 fa-th-list"></i> Detail</button>
-                                                            <a class="dropdown-item" href="{{ route('soal.edit',  $data->id) }}"><i class="ft-edit mr-1 ml-1"></i> Edit</a>
+                                                            <a class="dropdown-item" href="{{ route('data-tryout.edit',  $data->id) }}"><i class="ft-edit mr-1 ml-1"></i> Edit</a>
                                                             <button class="dropdown-item" href="#" data-toggle="modal" data-target="#hapus{{$data->id}}"><i class="ft-delete mr-1 ml-1"></i> Delete</button>
                                                         </div>
                                                     </div>
-                                                    {{-- MODAL DETAIL --}}
-                                                        <div class="modal fade text-left" id="detail{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-                                                            <div class="modal-dialog modal-lg" role="document">
-                                                              <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                  <h4 class="modal-title" id="myModalLabel1">Detail Soal {{ $data->nama }}</h4>
-                                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                  </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <span class=""><i class="fa fa-caret-right mb-1"></i><b> TPS</b></span><br>
-                                                                    <table style="background-color: white" class="table table-striped table-bordered text-left">
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class="mb-1"><i class="fa fa-caret-right"></i><b> Penalaran Umum</b> ({{ count($soal_pu) }} soal)</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @foreach ($soal_pu as $soal)
-                                                                        <tr>
-                                                                            <td>    
-                                                                                <span class="">{{ $soal->deskripsi }}</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @endforeach
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class="mb-1"><i class="fa fa-caret-right"></i> <b>Pemahaman Bacaan dan Menulis</b> ({{ count($soal_pbm) }} soal)</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @foreach ($soal_pbm as $soal)
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class=""> {{ $soal->deskripsi }}</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @endforeach
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class="mb-1"><i class="fa fa-caret-right"></i> <b>Pengetahuan dan Pemahaman Umum</b> ({{ count($soal_ppu) }} soal)</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @foreach ($soal_ppu as $soal)
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class=""> {{ $soal->deskripsi }}</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @endforeach
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class="mb-1"><i class="fa fa-caret-right"></i> <b>Pengetahuan Kuantitatif</b> ({{ count($soal_pk) }} soal)</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @foreach ($soal_pk as $soal)
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class=""> {{ $soal->deskripsi }}</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @endforeach
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class="mb-1"><i class="fa fa-caret-right"></i> <b>Bahasa Inggris</b> ({{ count($soal_bi) }} soal)</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @foreach ($soal_bi as $soal)
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class=""> {{ $soal->deskripsi }}</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @endforeach
-                                                                    </table>
-                                                                    <hr>
-                                                                    <span class=""><i class="fa fa-caret-right mb-1"></i><b> TKA SAINTEK</b></span><br>
-                                                                    <table style="background-color: white" class="table table-striped table-bordered text-left">
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class="mb-1"><i class="fa fa-caret-right"></i> <b>Matematika Saintek</b> ({{ count($soal_msa) }} soal)</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @foreach ($soal_msa as $soal)
-                                                                        <tr>
-                                                                            <td>    
-                                                                                <span class="">{{ $soal->deskripsi }}</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @endforeach
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class="mb-1"><i class="fa fa-caret-right"></i> <b>Fisika</b> ({{ count($soal_f) }} soal)</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @foreach ($soal_f as $soal)
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class=""> {{ $soal->deskripsi }}</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @endforeach
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class="mb-1"><i class="fa fa-caret-right"></i> <b>Kimia</b> ({{ count($soal_k) }} soal)</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @foreach ($soal_k as $soal)
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class=""> {{ $soal->deskripsi }}</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @endforeach
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class="mb-1"><i class="fa fa-caret-right"></i> <b>Biologi</b> ({{ count($soal_b) }} soal)</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @foreach ($soal_b as $soal)
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class=""> {{ $soal->deskripsi }}</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @endforeach
-                                                                    </table>
-                                                                    <hr>
-                                                                    <span class=""><i class="fa fa-caret-right mb-1"></i><b> TKA SOSHUM</b></span><br>
-                                                                    <table style="background-color: white" class="table table-striped table-bordered text-left">
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class="mb-1"><i class="fa fa-caret-right"></i> <b>MATEMATIKA SOSHUM</b> ({{ count($soal_mso) }} soal)</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @foreach ($soal_mso as $soal)
-                                                                        <tr>
-                                                                            <td>    
-                                                                                <span class="">{{ $soal->deskripsi }}</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @endforeach
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class="mb-1"><i class="fa fa-caret-right"></i> <b>EKONOMI</b> ({{ count($soal_e) }} soal)</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @foreach ($soal_e as $soal)
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class=""> {{ $soal->deskripsi }}</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @endforeach
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class="mb-1"><i class="fa fa-caret-right"></i> <b>GEOGRAFI</b> ({{ count($soal_g) }} soal)</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @foreach ($soal_g as $soal)
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class=""> {{ $soal->deskripsi }}</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @endforeach
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class="mb-1"><i class="fa fa-caret-right"></i> <b>SOSIOLOGI DAN SEJARAH</b> ({{ count($soal_ss) }} soal)</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @foreach ($soal_ss as $soal)
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span class=""> {{ $soal->deskripsi }}</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        @endforeach
-                                                                    </table>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                  <button type="button" class="btn white btn-secondary" data-dismiss="modal">Close</button>
-                                                                </div>
-                                                              </div>
-                                                            </div>
-                                                        </div>
-                                                        {{-- END MODAL DETAIL --}}
+                                                    
 
                                                         {{-- MODAL HAPUS --}}
                                                         <div class="modal fade text-left" id="hapus{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
@@ -283,8 +103,9 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th>Subtes</th>
-                                                    <th>Deskripsi</th>
+                                                    <th>Nama Try Out</th>
+                                                    <th>Waktu (hari/tanggal/jam)</th>
+                                                    <th>Harga</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </tfoot>
@@ -299,6 +120,91 @@
         </div>
         <div class="height-100"></div>
     </div>
+
+    {{-- MODAL DETAIL --}}
+    <div class="modal fade text-left" id="detail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel1">Detail Soal </h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <h3>TPS</h3>
+                <div id="accordionWrapa1" role="tablist" aria-multiselectable="true">
+                    <div class="card">
+                        <div id="heading1"  class="card-header" role="tab">
+                            <a data-toggle="collapse" data-parent="#accordionWrapa1" href="#tps1" aria-expanded="false"  class="card-title lead">Penalaran Umum</a>
+                        </div>
+                        <div id="tps1" role="tabpanel" aria-labelledby="heading1" class="collapse show">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    Caramels dessert chocolate cake pastry jujubes bonbon. Jelly wafer jelly beans. Caramels chocolate cake liquorice cake wafer jelly beans croissant apple pie. Oat cake brownie pudding jelly beans. Wafer liquorice chocolate bar chocolate bar liquorice. Tootsie roll gingerbread gingerbread chocolate bar tart chupa chups sugar plum toffee. Carrot cake macaroon sweet danish. Cupcake soufflé toffee marzipan candy canes pie jelly-o. Cotton candy bonbon powder topping carrot cake cookie caramels lemon drops liquorice. Dessert cookie ice cream toffee apple pie.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="heading2"  class="card-header" role="tab">
+                            <a data-toggle="collapse" data-parent="#accordionWrapa1" href="#tps2" aria-expanded="false"  class="card-title lead">Pemahaman Bacaan dan Menulis</a>
+                        </div>
+                        <div id="tps2" role="tabpanel" aria-labelledby="heading1" class="collapse show">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    Caramels dessert chocolate cake pastry jujubes bonbon. Jelly wafer jelly beans. Caramels chocolate cake liquorice cake wafer jelly beans croissant apple pie. Oat cake brownie pudding jelly beans. Wafer liquorice chocolate bar chocolate bar liquorice. Tootsie roll gingerbread gingerbread chocolate bar tart chupa chups sugar plum toffee. Carrot cake macaroon sweet danish. Cupcake soufflé toffee marzipan candy canes pie jelly-o. Cotton candy bonbon powder topping carrot cake cookie caramels lemon drops liquorice. Dessert cookie ice cream toffee apple pie.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="heading1"  class="card-header" role="tab">
+                            <a data-toggle="collapse" data-parent="#accordionWrapa1" href="#accordion1" aria-expanded="false"  class="card-title lead">Accordion Group Item #1</a>
+                        </div>
+                        <div id="accordion1" role="tabpanel" aria-labelledby="heading1" class="collapse show">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    Caramels dessert chocolate cake pastry jujubes bonbon. Jelly wafer jelly beans. Caramels chocolate cake liquorice cake wafer jelly beans croissant apple pie. Oat cake brownie pudding jelly beans. Wafer liquorice chocolate bar chocolate bar liquorice. Tootsie roll gingerbread gingerbread chocolate bar tart chupa chups sugar plum toffee. Carrot cake macaroon sweet danish. Cupcake soufflé toffee marzipan candy canes pie jelly-o. Cotton candy bonbon powder topping carrot cake cookie caramels lemon drops liquorice. Dessert cookie ice cream toffee apple pie.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="heading1"  class="card-header" role="tab">
+                            <a data-toggle="collapse" data-parent="#accordionWrapa1" href="#accordion1" aria-expanded="false"  class="card-title lead">Accordion Group Item #1</a>
+                        </div>
+                        <div id="accordion1" role="tabpanel" aria-labelledby="heading1" class="collapse show">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    Caramels dessert chocolate cake pastry jujubes bonbon. Jelly wafer jelly beans. Caramels chocolate cake liquorice cake wafer jelly beans croissant apple pie. Oat cake brownie pudding jelly beans. Wafer liquorice chocolate bar chocolate bar liquorice. Tootsie roll gingerbread gingerbread chocolate bar tart chupa chups sugar plum toffee. Carrot cake macaroon sweet danish. Cupcake soufflé toffee marzipan candy canes pie jelly-o. Cotton candy bonbon powder topping carrot cake cookie caramels lemon drops liquorice. Dessert cookie ice cream toffee apple pie.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="heading1"  class="card-header" role="tab">
+                            <a data-toggle="collapse" data-parent="#accordionWrapa1" href="#accordion1" aria-expanded="false"  class="card-title lead">Accordion Group Item #1</a>
+                        </div>
+                        <div id="accordion1" role="tabpanel" aria-labelledby="heading1" class="collapse show">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    Caramels dessert chocolate cake pastry jujubes bonbon. Jelly wafer jelly beans. Caramels chocolate cake liquorice cake wafer jelly beans croissant apple pie. Oat cake brownie pudding jelly beans. Wafer liquorice chocolate bar chocolate bar liquorice. Tootsie roll gingerbread gingerbread chocolate bar tart chupa chups sugar plum toffee. Carrot cake macaroon sweet danish. Cupcake soufflé toffee marzipan candy canes pie jelly-o. Cotton candy bonbon powder topping carrot cake cookie caramels lemon drops liquorice. Dessert cookie ice cream toffee apple pie.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn white btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    {{-- END MODAL DETAIL --}}
+
+    <script>
+        $('#kategori').click(function(){
+
+        });
+    </script>
 
     @endif
 @endsection

@@ -12,6 +12,7 @@
 <script src="/app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
 <script src="/app-assets/vendors/js/extensions/unslider-min.js"></script>
 <script src="/app-assets/vendors/js/charts/echarts/echarts.js"></script>
+{{-- <script src="/app-assets/vendors/js/charts/morris.min.js"></script> --}}
 <!-- END PAGE VENDOR JS-->
 <!-- BEGIN ROBUST JS-->
 <script src="/app-assets/js/core/app-menu.js"></script>

@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css" href="/app-assets/css/vendors.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/forms/icheck/icheck.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/forms/icheck/custom.css">
-{{-- <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/charts/morris.css"> --}}
+<link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/charts/morris.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/extensions/unslider.css">
 <link rel="stylesheet" type="text/css" href="/app-assets/vendors/css/weather-icons/climacons.min.css">
 <!-- END VENDOR CSS-->

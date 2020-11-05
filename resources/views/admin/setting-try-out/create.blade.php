@@ -50,6 +50,8 @@
                                                 <h5 class="text-center">Pilih Soal</h5>
                                                 <?php
                                                     $kategori = array('TPS', 'SAINTEK', 'SOSHUM');
+                                                    $warna = array('bg-success', 'bg-danger', 'bg-info');
+                                                    $i = 0;
                                                 ?>
                                                 @foreach ($kategori as $kategori)
                                                     <h6 class=""><i class="fa fa-caret-right"></i> <b>{{ $kategori }}</b></h6>
@@ -59,36 +61,30 @@
                                                         <div class="card collapse-icon accordion-icon-rotate">
                                                             @foreach ($data_subtes as $subtes)
                                                                 @if ($subtes->kategori == $kategori)
-                                                                    @if ($kategori == "TPS")
-                                                                        <div id="heading{{ $subtes->id }}"  class="card-header bg-success" role="tab">
-                                                                            <a data-toggle="collapse" data-parent="#accordionWrapa1" href="#subtes{{ $subtes->id }}" aria-expanded="false"  class="card-title lead white">{{ $subtes->nama }}</a>
-                                                                        </div>
-                                                                    @elseif ($kategori == "SAINTEK")
-                                                                        <div id="heading{{ $subtes->id }}"  class="card-header bg-danger" role="tab">
-                                                                            <a data-toggle="collapse" data-parent="#accordionWrapa1" href="#subtes{{ $subtes->id }}" aria-expanded="false"  class="card-title lead white">{{ $subtes->nama }}</a>
-                                                                        </div>
-                                                                    @else
-                                                                        <div id="heading{{ $subtes->id }}"  class="card-header bg-info" role="tab">
-                                                                            <a data-toggle="collapse" data-parent="#accordionWrapa1" href="#subtes{{ $subtes->id }}" aria-expanded="false"  class="card-title lead white">{{ $subtes->nama }}</a>
-                                                                        </div>
-                                                                    @endif
+                                                                    
+                                                                    <div id="heading{{ $subtes->id }}"  class="card-header {{ $warna[$i] }}" role="tab">
+                                                                        <a data-toggle="collapse" data-parent="#accordionWrapa1" href="#subtes{{ $subtes->id }}" aria-expanded="false"  class="card-title lead white">{{ $subtes->nama }}</a>
+                                                                    </div>
+                                                                    
                                                                     <div id="subtes{{ $subtes->id }}" role="tabpanel" aria-labelledby="heading{{ $subtes->id }}" class="collapse">
-                                                                        <div class="card-content">
-                                                                            <div class="card-body">
-                                                                                @foreach ($data_soal as $soal)
-                                                                                    @if ($soal->subtes == $subtes->id)
-                                                                                        <input name="soal[]" class="mr-1" type="checkbox" value="{{ $soal->id}}">{{ $soal->deskripsi }}
-                                                                                        <div class="mb-1"></div>
-                                                                                    @endif
-                                                                                @endforeach
-                                                                            </div>
-                                                                        </div>
+                                                                        <table class="table bg-light table-striped table-bordered">
+                                                                            @foreach ($data_soal as $soal)
+                                                                                @if ($soal->subtes == $subtes->id)
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <input name="soal[]" class="mr-1" type="checkbox" value="{{ $soal->id}}">{{ $soal->deskripsi }}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                @endif
+                                                                            @endforeach
+                                                                        </table>
                                                                     </div>
                                                                     <br>            
                                                                 @endif
                                                             @endforeach
                                                         </div>
-                                                    </div>    
+                                                    </div>
+                                                    <?php $i++ ?>    
                                                 @endforeach 
                                                 <div class="form-actions">
                                                     <a href="../../data-tryout" type="button" class="btn btn-warning mr-1">

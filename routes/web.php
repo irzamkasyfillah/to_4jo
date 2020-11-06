@@ -21,6 +21,12 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/daftar-to/{id}', [App\Http\Controllers\HomeController::class, 'daftar']);
+
+Route::post('/daftar-to/{id}/{id_user}', [App\Http\Controllers\HomeController::class, 'transaksi']);
+
+Route::get('/daftar-to/{id}/{id_user}/transaksi', [App\Http\Controllers\HomeController::class, 'showTransaksi']);
+
 Route::resource('/profile', 'App\Http\Controllers\UserProfileController');
 
 Route::resource('data-tryout', 'App\Http\Controllers\TryoutController');
@@ -34,3 +40,5 @@ Route::get('soal/kategori/{kategori}', [App\Http\Controllers\SoalController::cla
 Route::get('soal/get_subtes/{kategori}', [App\Http\Controllers\SoalController::class, 'getSubtes']);
 
 Route::resource('soal', 'App\Http\Controllers\SoalController');
+
+Route::get('tryout/konfirmasi-peserta', [App\Http\Controllers\TryoutController::class, 'showKonfirmasiPeserta']);

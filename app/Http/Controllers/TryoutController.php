@@ -158,4 +158,19 @@ class TryoutController extends Controller
         return view('to/kerja-to', ['subtes' => $subtes,
                                     'id' => $id]); 
     }
+
+    public function showKonfirmasiPeserta()
+    {
+        $data_peserta_konfirmasi = DB::table('peserta_konfirmasi')
+            ->where('status', 'Menunggu Pembayaran')
+            ->join('users', 'users.id', '=', 'peserta_konfirmasi.id_peserta')
+            ->join('tryout', 'tryout.id', '=', 'peserta_konfirmasi.id_tryout')
+            ->select('peserta_konfirmasi.*', 'users.*', 'tryout.*', 'users.id as id_user', 'tryout.id as id_tryout', 'peserta_konfirmasi.id as id_peserta_konfirmasi')
+            ->get();
+            
+        // dd($data_peserta_konfirmasi);
+        return view('admin/setting-try-out/peserta-konfirmasi', [
+            'data_peserta_konfirmasi' => $data_peserta_konfirmasi
+        ]);
+    }
 }

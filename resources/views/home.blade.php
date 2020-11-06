@@ -28,19 +28,22 @@
             <hr>
             <div class="card-content">
                 <div class="card-body">
-                    <div class="row ml-1 mr-1 text-center">
-                    <a href="list-to" class="col-xl-5 border-grey border-lighten-3">
-                            <div class="card-header border-2">
-                                <span class="text-400"><b>TRY OUT UTBK 2021 PART 1</b></span>
+                    <div class="row">
+                    @foreach ($data_tryout as $data_tryout)
+                        <a href="daftar-to/{{$data_tryout->id}}" class="col-xl-5 ml-3 mb-3 border-grey border-lighten-3">
+                            <div class="card-header border-2 text-center">
+                                <span class="font-small-4 text-muted text-bold-400 "><b>{{strtoupper($data_tryout->nama)}}</b></span>
                             </div>
+                            <span class="font-small-4 text-muted text-left">{{date_format(date_create($data_tryout->waktu), "j F Y")}} </span>
                             <hr>
                             <div class="card-content text-center">
-                                <button type="button" class="btn btn-info round btn-min-width mr-1 mb-1"> Mulai <i class="ft-arrow-right ml-1"></i></button>
+                                <button type="button" class="btn btn-info round box-shadow-1 btn-min-width mr-1 mb-1"> Daftar <i class="ft-arrow-right ml-1"></i></button>
                             </div>
                         </a>
+                    @endforeach
                     </div>
                     <!-- <div id="weekly-activity-chart" class="height-250"></div> -->
-                    <div class="height-100"></div>
+                    {{-- <div class="height-100"></div> --}}
                 </div>
             </div>
         </div>

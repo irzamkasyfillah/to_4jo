@@ -78,7 +78,7 @@ class HomeController extends Controller
             ->where('peserta_konfirmasi.id', $id_transaksi)
             ->join('tryout', 'tryout.id', '=', 'peserta_konfirmasi.id_tryout')
             ->join('users', 'users.id', '=', 'peserta_konfirmasi.id_peserta')
-            ->select( 'peserta_konfirmasi.*', 'tryout.*', 'users.*', 'peserta_konfirmasi.id as id_peserta_konfirmasi', 'tryout.id as id_tryout', 'users.id as id_user')
+            ->select( 'peserta_konfirmasi.*', 'tryout.nama', 'tryout.waktu', 'users.*', 'peserta_konfirmasi.id as id_peserta_konfirmasi', 'tryout.id as id_tryout', 'users.id as id_user')
             ->get();
 
         // dd($data_peserta);

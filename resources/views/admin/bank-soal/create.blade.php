@@ -22,9 +22,6 @@
                                             <span class="text-bold-300">Tambah Soal</span>
                                         </h3> 
                                     </div>
-                                    {{-- <div class="col-xl-6 text-right">
-                                        <a href="{{ route('soal.create') }}" class="btn btn-info"><i class="ft-plus"></i> Tambah Soal</a>
-                                    </div> --}}
                                 </div>
                             </div>
                             <hr>
@@ -36,8 +33,8 @@
                                             <div class="form-body">
                                                 <div class="form-group">
                                                     <label for="kategori">Kategori Soal</label>
-                                                    <select id="kategori" name="kategori" class="form-control">
-                                                        <option required value="" selected="" disabled="">Pilih kategori</option>
+                                                    <select required  id="kategori" name="kategori" class="form-control">
+                                                        <option value="" selected="" disabled="">Pilih kategori</option>
                                                         <option value="TPS">TPS</option>
                                                         <option value="SAINTEK">SAINTEK</option>
                                                         <option value="SOSHUM">SOSHUM</option>
@@ -45,8 +42,8 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="subtes">Subtes</label>
-                                                    <select id="subtes" name="subtes" class="form-control">
-                                                        <option required value="" selected="" disabled="">Pilih Subtes</option>
+                                                    <select required  id="subtes" name="subtes" class="form-control">
+                                                        <option value="" selected="" disabled="">Pilih Subtes</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">

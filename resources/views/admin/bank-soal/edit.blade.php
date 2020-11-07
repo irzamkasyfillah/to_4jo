@@ -89,7 +89,7 @@
     </div>
 </div>
 
-<option required value="`+obj[i]['id']+`" <?php if (intval($data[0]->subtes) == `+obj[i]['id']+`) { echo 'selected'; } ?> >`+obj[i]['nama']+`</option>
+{{-- <option required value="`+obj[i]['id']+`" <?php if (intval($data[0]->subtes) == `+obj[i]['id']+`) { echo 'selected'; } ?> >`+obj[i]['nama']+`</option> --}}
 
 <script>
     $(document).ready(function() {

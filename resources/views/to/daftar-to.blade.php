@@ -35,11 +35,24 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="text-right">Harga</td>
-                                                    <td>Rp. <input type="number" id="harga" name="harga" value="{{$data_tryout->harga}}" readonly class=""></td>
+                                                    <td>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">Rp.</span>
+                                                            </div>
+                                                            <input class="form-control bg-white" type="number" id="harga" name="harga" value="{{$data_tryout->harga}}" readonly>
+                                                            <input type="number" id="harga_awal" name="" value="{{$data_tryout->harga}}" hidden>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-right">Masukkan Kupon</td>
-                                                    <td><input type="text" id="kupon" name="kupon" class="form-control"><a id="cek_kupon" class="btn btn-warning white float-right mt-1">Cek kupon</a></td>
+                                                    <td>
+                                                        <input type="text" id="kupon" name="kupon" class="form-control">
+                                                        <div class="text-right" id="pesan"></div>
+                                                        <a id="cek_kupon" class="btn btn-warning white float-none mt-1">Cek kupon</a>
+                                                    </td>
+                                                    <input type="text" id="id_to" value="{{$data_tryout->id}}" readonly hidden>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-right">Kelompok Ujian</td>
@@ -64,9 +77,41 @@
                             </div>
                         </div>
                     </section>
-                    
                 </div>
             </div>
             <div class="height-25"></div>
         </div>
+
+        <script>
+            $('#cek_kupon').click(function() {
+                var kupon = $('#kupon').val();
+                var id_to = $('#id_to').val();
+                var harga_awal = $('#harga_awal').val();
+
+                $.ajax({
+                    url: '../../get_kupon/'+id_to,
+                    datatype: 'json',
+                    success: function(data){
+                        var obj = JSON.parse(data);
+                        console.log(obj);
+                        if (obj[0]['kode_kupon'] == kupon) {
+                            var after_diskon = harga_awal - (harga_awal*obj[0]['persen']/100);
+                            $('#harga').val(after_diskon);
+                            $('#pesan').empty();
+                            $('#pesan').append(`
+                                    <div class="float-right font-small-3 text-muted mt-1">Kode Kupon benar!</div>
+                                `)
+                        } else {
+                            $('#pesan').empty();
+                            $('#pesan').append(`
+                                    <div class="float-right font-small-3 text-muted mt-1">Kode kupon salah!</div>
+                                `)
+                        }   
+                    },
+                    error: function(data){
+                        console.log(data);
+                    }
+                }); 
+            });
+        </script>
 @endsection

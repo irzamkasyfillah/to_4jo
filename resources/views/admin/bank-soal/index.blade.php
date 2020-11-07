@@ -57,7 +57,7 @@
                                                     <div class="btn-group mr-1 ">
                                                         <button type="button" class="btn btn-icon btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-info"></i></button>
                                                         <div class="dropdown-menu">
-                                                            <button class="dropdown-item " href="#" data-toggle="modal" data-target="#detail{{$data->id_soal}}"><i class="fa mr-1 ml-1 fa-th-list"></i> Detail </button>
+                                                            <button class="dropdown-item " href="#" data-toggle="modal" data-target="#detail{{$data->id_soal}}"><i class="fa fa-th-list mr-1 ml-1"></i> Detail </button>
                                                             <a class="dropdown-item btn " href="{{ route('soal.edit',  $data->id_soal) }}"><i class="ft-edit mr-1 ml-1"></i> Edit </a>
                                                             <button class="dropdown-item " href="#" data-toggle="modal" data-target="#hapus{{$data->id_soal}}"><i class="ft-delete mr-1 ml-1"></i> Delete </button>
                                                         </div>

@@ -2,8 +2,8 @@
 <script src="/app-assets/vendors/js/vendors.min.js"></script>
 <!-- BEGIN VENDOR JS-->
 <!-- BEGIN PAGE VENDOR JS-->
-<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBDkKetQwosod2SZ7ZGCpxuJdxY3kxo5Po"></script>
-<script src="/app-assets/vendors/js/charts/gmaps.min.js"></script>
+{{-- <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBDkKetQwosod2SZ7ZGCpxuJdxY3kxo5Po"></script> --}}
+{{-- <script src="/app-assets/vendors/js/charts/gmaps.min.js"></script> --}}
 <script src="/app-assets/vendors/js/forms/icheck/icheck.min.js"></script>
 <script src="/app-assets/vendors/js/extensions/jquery.knob.min.js"></script>
 <script src="/app-assets/vendors/js/charts/raphael-min.js"></script>

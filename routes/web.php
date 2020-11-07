@@ -42,3 +42,9 @@ Route::get('soal/get_subtes/{kategori}', [App\Http\Controllers\SoalController::c
 Route::resource('soal', 'App\Http\Controllers\SoalController');
 
 Route::get('tryout/konfirmasi-peserta', [App\Http\Controllers\TryoutController::class, 'showKonfirmasiPeserta']);
+
+Route::resource('kupon', 'App\Http\Controllers\KuponController');
+
+Route::get('get_tryout', [App\Http\Controllers\KuponController::class, 'getTryout']);
+
+Route::get('get_kupon/{id_to}', [App\Http\Controllers\KuponController::class, 'getKupon']);

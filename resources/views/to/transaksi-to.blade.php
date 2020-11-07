@@ -12,7 +12,7 @@
                             <div class="card border-grey border-lighten-3 py-1 col-md-5 col-10 box-shadow-2 p-0">
                                 <div class="card-header border-0 pb-0">
                                     <div class="card-title text-center">
-                                        <h3> Transaksi #109</h3>
+                                        <h3> Transaksi #{{$data_peserta[0]->id_peserta_konfirmasi}}</h3>
                                     </div>
                                 </div>
                                 <hr class="mb-0">

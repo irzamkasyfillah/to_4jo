@@ -31,11 +31,21 @@ class HomeController extends Controller
         ]);
     }
 
-    public function daftar($id) {
-        $data_tryout = DB::table('tryout')->find($id);
-        return view('to/daftar-to',[
-            'data_tryout' =>$data_tryout
-        ]);
+    public function daftar($id_to, $id_user) {
+        $data_tryout = DB::table('tryout')->find($id_to);
+        $check_peserta = DB::table('peserta_konfirmasi')
+            ->where('id_tryout', $id_to)
+            ->where('id_peserta', $id_user)
+            ->get();
+        // dd($check_peserta[0]->id);
+
+        if ($check_peserta->count() > 0) {
+            return redirect('/transaksi/'.$check_peserta[0]->id);
+        } else {
+            return view('to/daftar-to',[
+                'data_tryout' =>$data_tryout
+            ]);
+        }
     }
 
     public function transaksi(Request $request, $id_to, $id_user) {
@@ -50,19 +60,27 @@ class HomeController extends Controller
             'status' => "Menunggu Pembayaran",
         ];
 
-        $peserta_konfirmasi = PesertaKonfirmasi::create($data_peserta_konfirmasi);
-    
-        return redirect('daftar-to/'. $peserta_konfirmasi->id_tryout . '/' . $peserta_konfirmasi->id . '/transaksi');
+        $check_peserta = DB::table('peserta_konfirmasi')
+            ->where('id_tryout', $id_to)
+            ->where('id_peserta', $id_user)
+            ->get();
+
+        if ($check_peserta->count() > 0) {
+            return redirect('/transaksi/'.$check_peserta[0]->id);
+        } else {
+            $peserta_konfirmasi = PesertaKonfirmasi::create($data_peserta_konfirmasi);
+            return redirect('/transaksi/'.$peserta_konfirmasi->id);
+        }
     }
 
-    public function showTransaksi($id_to, $id_peserta) {
+    public function showTransaksi($id_transaksi) {
         $data_peserta = DB::table('peserta_konfirmasi')
-            ->where('peserta_konfirmasi.id', $id_peserta)
+            ->where('peserta_konfirmasi.id', $id_transaksi)
             ->join('tryout', 'tryout.id', '=', 'peserta_konfirmasi.id_tryout')
             ->join('users', 'users.id', '=', 'peserta_konfirmasi.id_peserta')
             ->select( 'peserta_konfirmasi.*', 'tryout.*', 'users.*', 'peserta_konfirmasi.id as id_peserta_konfirmasi', 'tryout.id as id_tryout', 'users.id as id_user')
             ->get();
-        
+
         // dd($data_peserta);
 
         return view('to/transaksi-to', [

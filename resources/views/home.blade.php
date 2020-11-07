@@ -30,7 +30,7 @@
                 <div class="card-body">
                     <div class="row">
                     @foreach ($data_tryout as $data_tryout)
-                        <a href="daftar-to/{{$data_tryout->id}}" class="col-xl-5 ml-3 mb-3 border-grey border-lighten-3">
+                        <a href="daftar-to/{{$data_tryout->id}}/{{Auth::user()->id}}" class="col-xl-5 ml-3 mb-3 border-grey border-lighten-3">
                             <div class="card-header border-2 text-center">
                                 <span class="font-small-4 text-muted text-bold-400 "><b>{{strtoupper($data_tryout->nama)}}</b></span>
                             </div>

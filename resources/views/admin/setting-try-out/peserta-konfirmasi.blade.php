@@ -38,10 +38,10 @@
                                     <div class="table-responsive">
                                         <table id="data" class="table table-striped table-bordered zero-configuration">
                                             <thead>
-                                                <tr>
+                                                <tr class="text-center" >
                                                     <th width="5%">No</th>
                                                     <th width="">Email Peserta</th>
-                                                    <th width="">Tryout terdaftar</th>
+                                                    <th width="">Tryout Terdaftar</th>
                                                     <th width="">Kelompok Ujian</th>
                                                     <th width="">Harga</th>
                                                     <th width="">Status</th>
@@ -51,14 +51,14 @@
                                             <tbody>
                                                 <?php $i = 1; ?>
                                                 @foreach ($data_peserta_konfirmasi as $data)
-                                                <tr class="">
+                                                <tr>
                                                     <td class="text-center">{{$i++}}</td>
                                                     <td>{{ $data->email }}</td>
                                                     <td>{{ $data->nama }}</td>
                                                     <td>{{ $data->kelompok_ujian }} </td>
                                                     <td>Rp. {{ $data->harga }} </td>
                                                     <td>{{ $data->status }} </td>
-                                                    <td>
+                                                    <td class="text-center">
                                                         <button class="btn btn-success btn-min-width mb-1" href="#"><i class="fa fa-check"></i> Terima</button>
                                                         <button class="btn btn-danger btn-min-width" href="#"><i class="fa fa-times"></i> Tolak</button>
                                                     </td>
@@ -66,7 +66,7 @@
                                             @endforeach
                                             </tbody>
                                             <tfoot>
-                                                <tr>
+                                                <tr class="text-center" >
                                                     <th>No</th>
                                                     <th>Email Peserta</th>
                                                     <th>Tryout terdaftar</th>

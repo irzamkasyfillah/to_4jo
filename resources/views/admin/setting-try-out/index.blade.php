@@ -41,7 +41,7 @@
                                     <div class="table-responsive">
                                         <table id="data" class="table table-striped table-bordered zero-configuration">
                                             <thead>
-                                                <tr>
+                                                <tr class="text-center">
                                                     <th width="30%">Nama Try Out</th>
                                                     <th width="30%">Waktu (hari/tanggal/jam)</th>
                                                     <th width="30%">Harga</th>
@@ -60,7 +60,7 @@
                                                         @endif
                                                     </td>
                                                     <td>Rp. {{ $data->harga }} </td>
-                                                    <td>
+                                                    <td class="text-center">
                                                     <!-- Icon Button dropdowns -->
                                                     <div class="btn-group mr-1 mb-1">
                                                         <button type="button" class="btn btn-icon btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-info"></i></button>
@@ -176,7 +176,7 @@
                                             @endforeach
                                             </tbody>
                                             <tfoot>
-                                                <tr>
+                                                <tr class="text-center" >
                                                     <th>Nama Try Out</th>
                                                     <th>Waktu (hari/tanggal/jam)</th>
                                                     <th>Harga</th>

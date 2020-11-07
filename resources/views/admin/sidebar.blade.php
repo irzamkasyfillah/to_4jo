@@ -10,7 +10,7 @@
               </i><span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a>
             </li>
 
-          @if (Request::segment(1) == "data-tryout" )
+          @if (Request::segment(1) == "data-tryout" || Request::segment(1) == "tryout" )
             <li class="active nav-item">
           @else
             <li class=" nav-item">
@@ -19,7 +19,7 @@
               <ul class="menu-content">
                 <li><a class="menu-item" href="{{ route('data-tryout.index') }}" data-i18n="nav.templates.vert.main">List Try Out</a>
                 </li>
-                <li><a class="menu-item" href="tryout/konfirmasi-peserta" data-i18n="nav.templates.vert.main">List Konfirmasi Peserta</a>
+                <li><a class="menu-item" href="../../tryout/konfirmasi-peserta" data-i18n="nav.templates.vert.main">List Konfirmasi Peserta</a>
                 </li>
                 <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">3</a>
                 </li>

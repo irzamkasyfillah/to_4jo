@@ -31,11 +31,9 @@
               <li class="dropdown dropdown-user nav-item">
                   <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                       <span class="avatar avatar-online">
-                          <!-- if (Auth::user()->foto != '') { -->
-                            <!-- <img src="{{ URL::to('/')}}/uploads/{{ Auth::user()->foto }}" alt="avatar"> -->
-                          <!-- } else { -->
+                          
                             <img src="../../../app-assets/images/portrait/small/avatar-s-1.png" alt="avatar">
-                          <!-- } -->
+                          
                           <i></i>
                       </span>
                       <span class="user-name">{{ Auth::user()->name }}</span>

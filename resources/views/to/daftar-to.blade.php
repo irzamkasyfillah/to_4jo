@@ -22,7 +22,7 @@
                                             Untuk mendaftar di <b>{{ucfirst($data_tryout->nama)}}</b>, terlebih dahulu silakan pilih kelompok ujianmu.
                                             Kamu hanya dapat memilih <b>satu</b> kelompok ujian untuk setiap Try Out.
                                         </p>
-                                        <form class="form-horizontal" method="POST" action="../daftar-to/{{$data_tryout->id}}/{{Auth::User()->id}}">
+                                        <form class="form-horizontal" method="POST" action="../../../daftar-to/{{$data_tryout->id}}/{{Auth::User()->id}}/transaksi">
                                             @csrf
                                             <table class="table table-bordered">
                                                 <tr>

@@ -21,11 +21,11 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/daftar-to/{id}', [App\Http\Controllers\HomeController::class, 'daftar']);
+Route::get('/daftar-to/{id_to}/{id_user}', [App\Http\Controllers\HomeController::class, 'daftar']);
 
-Route::post('/daftar-to/{id}/{id_user}', [App\Http\Controllers\HomeController::class, 'transaksi']);
+Route::post('/daftar-to/{id_to}/{id_user}/transaksi', [App\Http\Controllers\HomeController::class, 'transaksi']);
 
-Route::get('/daftar-to/{id}/{id_user}/transaksi', [App\Http\Controllers\HomeController::class, 'showTransaksi']);
+Route::get('transaksi/{id_transaksi}', [App\Http\Controllers\HomeController::class, 'showTransaksi']);
 
 Route::resource('/profile', 'App\Http\Controllers\UserProfileController');
 

@@ -93,20 +93,30 @@
                     datatype: 'json',
                     success: function(data){
                         var obj = JSON.parse(data);
-                        console.log(obj);
-                        if (obj[0]['kode_kupon'] == kupon) {
-                            var after_diskon = harga_awal - (harga_awal*obj[0]['persen']/100);
-                            $('#harga').val(after_diskon);
-                            $('#pesan').empty();
-                            $('#pesan').append(`
-                                    <div class="float-right font-small-3 text-muted mt-1">Kode Kupon benar!</div>
-                                `)
-                        } else {
+                        var ada = false;
+                        // console.log(obj);
+
+                        for ($i=0; $i<obj.length; $i++) {
+                            if (obj[$i]['kode_kupon'] == kupon) {
+                                var after_diskon = harga_awal - (harga_awal*obj[$i]['persen']/100);
+                                $('#harga').val(after_diskon);
+                                $('#pesan').empty();
+                                $('#pesan').append(`
+                                        <div class="float-right font-small-3 text-muted mt-1">Kode Kupon benar!</div>
+                                    `)
+                                ada = true;
+                                break;
+                            } else {
+                                
+                            }   
+                        }
+
+                        if (!ada) {
                             $('#pesan').empty();
                             $('#pesan').append(`
                                     <div class="float-right font-small-3 text-muted mt-1">Kode kupon salah!</div>
                                 `)
-                        }   
+                        }
                     },
                     error: function(data){
                         console.log(data);

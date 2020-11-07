@@ -59,11 +59,12 @@ class HomeController extends Controller
             'kelompok_ujian' => $request->kelompok_ujian,
             'status' => "Menunggu Pembayaran",
         ];
-
+        
         $check_peserta = DB::table('peserta_konfirmasi')
-            ->where('id_tryout', $id_to)
-            ->where('id_peserta', $id_user)
-            ->get();
+        ->where('id_tryout', $id_to)
+        ->where('id_peserta', $id_user)
+        ->get();
+        
 
         if ($check_peserta->count() > 0) {
             return redirect('/transaksi/'.$check_peserta[0]->id);

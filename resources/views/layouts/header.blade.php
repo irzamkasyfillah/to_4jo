@@ -42,7 +42,7 @@
                     <a class="dropdown-item" href="{{ route('profile.index') }}">
                         <i class="ft-user"></i> Edit Profile
                     </a>
-                    <a class="dropdown-item" href="email-application.html">
+                    <a class="dropdown-item" href="../../notifikasi/{{Auth::user()->id}}">
                         <i class="ft-mail"></i> My Inbox
                     </a>
                     <a class="dropdown-item" href="user-cards.html">

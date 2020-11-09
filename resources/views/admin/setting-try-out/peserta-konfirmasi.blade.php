@@ -19,6 +19,14 @@
                             </div>
                         </div>
                     @endif
+                    @if ($message = Session::get('failed'))
+                        <div class="col-xl-12">
+                            <div class="alert alert-danger alert-block">
+                                <button type="button" class="close" data-dismiss="alert">×</button> 
+                                <span style="color:white;" class="text-bold-400">{{ strtoupper($message) }}</span>
+                            </div>
+                        </div>
+                    @endif
                 </div>
                 <div class="row">
                     <div class="col-xl-12 col-lg-12">
@@ -59,8 +67,14 @@
                                                     <td>Rp. {{ $data->harga }} </td>
                                                     <td>{{ $data->status }} </td>
                                                     <td class="text-center">
-                                                        <button class="btn btn-success btn-min-width mb-1" href="#"><i class="fa fa-check"></i> Terima</button>
-                                                        <button class="btn btn-danger btn-min-width" href="#"><i class="fa fa-times"></i> Tolak</button>
+                                                        <form class="form" method="POST" action="../tryout/terima-peserta/{{$data->id_peserta_konfirmasi}}">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-success btn-min-width mb-1"><i class="fa fa-check"></i> Terima</a>
+                                                        </form>
+                                                        <form class="form" method="POST" action="../tryout/tolak-peserta/{{$data->id_peserta_konfirmasi}}">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-danger btn-min-width"><i class="fa fa-times"></i> Tolak</button>
+                                                        </form>
                                                     </td>
                                                 </tr>
                                             @endforeach

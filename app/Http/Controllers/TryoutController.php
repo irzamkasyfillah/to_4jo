@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notifikasi;
+use App\Models\PesertaKonfirmasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Crypt;
 
 use App\Models\Tryout;
 use App\Models\Soal;
@@ -172,5 +177,56 @@ class TryoutController extends Controller
         return view('admin/setting-try-out/peserta-konfirmasi', [
             'data_peserta_konfirmasi' => $data_peserta_konfirmasi
         ]);
+    }
+
+    public function terimaPeserta($id) {
+        $data_peserta = PesertaKonfirmasi::find($id);
+        
+        $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      
+        function generate_string($input, $strength = 16) {
+            $input_length = strlen($input);
+            $random_string = '';
+            for($i = 0; $i < $strength; $i++) {
+                $random_character = $input[mt_rand(0, $input_length - 1)];
+                $random_string .= $random_character;
+            }
+            return time().$random_string;
+        }
+
+        $kode = substr(generate_string($permitted_chars, 10), 5);
+        $diterima = [
+            'status' => 'Diterima',
+            'kode_unik' => Crypt::encryptString($kode)
+        ];
+        $validate = Validator::make($diterima, [
+            'kode_unik' => ['required', 'string', 'max:255', Rule::unique('peserta_konfirmasi')],
+        ]);
+
+        //Kirim notifikasi
+        $notif = [
+            'pengirim' => 'System',
+            'id_user' => $data_peserta->id_peserta,
+            'id_peserta' => $data_peserta->id,
+            'judul' => 'Kode Unik Peserta Try Out',
+            'isi' => Crypt::encryptString($kode)
+        ];
+
+        if (!$validate->fails()) {
+            $data_peserta->update($diterima);
+            Notifikasi::create($notif);
+            return redirect('tryout/konfirmasi-peserta')->with('success', 'Data peserta telah diterima.');
+        } else {
+            return redirect('tryout/konfirmasi-peserta')->with('failed', 'Data peserta gagal diterima. Silakan ulangi beberapa saat lagi.');
+        }
+    }
+
+    public function tolakPeserta($id) {
+        $data_peserta = PesertaKonfirmasi::find($id);
+        $ditolak = [
+            'status' => 'Ditolak'
+        ];
+        $data_peserta->update($ditolak);
+        return redirect('tryout/konfirmasi-peserta')->with('success', 'Data peserta ditolak.');
     }
 }

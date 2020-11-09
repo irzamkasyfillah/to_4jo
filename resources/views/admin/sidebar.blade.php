@@ -2,10 +2,10 @@
       <div class="main-menu-content">
         
           <img width="100%" src="../../uploads/4jo.png" class="" alt="Card image">
+          <hr class="m-0">
         
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-           <hr class="m-0"> 
-          @if (Request::segment(1) == "home" || Request::segment(1) == "")
+           @if (Request::segment(1) == "home" || Request::segment(1) == "")
             <li class="active nav-item">
           @else
             <li class=" nav-item">

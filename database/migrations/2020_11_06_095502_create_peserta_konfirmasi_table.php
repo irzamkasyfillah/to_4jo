@@ -20,7 +20,7 @@ class CreatePesertaKonfirmasiTable extends Migration
             $table->string('harga');
             $table->string('status');
             $table->string('kelompok_ujian');
-            $table->string('kode_unik')->nullable();
+            $table->string('kode_unik')->unique()->nullable();
             $table->timestamps();
         });
     }

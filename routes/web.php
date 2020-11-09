@@ -48,3 +48,11 @@ Route::resource('kupon', 'App\Http\Controllers\KuponController');
 Route::get('get_tryout', [App\Http\Controllers\KuponController::class, 'getTryout']);
 
 Route::get('get_kupon/{id_to}', [App\Http\Controllers\KuponController::class, 'getKupon']);
+
+Route::post('tryout/terima-peserta/{id}', [App\Http\Controllers\TryoutController::class, 'terimaPeserta']);
+
+Route::post('tryout/tolak-peserta/{id}', [App\Http\Controllers\TryoutController::class, 'tolakPeserta']);
+
+Route::get('notifikasi/{id}', [App\Http\Controllers\NotifikasiController::class, 'index']);
+
+Route::get('notifikasi/detail/{id}', [App\Http\Controllers\NotifikasiController::class, 'show']);

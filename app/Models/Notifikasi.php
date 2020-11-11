@@ -16,6 +16,7 @@ class Notifikasi extends Model
         'id_user',
         'id_peserta',
         'judul',
-        'isi'
+        'isi',
+        'read'
     ];
 }

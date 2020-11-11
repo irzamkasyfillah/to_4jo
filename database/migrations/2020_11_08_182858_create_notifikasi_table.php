@@ -20,6 +20,7 @@ class CreateNotifikasiTable extends Migration
             $table->string('id_peserta')->nullable();
             $table->string('judul');
             $table->string('isi');
+            $table->boolean('read');
             $table->timestamps();
         });
     }

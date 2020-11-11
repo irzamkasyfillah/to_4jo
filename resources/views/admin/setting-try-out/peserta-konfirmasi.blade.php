@@ -44,7 +44,7 @@
                             <div class="card-content">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table id="data" class="table table-striped table-bordered zero-configuration">
+                                        <table id="data" class="table table-hover table-striped table-bordered zero-configuration">
                                             <thead>
                                                 <tr class="text-center" >
                                                     <th width="5%">No</th>
@@ -71,12 +71,34 @@
                                                             @csrf
                                                             <button type="submit" class="btn btn-success btn-min-width mb-1"><i class="fa fa-check"></i> Terima</a>
                                                         </form>
-                                                        <form class="form" method="POST" action="../tryout/tolak-peserta/{{$data->id_peserta_konfirmasi}}">
-                                                            @csrf
-                                                            <button type="submit" class="btn btn-danger btn-min-width"><i class="fa fa-times"></i> Tolak</button>
-                                                        </form>
+                                                        <button data-toggle="modal" data-target="#tolak{{$data->id_peserta_konfirmasi}}" class="btn btn-danger btn-min-width"><i class="fa fa-times"></i> Tolak</button>
                                                     </td>
                                                 </tr>
+
+                                                 {{-- MODAL HAPUS --}}
+                                                    <div class="modal fade text-left" id="tolak{{$data->id_peserta_konfirmasi}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h4 class="modal-title" id="myModalLabel1">Tolak Peserta</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Apakah Anda yakin ingin menolak peserta ini?</p>    
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-warning" data-dismiss="modal">Batal</button>
+                                                            <form class="form" method="POST" action="../tryout/tolak-peserta/{{$data->id_peserta_konfirmasi}}">
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-danger btn-min-width"><i class="fa fa-times"></i> Tolak</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                {{-- END MODAL HAPUS --}}
                                             @endforeach
                                             </tbody>
                                             <tfoot>

@@ -28,8 +28,8 @@
             <hr>
             <div class="card-content">
                 <div class="card-body">
-                    {{-- <div class="row"> --}}
-                        <table class="table table-striped table-bordered">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered zero-configuration">
                             <thead>
                                 <th>Pengirim</th>
                                 <th>Judul</th>
@@ -37,16 +37,21 @@
                             </thead>
                             <tbody>
                                 @foreach ($data as $data)
-                                <tr>
-                                    <td><a href="../../notifikasi/detail/{{$data->id}}">{{$data->pengirim}}</a></td>
-                                    <td><a href="../../notifikasi/detail/{{$data->id}}">{{$data->judul}}</a></td>
-                                    <td>{{date_format(date_create($data->created_at), 'd-m-Y')}}</td>
+                                @if ($data->read == false) 
+                                    <?php $bg = "bg-yellow";?>
+                                @else
+                                    <?php $bg = "";?>
+                                @endif
+                                <tr class="{{$bg}}">
+                                    <td ><a href="../../notifikasi/detail/{{$data->id}}">{{$data->pengirim}}</a></td>
+                                    <td ><a href="../../notifikasi/detail/{{$data->id}}">{{$data->judul}}</a></td>
+                                    <td >{{date_format(date_create($data->created_at), 'd-m-Y')}}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                    {{-- </div> --}}
-                    <div class="height-200"></div>
+                    </div>
+                    <div class="height-300"></div>
                 </div>
             </div>
         </div>

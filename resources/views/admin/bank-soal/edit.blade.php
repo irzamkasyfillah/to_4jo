@@ -46,7 +46,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="deskripsi">Deskripsi Soal</label>
-                                                    <textarea value="" required id="deskripsi" rows="5" class="form-control" name="deskripsi" placeholder="...">{{ $data[0]->deskripsi }}</textarea>
+                                                    <textarea  value="" required id="deskripsi" rows="5" class="ckeditor" name="deskripsi" placeholder="...">{{ $data[0]->deskripsi }}</textarea>
                                                 </div>
                                                 <div class="form-group">    
                                                     <label for="jawaban_benar">Opsi 1 (Benar)</label>

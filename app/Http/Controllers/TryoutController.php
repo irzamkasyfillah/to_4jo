@@ -170,7 +170,7 @@ class TryoutController extends Controller
             ->where('status', 'Menunggu Pembayaran')
             ->join('users', 'users.id', '=', 'peserta_konfirmasi.id_peserta')
             ->join('tryout', 'tryout.id', '=', 'peserta_konfirmasi.id_tryout')
-            ->select('peserta_konfirmasi.*', 'users.*', 'tryout.*', 'users.id as id_user', 'tryout.id as id_tryout', 'peserta_konfirmasi.id as id_peserta_konfirmasi')
+            ->select('peserta_konfirmasi.*', 'users.*', 'tryout.nama', 'users.id as id_user', 'tryout.id as id_tryout', 'peserta_konfirmasi.id as id_peserta_konfirmasi')
             ->get();
             
         // dd($data_peserta_konfirmasi);
@@ -179,11 +179,8 @@ class TryoutController extends Controller
         ]);
     }
 
+    
     public function terimaPeserta($id) {
-        $data_peserta = PesertaKonfirmasi::find($id);
-        
-        $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      
         function generate_string($input, $strength = 16) {
             $input_length = strlen($input);
             $random_string = '';
@@ -191,10 +188,14 @@ class TryoutController extends Controller
                 $random_character = $input[mt_rand(0, $input_length - 1)];
                 $random_string .= $random_character;
             }
-            return time().$random_string;
+            return $random_string;
         }
-
-        $kode = substr(generate_string($permitted_chars, 10), 5);
+        $data_peserta = PesertaKonfirmasi::find($id);
+        
+        $permitted_chars = '!@#$%^&*()_+-=01234567890123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        
+        ulang:
+        $kode = generate_string($permitted_chars, 12);
         $diterima = [
             'status' => 'Diterima',
             'kode_unik' => Crypt::encryptString($kode)
@@ -209,7 +210,8 @@ class TryoutController extends Controller
             'id_user' => $data_peserta->id_peserta,
             'id_peserta' => $data_peserta->id,
             'judul' => 'Kode Unik Peserta Try Out',
-            'isi' => Crypt::encryptString($kode)
+            'isi' => Crypt::encryptString($kode),
+            'read' => false
         ];
 
         if (!$validate->fails()) {
@@ -217,7 +219,7 @@ class TryoutController extends Controller
             Notifikasi::create($notif);
             return redirect('tryout/konfirmasi-peserta')->with('success', 'Data peserta telah diterima.');
         } else {
-            return redirect('tryout/konfirmasi-peserta')->with('failed', 'Data peserta gagal diterima. Silakan ulangi beberapa saat lagi.');
+            goto ulang;
         }
     }
 

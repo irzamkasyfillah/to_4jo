@@ -54,7 +54,9 @@
                                         @if (strtolower($data->judul) == "kode unik peserta try out")
                                         <p>
                                             Selamat anda telah terdaftar sebagai peserta <b>{{$data->nama}}</b>. Gunakan kode unik berikut untuk login ketika memulai try out: <br>
-                                            <b>{{$data->isi}}</b>
+                                            <b>{{$data->isi}}</b><br><br>
+                                            <b>Jadwal Try Out</b> : {{date_format(date_create($data->waktu), 'd-m-Y')}}, pukul {{date_format(date_create($data->waktu), 'H:i')}}<br>
+                                            <b>Kelompok Ujian</b> : {{$data->kelompok_ujian}}
                                         </p>
                                         @endif
                                     </td>

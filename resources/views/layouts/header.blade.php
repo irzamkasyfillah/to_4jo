@@ -33,17 +33,18 @@
                       <span class="avatar avatar-online">
                           
                             <img src="../../../app-assets/images/portrait/small/avatar-s-1.png" alt="avatar">
-                          
-                          <i></i>
-                      </span>
-                      <span class="user-name">{{ Auth::user()->name }}</span>
+                            
+                            <i></i>
+                          </span>
+                        <span class="user-name">{{ Auth::user()->name }} <span id="notif1"></span>
+                        <input id="id_user" type="text" value="{{Auth::user()->id}}" hidden>
                     </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="{{ route('profile.index') }}">
                         <i class="ft-user"></i> Edit Profile
                     </a>
                     <a class="dropdown-item" href="../../notifikasi/{{Auth::user()->id}}">
-                        <i class="ft-mail"></i> My Inbox
+                        <i class="ft-mail"></i> My Inbox <span id="notif2"></span>
                     </a>
                     <a class="dropdown-item" href="user-cards.html">
                         <i class="ft-check-square"></i> Task
@@ -70,5 +71,32 @@
         </div>
       </div>
     </nav>
+    {{-- @if (Auth::user()->id != "") --}}
+    {{-- @endif --}}
+    <script>
+      $(document).ready(function(){
+          var id = $('#id_user').val();
+          
+          $.ajax({
+              url: '../../jumlah-notifikasi/'+id,
+              datatype: 'json',
+              success: function(data){
+                  // var obj = JSON.parse(data);
+                  // console.log(obj);
+                  if (data>0) {
+                    $('#notif1').append(`
+                    <span class="notif badge badge-pill badge-default badge-danger badge-default badge-up">`+data+`</span>
+                    `);
+                    $('#notif2').append(`
+                    <span class="notif badge badge-pill badge-default badge-danger badge-default">`+data+`</span>
+                    `);
+                  }
+              },
+              error: function(data){
+                  console.log(data);
+              }
+          });
+      });
+  </script>
 
     <!-- ////////////////////////////////////////////////////////////////////////////-->

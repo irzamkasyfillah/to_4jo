@@ -19,6 +19,13 @@
                             </div>
                         </div>
                     @endif
+                    @if(!empty($errors->all())) 
+                        @foreach($errors->all() as $error) 
+                            <div class="alert alert-danger alert-block">
+                                <span style="color:white;" class="text-bold-400">{{ $error }}</span>
+                            </div>
+                        @endforeach 
+                    @endif
                 </div>
                 <div class="row">
                     <div class="col-xl-12 col-lg-12">
@@ -39,7 +46,7 @@
                             <div class="card-content">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table id="data" class="table table-striped table-bordered zero-configuration">
+                                        <table id="data" class="table table-hover table-striped table-bordered zero-configuration">
                                             <thead>
                                                 <tr class="text-center">
                                                     <th width="30%">Kode Kupon</th>

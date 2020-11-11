@@ -39,7 +39,7 @@
                             <div class="card-content">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table id="data" class="table table-striped table-bordered zero-configuration">
+                                        <table id="data" class="table table-hover table-striped table-bordered zero-configuration">
                                             <thead>
                                                 <tr>
                                                     <th width="20%">Subtes</th>
@@ -51,7 +51,7 @@
                                                 @foreach ($data as $data)
                                                 <tr>
                                                     <td>{{ $data->nama_subtes }}</td>
-                                                    <td>{{ $data->deskripsi }}</td>
+                                                    <td><?php echo $data->deskripsi ?> </td>
                                                     <td>
                                                     <!-- Icon Button dropdowns -->
                                                     <div class="btn-group mr-1 ">
@@ -76,7 +76,9 @@
                                                                     <table style="background-color: white" class="table table-striped table-bordered">
                                                                         <tr>
                                                                             <td width="15%"><b>Soal</b></td>
-                                                                            <td>{{ $data->deskripsi }}</td>
+                                                                            <td>
+                                                                                <?php echo $data->deskripsi ?>
+                                                                            </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td><b>Opsi 1 (Benar)</b></td>

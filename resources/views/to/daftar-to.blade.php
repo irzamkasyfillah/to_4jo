@@ -102,7 +102,7 @@
                                 $('#harga').val(after_diskon);
                                 $('#pesan').empty();
                                 $('#pesan').append(`
-                                        <div class="float-right font-small-3 text-muted mt-1">Kode Kupon benar!</div>
+                                        <div class="success float-right font-small-3 text-muted mt-1">Kode Kupon benar!</div>
                                     `)
                                 ada = true;
                                 break;
@@ -112,9 +112,10 @@
                         }
 
                         if (!ada) {
+                            $('#harga').val(harga_awal);
                             $('#pesan').empty();
                             $('#pesan').append(`
-                                    <div class="float-right font-small-3 text-muted mt-1">Kode kupon salah!</div>
+                                    <div class="danger float-right font-small-3 text-muted mt-1">Kode kupon salah!</div>
                                 `)
                         }
                     },

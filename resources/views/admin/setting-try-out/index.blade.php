@@ -39,7 +39,7 @@
                             <div class="card-content">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table id="data" class="table table-striped table-bordered zero-configuration">
+                                        <table id="data" class="table table-hover table-striped table-bordered zero-configuration">
                                             <thead>
                                                 <tr class="text-center">
                                                     <th width="30%">Nama Try Out</th>
@@ -100,7 +100,7 @@
                                                                                     </div>
                                                                                     
                                                                                     <div id="subtes{{ $data->id . $subtes->id }}" role="tabpanel" aria-labelledby="heading{{ $data->id . $subtes->id }}" class="collapse">
-                                                                                        <table class="table bg-light table-striped table-bordered">
+                                                                                        <table class="table  bg-light table-striped table-bordered">
                                                                                             <thead>
                                                                                                 <tr>
                                                                                                     <th width="5%">No.</th>

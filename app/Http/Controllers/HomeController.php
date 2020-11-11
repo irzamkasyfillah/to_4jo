@@ -88,4 +88,11 @@ class HomeController extends Controller
             'data_peserta' => $data_peserta
         ]);
     }
+
+    public function deleteTransaksi($id) {
+        $data_peserta = PesertaKonfirmasi::find($id);
+        $data_peserta->delete();
+
+        return redirect('/home');
+    }
 }

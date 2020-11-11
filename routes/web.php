@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 
 Auth::routes();
 
@@ -26,6 +24,8 @@ Route::get('/daftar-to/{id_to}/{id_user}', [App\Http\Controllers\HomeController:
 Route::post('/daftar-to/{id_to}/{id_user}/transaksi', [App\Http\Controllers\HomeController::class, 'transaksi']);
 
 Route::get('transaksi/{id_transaksi}', [App\Http\Controllers\HomeController::class, 'showTransaksi']);
+
+Route::get('transaksi/{id_transaksi}/delete', [App\Http\Controllers\HomeController::class, 'deleteTransaksi']);
 
 Route::resource('/profile', 'App\Http\Controllers\UserProfileController');
 
@@ -40,6 +40,8 @@ Route::get('soal/kategori/{kategori}', [App\Http\Controllers\SoalController::cla
 Route::get('soal/get_subtes/{kategori}', [App\Http\Controllers\SoalController::class, 'getSubtes']);
 
 Route::resource('soal', 'App\Http\Controllers\SoalController');
+
+Route::post('soal/upload', [App\Http\Controllers\SoalController::class, 'upload'])->name('upload.upload');
 
 Route::get('tryout/konfirmasi-peserta', [App\Http\Controllers\TryoutController::class, 'showKonfirmasiPeserta']);
 
@@ -56,3 +58,5 @@ Route::post('tryout/tolak-peserta/{id}', [App\Http\Controllers\TryoutController:
 Route::get('notifikasi/{id}', [App\Http\Controllers\NotifikasiController::class, 'index']);
 
 Route::get('notifikasi/detail/{id}', [App\Http\Controllers\NotifikasiController::class, 'show']);
+
+Route::get('jumlah-notifikasi/{id}', [App\Http\Controllers\NotifikasiController::class, 'getJumlahNotif']);

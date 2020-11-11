@@ -48,8 +48,8 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="deskripsi">Deskripsi Soal</label>
-                                                    <textarea required id="deskripsi" rows="5" class="form-control" name="deskripsi" placeholder="..."></textarea>
-                                                </div>
+                                                    <textarea required id="deskripsi" rows="5" class="ckeditor" name="deskripsi" placeholder="..."></textarea>
+                                                </div>  
                                                 <div class="form-group">
                                                     <label for="jawaban_benar">Opsi 1 (Benar)</label>
                                                     <input id="jawaban_benar" type="text" class="form-control" name="jawaban_benar">
@@ -90,6 +90,16 @@
         </div>
     </div>
 </div>
+
+{{-- <script src="https://cdn.ckeditor.com/4.12.1/full/ckeditor.js"></script>
+<script type="text/javascript">
+    CKEDITOR.replace('deksripsi', {
+        filebrowserUploadUrl: "{{ route('upload.upload', ['_token' => csrf_token() ])}}",
+        filebrowserUploadMethod: 'form',
+        height: '250px',
+        width: '700px'
+    });
+</script> --}}
 
 <script>
     $('#kategori').change(function(){

@@ -13,10 +13,7 @@ class Jawaban extends Model
 
     protected $fillable = [
         'id_soal',
-        'jawaban_benar',
-        'jawaban_salah_1',
-        'jawaban_salah_2',
-        'jawaban_salah_3',
-        'jawaban_salah_4'
+        'teks',
+        'value',
     ];
 }

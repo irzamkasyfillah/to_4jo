@@ -48,26 +48,20 @@
                                                     <label for="deskripsi">Deskripsi Soal</label>
                                                     <textarea  value="" required id="deskripsi" rows="5" class="ckeditor" name="deskripsi" placeholder="...">{{ $data[0]->deskripsi }}</textarea>
                                                 </div>
-                                                <div class="form-group">    
-                                                    <label for="jawaban_benar">Opsi 1 (Benar)</label>
-                                                    <input required value="{{ $data[0]->jawaban_benar }}" id="jawaban_benar" type="text" class="form-control" name="jawaban_benar">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="jawaban_salah_1">Opsi 2</label>
-                                                    <input required value="{{ $data[0]->jawaban_salah_1 }}" id="jawaban_salah_1" type="text" class="form-control" name="jawaban_salah_1">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="jawaban_salah_2">Opsi 3</label>
-                                                    <input required value="{{ $data[0]->jawaban_salah_2 }}" id="jawaban_salah_2" type="text" class="form-control" name="jawaban_salah_2">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="jawaban_salah_3">Opsi 4</label>
-                                                    <input required value="{{ $data[0]->jawaban_salah_3 }}" id="jawaban_salah_3" type="text" class="form-control" name="jawaban_salah_3">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="jawaban_salah_4">Opsi 5</label>
-                                                    <input required value="{{ $data[0]->jawaban_salah_4 }}" id="jawaban_salah_4" type="text" class="form-control" name="jawaban_salah_4">
-                                                </div>
+                                                <?php $i=1;?>
+                                                @foreach ($jawaban as $jawaban)
+                                                    @if ($jawaban->value == 1) 
+                                                        <?php $benar = "(Benar)"; ?>
+                                                    @else 
+                                                        <?php $benar = ""; ?>
+                                                    @endif
+
+                                                    <div class="form-group">    
+                                                        <label for="">Opsi  {{ $i++ . ' '. $benar}}</label>
+                                                        <input type="hidden" value="{{$jawaban->id}}" name="id_jawaban[]">
+                                                        <textarea  required  rows="2" class="ckeditor" name="jawaban[]" placeholder="">{{ $jawaban->teks }}</textarea>
+                                                    </div>
+                                                @endforeach
                                                 <div class="form-actions">
                                                     <a href="../../" type="button" class="btn btn-warning mr-1">
                                                         <i class="ft-x"></i> Cancel

@@ -52,23 +52,23 @@
                                                 </div>  
                                                 <div class="form-group">
                                                     <label for="jawaban_benar">Opsi 1 (Benar)</label>
-                                                    <input id="jawaban_benar" type="text" class="form-control" name="jawaban_benar">
+                                                    <textarea id="jawaban_benar" rows="2" class="ckeditor" name="jawaban_benar" placeholder="Opsi 1 (Benar)"></textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="jawaban_salah_1">Opsi 2</label>
-                                                    <input id="jawaban_salah_1" type="text" class="form-control" name="jawaban_salah_1">
+                                                    <textarea id="jawaban_salah_1" rows="2" class="ckeditor" name="jawaban_salah_1" placeholder="Opsi 2"></textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="jawaban_salah_2">Opsi 3</label>
-                                                    <input id="jawaban_salah_2" type="text" class="form-control" name="jawaban_salah_2">
+                                                    <textarea id="jawaban_salah_2" rows="2" class="ckeditor" name="jawaban_salah_2" placeholder="Opsi 3"></textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="jawaban_salah_3">Opsi 4</label>
-                                                    <input id="jawaban_salah_3" type="text" class="form-control" name="jawaban_salah_3">
+                                                    <textarea id="jawaban_salah_3" rows="2" class="ckeditor" name="jawaban_salah_3" placeholder="Opsi 4"></textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="jawaban_salah_4">Opsi 5</label>
-                                                    <input id="jawaban_salah_4" type="text" class="form-control" name="jawaban_salah_4">
+                                                    <textarea id="jawaban_salah_4" rows="2" class="ckeditor" name="jawaban_salah_4" placeholder="Opsi 5"></textarea>
                                                 </div>
                                                 <div class="form-actions">
                                                     <a href="../" type="button" class="btn btn-warning mr-1">
@@ -90,16 +90,6 @@
         </div>
     </div>
 </div>
-
-{{-- <script src="https://cdn.ckeditor.com/4.12.1/full/ckeditor.js"></script>
-<script type="text/javascript">
-    CKEDITOR.replace('deksripsi', {
-        filebrowserUploadUrl: "{{ route('upload.upload', ['_token' => csrf_token() ])}}",
-        filebrowserUploadMethod: 'form',
-        height: '250px',
-        width: '700px'
-    });
-</script> --}}
 
 <script>
     $('#kategori').change(function(){

@@ -21,6 +21,8 @@ class CreatePesertaKonfirmasiTable extends Migration
             $table->string('status');
             $table->string('kelompok_ujian');
             $table->string('kode_unik')->unique()->nullable();
+            $table->dateTime('waktu_mulai')->nullable();
+            $table->dateTime('waktu_selesai')->nullable();
             $table->timestamps();
         });
     }

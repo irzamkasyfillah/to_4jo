@@ -50,6 +50,9 @@
                                                     Anda telah terdaftar dalam <b>{{$data_peserta[0]->nama}}</b>. Silakan cek pesan anda untuk info yang lebih detail. Terimakasih.
                                                 </span>
                                             </div>
+                                            <div class="text-center">
+                                                <a href="{{ route('tryout.showlogin', $data_peserta[0]->id_tryout) }}" class="btn btn-danger btn-min-width">Mulai Try Out</a>
+                                            </div>
                                         @elseif (strtolower($data_peserta[0]->status) == "ditolak")
                                             <div class="alert alert-danger mb-1">
                                                 <span class="font-small-4 ">

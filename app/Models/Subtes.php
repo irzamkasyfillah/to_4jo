@@ -12,6 +12,8 @@ class Subtes extends Model
     protected $table = "subtes";
 
     protected $fillable = [
-        'nama'
+        'nama',
+        'kategori',
+        'durasi'
     ];
 }

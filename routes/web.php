@@ -31,9 +31,13 @@ Route::resource('/profile', 'App\Http\Controllers\UserProfileController');
 
 Route::resource('data-tryout', 'App\Http\Controllers\TryoutController');
 
-Route::get('list-to/{subtes}/{id}', [App\Http\Controllers\TryoutController::class, 'showSoal'])->name('to/subtes');
+Route::get('tryout{id_to}/{subtes}/{id_no}', [App\Http\Controllers\TryoutController::class, 'showSoal']);
 
-Route::get('list-to', [App\Http\Controllers\TryoutController::class, 'listTO'])->name('to/list-to');
+Route::get('tryout{id}/login', [App\Http\Controllers\TryoutController::class, 'showLogin'])->name('tryout.showlogin');
+
+Route::post('tryout{id_to}/login/{id}', [App\Http\Controllers\TryoutController::class, 'login'])->name('tryout.login');
+
+Route::get('tryout{id}', [App\Http\Controllers\TryoutController::class, 'listTO'])->name('tryout.index');
 
 Route::get('soal/kategori/{kategori}', [App\Http\Controllers\SoalController::class, 'showCategory']);
 
@@ -60,3 +64,5 @@ Route::get('notifikasi/{id}', [App\Http\Controllers\NotifikasiController::class,
 Route::get('notifikasi/detail/{id}', [App\Http\Controllers\NotifikasiController::class, 'show']);
 
 Route::get('jumlah-notifikasi/{id}', [App\Http\Controllers\NotifikasiController::class, 'getJumlahNotif']);
+
+Route::get('get-jawaban/{id}', [App\Http\Controllers\SoalController::class, 'getJawaban'])->name('soal.get_jawaban');

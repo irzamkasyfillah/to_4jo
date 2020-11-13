@@ -57,58 +57,11 @@
                                                     <div class="btn-group mr-1 ">
                                                         <button type="button" class="btn btn-icon btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-info"></i></button>
                                                         <div class="dropdown-menu">
-                                                            <button class="dropdown-item " href="#" data-toggle="modal" data-target="#detail{{$data->id_soal}}"><i class="fa fa-th-list mr-1 ml-1"></i> Detail </button>
+                                                            <button id="ambil_jawaban" onclick="getJawaban('{{$data->id}}')" class="dropdown-item " href="#" data-toggle="modal" data-target="#detail"><i class="fa fa-th-list mr-1 ml-1"></i> Detail </button>
                                                             <a class="dropdown-item btn " href="{{ route('soal.edit',  $data->id_soal) }}"><i class="ft-edit mr-1 ml-1"></i> Edit </a>
                                                             <button class="dropdown-item " href="#" data-toggle="modal" data-target="#hapus{{$data->id_soal}}"><i class="ft-delete mr-1 ml-1"></i> Delete </button>
                                                         </div>
                                                     </div>
-                                                    {{-- MODAL DETAIL --}}
-                                                        <div class="modal fade text-left" id="detail{{$data->id_soal}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-                                                            <div class="modal-dialog modal-lg" role="document">
-                                                              <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                  <h4 class="modal-title" id="myModalLabel1">Detail Soal</h4>
-                                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                  </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <table style="background-color: white" class="table table-striped table-bordered">
-                                                                        <tr>
-                                                                            <td width="15%"><b>Soal</b></td>
-                                                                            <td>
-                                                                                <?php echo $data->deskripsi ?>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td><b>Opsi 1 (Benar)</b></td>
-                                                                            <td>{{ $data->jawaban_benar }}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td><b>Opsi 2</b></td>
-                                                                            <td>{{ $data->jawaban_salah_1 }}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td><b>Opsi 3</b></td>
-                                                                            <td>{{ $data->jawaban_salah_2 }}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td><b>Opsi 4</b></td>
-                                                                            <td>{{ $data->jawaban_salah_3 }}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td><b>Opsi 5</b></td>
-                                                                            <td>{{ $data->jawaban_benar }}</td>
-                                                                        </tr>
-                                                                    </table>
-                                                                  </div>
-                                                                <div class="modal-footer">
-                                                                  <button type="button" class="btn white btn-secondary" data-dismiss="modal">Close</button>
-                                                                </div>
-                                                              </div>
-                                                            </div>
-                                                        </div>
-                                                        {{-- END MODAL DETAIL --}}
 
                                                         {{-- MODAL HAPUS --}}
                                                         <div class="modal fade text-left" id="hapus{{$data->id_soal}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
@@ -137,7 +90,6 @@
                                                         {{-- END MODAL HAPUS --}}
                                                     </td>
                                                 </tr>
-                                                
                                             @endforeach
                                             </tbody>
                                             <tfoot>
@@ -159,6 +111,67 @@
         <div class="height-100"></div>
     </div>
 
+    {{-- MODAL DETAIL --}}
+    <div class="modal fade text-left" id="detail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel1">Detail Soal</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <table style="background-color: white" class="table table-striped table-bordered">
+                    <tbody id="show_detail" >
+                    </tbody>
+                </table>
+              </div>
+            <div class="modal-footer">
+              <button type="button" class="btn white btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    {{-- END MODAL DETAIL --}}
+
+    <script>
+        function getJawaban(id_soal) {
+            $.ajax({
+                url: '../../get-jawaban/'+id_soal,
+                datatype: 'json',
+                
+                success: function(data){
+                    var obj = JSON.parse(data);
+                    console.log(obj);
+
+                    $('#show_detail').empty();
+                    $('#show_detail').append(`
+                            <tr>
+                                <td width='10%'>Soal</td>
+                                <td>`+obj[0]['deskripsi']+`</td>
+                            </tr>
+                        `);
+                    for (i=0; i<=obj.length; i++) {
+                        if (obj[i]['value'] == 1) {
+                            benar = "(benar)";
+                        } else {
+                            benar = "";
+                        }
+                        $('#show_detail').append(`
+                            <tr>
+                                <td >Opsi `+parseInt(i+1)+` `+benar+`</td>
+                                <td>`+obj[i]['teks']+`</td>
+                            </tr>
+                        `);
+                    }
+                },
+                error: function(data){
+                    console.log(data);
+                }
+            });
+        }
+    </script>
     @endif
 @endsection
     

@@ -15,12 +15,9 @@ class CreateJawabanTable extends Migration
     {
         Schema::create('jawaban', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_soal');
-            $table->string('jawaban_benar')->nullable();
-            $table->string('jawaban_salah_1')->nullable();
-            $table->string('jawaban_salah_2')->nullable();
-            $table->string('jawaban_salah_3')->nullable();
-            $table->string('jawaban_salah_4')->nullable();
+            $table->integer('id_soal')->nullable();
+            $table->text('teks')->nullable();
+            $table->boolean('value')->nullable();
             $table->timestamps();
         });
     }

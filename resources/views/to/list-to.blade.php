@@ -48,25 +48,52 @@
                     <div class="card-header">
                         <h4 class="text-bold-400">TES POTENSI SKOLASTIK</h4>
                     </div>
-                <div class="mt-2 mb-2">
-                    <div class="ml-2 mr-2">
-                        <div class="form-group">
-                            <a href="list-to/{{'penalaran-umum'}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">PENALARAN UMUM <i class="ft-arrow-right"></i></a>
-                            <a href="list-to/{{'pengetahuan-dan-pemahaman-umum'}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">PENGETAHUAN DAN PEMAHAMAN UMUM <i class="ft-arrow-right"></i></a>
-                            <a href="list-to/{{'pemahaman-bacaan-dan-menulis'}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">PEMAHAMAN BACAAN DAN MENULIS <i class="ft-arrow-right"></i></a>
-                            <a href="list-to/{{'pengetahuan-kuantitatif'}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">PENGETAHUAN KUANTITATIF <i class="ft-arrow-right"></i></a>
+                    <div class="mb-2">
+                        <div class="ml-2 mr-2 mb-3">
+                            <div class="form-group">
+                                <?php $i=1; ?>
+                                <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">PENALARAN UMUM </a>
+                                <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">PENGETAHUAN DAN PEMAHAMAN UMUM </a>
+                                <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">PEMAHAMAN BACAAN DAN MENULIS </a>
+                                <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">PENGETAHUAN KUANTITATIF </a>
+                                <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">BAHASA INGGRIS </a>
+                            </div>
                         </div>
-                        </div>
-                </div>
-                </div>
+                        <hr>
+                        @if (strtolower($data[0]->kelompok_ujian) == 'saintek')
+
+                            <div class="card-header">
+                                <h4 class="text-bold-400">TKA SAINTEK</h4>
+                            </div>
+                            <div class="ml-2 mr-2">
+                                <div class="form-group">
+                                    <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">MATEMATIKA SAINTEK</a>
+                                    <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">FISIKA</a>
+                                    <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">KIMIA</a>
+                                    <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">BIOLOGI</a>
+                                </div>
+                            </div>
+                        @else
+                            <div class="card-header">
+                                <h4 class="text-bold-400">TKA SOSHUM</h4>
+                            </div>
+                            <div class="ml-2 mr-2">
+                                <div class="form-group">
+                                    <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">MATEMATIKA SOSHUM</a>
+                                    <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">EKONOMI</a>
+                                    <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">GEOGRAFI</a>
+                                    <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">SOSIOLOGI DAN SEJARAH</a>
+                                </div>
+                            </div>
+                        @endif
+                        <hr class="mt-3">
+                        <button class="btn btn-danger btn-min-width">Selesai Ujian</button>
+                    </div>
                 </div>
             </div>
- </div>
-    
-    
-          
-          
         </div>
+    </div>
+</div>
     
             </div>
           </div>

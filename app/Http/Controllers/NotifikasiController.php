@@ -10,6 +10,10 @@ use App\Models\Notifikasi;
 
 class NotifikasiController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index($id)
     {
         $data = DB::table('notifikasi')

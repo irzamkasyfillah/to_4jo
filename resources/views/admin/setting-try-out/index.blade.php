@@ -118,7 +118,7 @@
                                                                                                                         {{$no++}}
                                                                                                                     </td>
                                                                                                                     <td>
-                                                                                                                        {{$soal->deskripsi }}
+                                                                                                                        <?php echo $soal->deskripsi ?>
                                                                                                                     </td>
                                                                                                                 </tr>
                                                                                                             @endif

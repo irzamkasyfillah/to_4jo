@@ -17,16 +17,8 @@
                 <div class="card-header no-border-bottom ml-1 mr-1">
                     <div class="row">
                         <div class="col-xl-6">
-                            @if ($subtes == "penalaran-umum")
-                                <h4 class="text-bold-400">PENALARAN UMUM</h4>    
-                            @elseif ($subtes == "pengetahuan-dan-pemahaman-umum")
-                                <h4 class="text-bold-400">PENGETAHUAN DAN PEMAHAMAN UMUM</h4>
-                            @elseif ($subtes == "pemahaman-bacaan-dan-menulis")
-                                <h4 class="text-bold-400">PEMAHAMAN BACAAN DAN MENULIS</h4>
-                            @elseif ($subtes == "pengetahuan-kuantitatif")
-                                <h4 class="text-bold-400">PENGETAHUAN KUANTITATIF</h4>
-                            @endif
-                            <h4 class="text-bold-400">SOAL NO. {{$id}}</h4>
+                            <h4 class="text-bold-400">{{$data_soal[0]->nama}}</h4>    
+                            <h4 class="text-bold-400">SOAL NO. {{$no}}</h4>
                         </div>
                         <div class="col-xl-6">
                             <div class="text-right">
@@ -40,6 +32,9 @@
                 <div class="card-content">
                     <div class="card-body">
                         <div class="row ml-1 mr-1">
+                            @foreach ($data_soal as $data_soal)
+                                
+                            @endforeach
                             <span class="font-medium-2 mb-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam blandit, enim at dictum auctor, mi sapien porttitor diam, a lacinia purus leo sed quam...</span>
                         </div>
                         <hr class="ml-1 mr-1">
@@ -76,8 +71,8 @@
                     
 				    <div class="col-4">
                         <div class="text-left">
-                        @if ($id > 1)
-                            <a href="../{{$subtes}}/{{$id-1}}" class="btn btn-info btn-min-width"><i class="ft-arrow-left"></i> Soal Sebelumnya</a>
+                        @if ($no > 1)
+                            <a href="#" class="btn btn-info btn-min-width"><i class="ft-arrow-left"></i> Soal Sebelumnya</a>
                         @else
                             <a href="#" class="disabled btn btn-info btn-min-width"><i class="ft-arrow-left"></i> Soal Sebelumnya</a>
                         @endif
@@ -91,8 +86,9 @@
                     </div>
                     <div class="col-4">
                         <div class="text-right">
-                            @if ($id < 20)
-                                <a href="../{{$subtes}}/{{$id+1}}" class="btn btn-info btn-min-width">Soal Selanjutnya <i class="ft-arrow-right"></i></a>
+                            @if ($no < 20)
+                                <a href="#" class="btn btn-info btn-min-width">Soal Selanjutnya <i class="ft-arrow-right"></i></a>
+                                {{-- <a href="../{{$subtes}}/{{$id+1}}" class="btn btn-info btn-min-width">Soal Selanjutnya <i class="ft-arrow-right"></i></a> --}}
                             @else
                                 <a href="#" class="disabled btn btn-info btn-min-width">Soal Selanjutnya <i class="ft-arrow-right"></i></a>
                             @endif
@@ -114,7 +110,8 @@
                     <div class="card-body">
                         <div class="row ml-1">
                             @for ($i=1; $i<=20; $i++)
-                                <a href="../{{$subtes}}/{{$i}}"  style="min-width:46px; height:46px"class="btn mb-1 mr-1 btn-secondary">{{$i}}</a>
+                                <a href=""  style="min-width:46px; height:46px"class="btn mb-1 mr-1 btn-secondary">{{$i}}</a>
+                                {{-- <a href="../{{$subtes}}/{{$i}}"  style="min-width:46px; height:46px"class="btn mb-1 mr-1 btn-secondary">{{$i}}</a> --}}
                             @endfor
                         </div>
                     </div>

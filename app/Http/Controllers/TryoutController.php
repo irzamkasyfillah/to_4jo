@@ -153,32 +153,41 @@ class TryoutController extends Controller
     }
 
     // UNTUK PESERTA TRY OUT
-    public function listTO()
+    
+    public function showSoal($id_to, $id_subtes, $no)
     {
-        return view('to/list-to');
-    }
+        $data_tryout = DB::table('tryout')
+            ->where('tryout.id', $id_to)
+            ->get();
 
-    public function showSoal($subtes, $id)
-    {
-        return view('to/kerja-to', ['subtes' => $subtes,
-                                    'id' => $id]); 
+        $data_soal = DB::table('soal')
+            ->where('soal.subtes', $id_subtes)
+            ->join('subtes', 'subtes.id', '=', 'soal.subtes')
+            ->get();
+        
+        // dd($data_tryout, $data_soal);
+        return view('to/kerja-to', [
+            'data_tryout' => $data_tryout,
+            'data_soal' => $data_soal,
+            'no' => $no
+            ]);
     }
-
+    
     public function showKonfirmasiPeserta()
     {
         $data_peserta_konfirmasi = DB::table('peserta_konfirmasi')
-            ->where('status', 'Menunggu Pembayaran')
-            ->join('users', 'users.id', '=', 'peserta_konfirmasi.id_peserta')
-            ->join('tryout', 'tryout.id', '=', 'peserta_konfirmasi.id_tryout')
-            ->select('peserta_konfirmasi.*', 'users.*', 'tryout.nama', 'users.id as id_user', 'tryout.id as id_tryout', 'peserta_konfirmasi.id as id_peserta_konfirmasi')
-            ->get();
-            
+        ->where('status', 'Menunggu Pembayaran')
+        ->join('users', 'users.id', '=', 'peserta_konfirmasi.id_peserta')
+        ->join('tryout', 'tryout.id', '=', 'peserta_konfirmasi.id_tryout')
+        ->select('peserta_konfirmasi.*', 'users.*', 'tryout.nama', 'users.id as id_user', 'tryout.id as id_tryout', 'peserta_konfirmasi.id as id_peserta_konfirmasi')
+        ->get();
+        
         // dd($data_peserta_konfirmasi);
         return view('admin/setting-try-out/peserta-konfirmasi', [
             'data_peserta_konfirmasi' => $data_peserta_konfirmasi
         ]);
     }
-
+    
     
     public function terimaPeserta($id) {
         function generate_string($input, $strength = 16) {
@@ -198,37 +207,95 @@ class TryoutController extends Controller
         $kode = generate_string($permitted_chars, 12);
         $diterima = [
             'status' => 'Diterima',
-            'kode_unik' => Crypt::encryptString($kode)
+            'kode_unik' => $kode
         ];
         $validate = Validator::make($diterima, [
             'kode_unik' => ['required', 'string', 'max:255', Rule::unique('peserta_konfirmasi')],
-        ]);
-
-        //Kirim notifikasi
-        $notif = [
-            'pengirim' => 'System',
-            'id_user' => $data_peserta->id_peserta,
-            'id_peserta' => $data_peserta->id,
-            'judul' => 'Kode Unik Peserta Try Out',
-            'isi' => Crypt::encryptString($kode),
-            'read' => false
-        ];
-
-        if (!$validate->fails()) {
-            $data_peserta->update($diterima);
-            Notifikasi::create($notif);
-            return redirect('tryout/konfirmasi-peserta')->with('success', 'Data peserta telah diterima.');
-        } else {
-            goto ulang;
+            ]);
+            
+            //Kirim notifikasi
+            $notif = [
+                'pengirim' => 'System',
+                'id_user' => $data_peserta->id_peserta,
+                'id_peserta' => $data_peserta->id,
+                'judul' => 'Kode Unik Peserta Try Out',
+                'isi' => $kode,
+                'read' => false
+            ];
+            
+            if (!$validate->fails()) {
+                $data_peserta->update($diterima);
+                Notifikasi::create($notif);
+                return redirect('tryout/konfirmasi-peserta')->with('success', 'Data peserta telah diterima.');
+            } else {
+                goto ulang;
+            }
         }
-    }
-
-    public function tolakPeserta($id) {
-        $data_peserta = PesertaKonfirmasi::find($id);
-        $ditolak = [
-            'status' => 'Ditolak'
+        
+        public function tolakPeserta($id) {
+            $data_peserta = PesertaKonfirmasi::find($id);
+            $ditolak = [
+                'status' => 'Ditolak'
         ];
         $data_peserta->update($ditolak);
         return redirect('tryout/konfirmasi-peserta')->with('success', 'Data peserta ditolak.');
+    }
+
+    public function showLogin(Request $request, $id_to) {
+        if ($request->session()->has('loginTO')) {
+            if ($request->session()->get('loginTO')['id_to'] == $id_to) {
+                $data = Tryout::find($id_to);
+                return redirect(route('tryout.index', $id_to));
+            } 
+        } 
+
+        $data = Tryout::find($id_to);
+        // dd($data);
+        return view('to/kode-unik', [
+            'data' => $data
+        ]);
+    }
+
+    public function login(Request $request, $id_to, $id) {
+        $check_kode = DB::table('peserta_konfirmasi')
+        ->where('id_peserta', $id)
+        ->where('id_tryout', $id_to)
+        ->get();
+        
+        if ($check_kode->count() > 0) {
+            if ($check_kode[0]->kode_unik == $request->kode_unik ) {
+                $request->session()->put('loginTO', [
+                    'id' => $id,
+                    'id_to' => $id_to ]);
+                return redirect(route('tryout.index', $id_to));
+            } else {
+                return redirect()->back()->with('failed', 'Kode yang anda masukkan salah');    
+            }
+        } else {
+            return redirect()->back()->with('failed', 'Anda belum terdaftar sebagai peserta try out ini.');
+        }
+    }
+
+    public function listTO(Request $request, $id_to)
+    {
+        if ($request->session()->has('loginTO')) {
+            if ($request->session()->get('loginTO')['id_to'] == $id_to) {
+                $data = DB::table('peserta_konfirmasi')
+                    ->where('id_peserta', $request->session()->get('loginTO')['id'])
+                    ->where('id_tryout', $id_to)
+                    ->join('tryout', 'tryout.id', '=', 'peserta_konfirmasi.id_tryout')
+                    ->select('tryout.*', 'peserta_konfirmasi.*', 'tryout.id as id_tryout', 'peserta_konfirmasi.id as id_peserta_konfirmasi')
+                    ->get();
+
+                // dd($data);
+                return view('to/list-to', [
+                    'data' => $data
+                ]);
+            } else {
+                return redirect(route('tryout.showlogin', $id_to));    
+            }
+        } else {
+            return redirect(route('tryout.showlogin', $id_to));
+        }
     }
 }

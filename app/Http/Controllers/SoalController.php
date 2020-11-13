@@ -19,6 +19,10 @@ class SoalController extends Controller
         //
     }
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -40,12 +44,12 @@ class SoalController extends Controller
         $request->validate([
             'kategori' => ['required', 'string', 'max:255'],
             'subtes' => ['required', 'string', 'max:255'],
-            'deskripsi' => ['required', 'string', 'max:255'],
-            'jawaban_benar' => ['nullable', 'string', 'max:255'],
-            'jawaban_salah_1' => ['nullable', 'string', 'max:255'],
-            'jawaban_salah_2' => ['nullable', 'string', 'max:255'],
-            'jawaban_salah_3' => ['nullable', 'string', 'max:255'],
-            'jawaban_salah_4' => ['nullable', 'string', 'max:255']
+            'deskripsi' => ['required', 'string', 'max:1024'],
+            'jawaban_benar' => ['nullable', 'string', 'max:512'],
+            'jawaban_salah_1' => ['nullable', 'string', 'max:512'],
+            'jawaban_salah_2' => ['nullable', 'string', 'max:512'],
+            'jawaban_salah_3' => ['nullable', 'string', 'max:512'],
+            'jawaban_salah_4' => ['nullable', 'string', 'max:512']
         ]);
 
         $data_soal = [
@@ -56,18 +60,16 @@ class SoalController extends Controller
 
         $soal = Soal::create($data_soal);
 
-        $data_jawaban = [
-            'id_soal' => $soal->id,
-            'jawaban_benar' => $request->jawaban_benar,
-            'jawaban_salah_1' => $request->jawaban_salah_1,
-            'jawaban_salah_2' => $request->jawaban_salah_2,
-            'jawaban_salah_3' => $request->jawaban_salah_3,
-            'jawaban_salah_4' => $request->jawaban_salah_4
-        ];
+        // dd($soal->id);
 
-        Jawaban::create($data_jawaban);
-
-        // return view('admin/bank-soal/index', ['kategori' => $request->kategori])->with('success', 'Data Berhasil Ditambahkan.');
+        DB::table('jawaban')->insert([
+            ['id_soal' => $soal->id, 'teks' => $request->jawaban_benar, 'value' => true],
+            ['id_soal' => $soal->id, 'teks' => $request->jawaban_salah_1, 'value' => false],
+            ['id_soal' => $soal->id, 'teks' => $request->jawaban_salah_2, 'value' => false],
+            ['id_soal' => $soal->id, 'teks' => $request->jawaban_salah_3, 'value' => false],
+            ['id_soal' => $soal->id, 'teks' => $request->jawaban_salah_4, 'value' => false]
+        ]);
+    
         return redirect('/soal/kategori/'. strtolower($soal->kategori))->with('success', 'Data Berhasil Ditambahkan.');
     }
 
@@ -119,15 +121,20 @@ class SoalController extends Controller
     public function edit($id)
     {
         $data = DB::table('soal')
-        ->where('soal.id', $id)
-        ->leftJoin('subtes', 'subtes.id', '=', 'soal.subtes')
-        ->leftJoin('jawaban', 'soal.id', '=', 'jawaban.id_soal')
-        ->select('soal.*', 'jawaban.*', 'soal.id as id_soal', 'jawaban.id as id_jawaban', 'subtes.nama as nama_subtes')
-        ->get();
+            ->where('soal.id', $id)
+            ->leftJoin('subtes', 'subtes.id', '=', 'soal.subtes')
+            ->select('soal.*', 'soal.id as id_soal', 'subtes.nama as nama_subtes')
+            ->get();
 
-        // dd($data);
+        $jawaban = DB::table('jawaban')
+            ->where('id_soal', $data[0]->id)
+            ->get();
 
-        return view('admin/bank-soal/edit', ['data' => $data]);
+        // dd($jawaban);
+
+        return view('admin/bank-soal/edit', [
+            'data' => $data,
+            'jawaban' => $jawaban]);
     }
 
     /**
@@ -142,12 +149,7 @@ class SoalController extends Controller
         $request->validate([
             'kategori' => ['required', 'string', 'max:255'],
             'subtes' => ['required', 'string', 'max:255'],
-            'deskripsi' => ['required', 'string', 'max:255'],
-            'jawaban_benar' => ['required', 'string', 'max:255'],
-            'jawaban_salah_1' => ['required', 'string', 'max:255'],
-            'jawaban_salah_2' => ['required', 'string', 'max:255'],
-            'jawaban_salah_3' => ['required', 'string', 'max:255'],
-            'jawaban_salah_4' => ['required', 'string', 'max:255']
+            'deskripsi' => ['required', 'string', 'max:1024'],
         ]);
 
         $data_soal = [
@@ -159,18 +161,16 @@ class SoalController extends Controller
         $soal = Soal::find($id_soal);
         $soal->update($data_soal);
 
-        $data_jawaban = [
-            'id_soal' => $soal->id,
-            'jawaban_benar' => $request->jawaban_benar,
-            'jawaban_salah_1' => $request->jawaban_salah_1,
-            'jawaban_salah_2' => $request->jawaban_salah_2,
-            'jawaban_salah_3' => $request->jawaban_salah_3,
-            'jawaban_salah_4' => $request->jawaban_salah_4
-        ];
-
-        $jawaban = Jawaban::where('id_soal', $id_soal)->first();
-        $jawaban->update($data_jawaban);
-
+        $id_jawaban = $request->id_jawaban;
+        $jawaban = $request->jawaban;
+        
+        for ($i=0; $i<count($id_jawaban); $i++) {
+            $jawab = Jawaban::find($id_jawaban[$i]);
+            $data_jawaban = [
+                'teks' => $jawaban[$i]
+            ];
+            $jawab->update($data_jawaban);
+        }
         return redirect('/soal/kategori/'. strtolower($request->kategori))->with('success', 'Data Berhasil Di-update.');
     }
 
@@ -186,8 +186,10 @@ class SoalController extends Controller
         $kategori = $soal->kategori;
         $soal->delete();
 
-        $jawaban = Jawaban::where('id_soal', $id)->first();
-        $jawaban->delete();
+        $jawaban = Jawaban::where('id_soal', $id)->get()->all();
+        foreach ($jawaban as $jawaban) {
+            $jawaban->delete();
+        }
 
         return redirect('/soal/kategori/'. strtolower($kategori))->with('success', 'Data Berhasil Dihapus.');
     }
@@ -197,13 +199,21 @@ class SoalController extends Controller
         $data = DB::table('soal')
             ->where('soal.kategori', $kategori)
             ->leftJoin('subtes', 'subtes.id', '=', 'soal.subtes')
-            ->leftJoin('jawaban', 'soal.id', '=', 'jawaban.id_soal')
-            ->select('soal.*', 'jawaban.*', 'soal.id as id_soal', 'jawaban.id as id_jawaban', 'subtes.nama as nama_subtes')
+            ->select('soal.*', 'soal.id as id_soal', 'subtes.nama as nama_subtes')
             ->get();
-
+        
         return view('admin/bank-soal/index', [
                                         'kategori' => $kategori,
                                         'data' => $data]);
+    }
 
+    public function getJawaban($id_soal) {
+        $data = DB::table('jawaban')
+            ->where('jawaban.id_soal', $id_soal)
+            ->join('soal', 'soal.id', '=', 'jawaban.id_soal')
+            ->select('jawaban.*', 'soal.deskripsi','jawaban.id as id_jawaban', 'soal.id as id_soal')
+            ->get();
+        // dd($data);
+        echo json_encode($data);
     }
 }

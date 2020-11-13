@@ -72,7 +72,7 @@
                                                                                 @if ($soal->subtes == $subtes->id)
                                                                                     <tr>
                                                                                         <td>
-                                                                                            <input name="soal[]" class="mr-1" type="checkbox" value="{{ $soal->id}}">{{ $soal->deskripsi }}
+                                                                                            <input name="soal[]" class="mr-1" type="checkbox" value="{{ $soal->id}}"><?php echo $soal->deskripsi ?>
                                                                                         </td>
                                                                                     </tr>
                                                                                 @endif

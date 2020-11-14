@@ -66,3 +66,7 @@ Route::get('notifikasi/detail/{id}', [App\Http\Controllers\NotifikasiController:
 Route::get('jumlah-notifikasi/{id}', [App\Http\Controllers\NotifikasiController::class, 'getJumlahNotif']);
 
 Route::get('get-jawaban/{id}', [App\Http\Controllers\SoalController::class, 'getJawaban'])->name('soal.get_jawaban');
+
+Route::get('insert-jawaban/{id_peserta}/{id_soal}/{id_jawaban}', [App\Http\Controllers\TryoutController::class, 'insertJawabanPeserta']);
+
+Route::get('insert-ragu/{id_peserta}/{id_soal}/{ragu}', [App\Http\Controllers\TryoutController::class, 'insertRagu']);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JawabanPeserta;
 use App\Models\Notifikasi;
 use App\Models\PesertaKonfirmasi;
 use Illuminate\Http\Request;
@@ -163,13 +164,49 @@ class TryoutController extends Controller
         $data_soal = DB::table('soal')
             ->where('soal.subtes', $id_subtes)
             ->join('subtes', 'subtes.id', '=', 'soal.subtes')
+            ->select('soal.*', 'soal.id as id_soal', 'subtes.nama')
             ->get();
         
-        // dd($data_tryout, $data_soal);
+        $data_jawaban = DB::table('jawaban')
+            ->where('id_soal', $data_soal[$no-1]->id)
+            ->inRandomOrder()
+            ->get();
+
+        $data_jawaban_peserta = DB::table('jawaban_peserta')
+            ->where('jawaban_peserta.id_peserta', session()->get('loginTO')['id'])
+            ->where('jawaban_peserta.id_soal', $data_soal[$no-1]->id)
+            ->get();
+
+        $data_semua_jawaban_peserta = DB::table('jawaban_peserta')
+            ->where('jawaban_peserta.id_peserta', session()->get('loginTO')['id'])
+            ->select('id_soal')
+            ->get();
+
+        $array_jawaban = [];
+        foreach ($data_semua_jawaban_peserta as $data) {
+            array_push($array_jawaban, $data->id_soal);
+        }
+
+        $data_semua_jawaban_peserta_ragu = DB::table('jawaban_peserta')
+            ->where('jawaban_peserta.id_peserta', session()->get('loginTO')['id'])
+            ->where('ragu', 1)
+            ->select('id_soal')
+            ->get();
+
+        $array_jawaban_ragu = [];
+        foreach ($data_semua_jawaban_peserta_ragu as $data) {
+            array_push($array_jawaban_ragu, $data->id_soal);
+        }
+
+        // dd($data_tryout, $data_soal, $data_jawaban, $data_jawaban_peserta, $data_semua_jawaban_peserta);
         return view('to/kerja-to', [
             'data_tryout' => $data_tryout,
             'data_soal' => $data_soal,
-            'no' => $no
+            'no' => $no,
+            'data_jawaban' => $data_jawaban,
+            'data_jawaban_peserta' => $data_jawaban_peserta,
+            'array_jawaban' => $array_jawaban,
+            'array_jawaban_ragu' => $array_jawaban_ragu
             ]);
     }
     
@@ -297,5 +334,50 @@ class TryoutController extends Controller
         } else {
             return redirect(route('tryout.showlogin', $id_to));
         }
+    }
+
+    public function insertJawabanPeserta($id_peserta, $id_soal, $id_jawaban) {
+        $check_answered = DB::table('jawaban_peserta')
+            ->where('jawaban_peserta.id_soal', $id_soal)
+            ->get();
+
+        $data_input = [
+            'id_peserta' => $id_peserta,
+            'id_soal' => $id_soal,
+            'id_jawaban' => $id_jawaban,
+            'ragu' => 0
+        ];
+        
+        if (count($check_answered) > 0) {
+            $jawaban = JawabanPeserta::find($check_answered[0]->id);
+            $jawaban->update($data_input);
+            // echo 'berhasil update';
+        } else {
+            JawabanPeserta::create($data_input);
+            // echo 'berhasil create';
+        }
+
+    }
+
+    public function insertRagu($id_peserta, $id_soal, $ragu) {
+        $check_answered = DB::table('jawaban_peserta')
+            ->where('jawaban_peserta.id_soal', $id_soal)
+            ->get();
+
+        $data_input = [
+            'id_peserta' => $id_peserta,
+            'id_soal' => $id_soal,
+            'ragu' => $ragu
+        ];
+        
+        if (count($check_answered) > 0) {
+            $jawaban = JawabanPeserta::find($check_answered[0]->id);
+            $jawaban->update($data_input);
+            // echo 'berhasil update ragu'. $ragu;
+        } else {
+            JawabanPeserta::create($data_input);
+            // echo 'berhasil create ragu'. $ragu;
+        }
+
     }
 }

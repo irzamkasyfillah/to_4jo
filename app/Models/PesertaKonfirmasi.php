@@ -16,7 +16,12 @@ class PesertaKonfirmasi extends Model
         'id_tryout',
         'harga',
         'status',
+        'subtes_done',
         'kelompok_ujian',
         'kode_unik'
+    ];
+
+    protected $casts =  [
+        'subtes_done' => 'array'
     ];
 }

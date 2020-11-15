@@ -1,7 +1,7 @@
 <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
       <div class="main-menu-content">
         
-          <img width="100%" src="../../uploads/4jo.png" class="" alt="Card image">
+          <img width="100%" src="{{asset('/uploads/4jo.png')}}" class="" alt="Card image">
           <hr class="m-0">
         
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
@@ -28,6 +28,8 @@
                 <li><a class="menu-item" href="../../tryout/konfirmasi-peserta" data-i18n="nav.templates.vert.main">Daftar Konfirmasi Peserta</a>
                 </li>
                 <li><a class="menu-item" href="" data-i18n="nav.templates.vert.main">Daftar Peserta Dikonfirmasi</a>
+                </li>
+                <li><a class="menu-item" href="{{ route('setting.index') }}" data-i18n="nav.templates.vert.main">Setting</a>
                 </li>
             </ul>
           </li>

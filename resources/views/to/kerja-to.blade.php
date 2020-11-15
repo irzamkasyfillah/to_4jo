@@ -144,15 +144,43 @@
                                     </div>
                                     <hr>
                                     <div class="form-group text-center mt-1">
-                                        <button href="#" type="submit" class="btn btn-danger">HENTIKAN UJIAN</button>
+                                        <button data-toggle="modal" data-target="#selesai" class="btn btn-danger">SELESAI</button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>    
                     </div> 
                 </div>
             </div>
         </div>
+
+        {{-- MODAL HAPUS --}}
+        <div class="modal fade text-left" id="selesai" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="myModalLabel1">Selesai</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda telah selesai mengerjakan paket soal ini?<br><br>
+                        *Aksi ini tidak dapat dibatalkan
+                    </p>    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Batal</button>
+                    <form action="{{ route('subtes.finish', [$data_tryout[0]->id, $data_soal[0]->subtes, session()->get('loginTO')['id']]) }}" method="GET">
+                        @csrf
+                        <button type="submit" class="btn btn-danger">Selesai</button>
+                    </form>
+                </div>
+              </div>
+            </div>
+        </div>
+        {{-- END MODAL HAPUS --}}
+
         <script>
             function insertJawaban(id_peserta, id_soal, id_jawaban) {
                 console.log(id_peserta, id_soal, id_jawaban)

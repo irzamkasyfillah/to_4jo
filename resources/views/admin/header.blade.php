@@ -24,7 +24,7 @@
                           <!-- if (Auth::user()->foto != '') { -->
                             <!-- <img src="{{ URL::to('/')}}/uploads/{{ Auth::user()->foto }}" alt="avatar"> -->
                           <!-- } else { -->
-                            <img src="../../../app-assets/images/portrait/small/avatar-s-1.png" alt="avatar">
+                            <img src="{{asset('/app-assets/images/portrait/small/avatar-s-1.png')}}" alt="avatar">
                           <!-- } -->
                           <i></i>
                       </span>

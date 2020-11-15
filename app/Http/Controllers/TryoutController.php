@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Crypt;
 
 use App\Models\Tryout;
 use App\Models\Soal;
+use App\Models\Subtes;
 
 class TryoutController extends Controller
 {
@@ -44,6 +45,30 @@ class TryoutController extends Controller
             'data_subtes' => $data_subtes,
             'data_soal' => $data_soal
             ]);
+    }
+
+    public function indexSetting() {
+        $data = Subtes::all();
+        return view('admin/setting-try-out/setting/index', [
+            'data' => $data
+        ]);
+    }
+
+    public function editSetting($id) {
+        $data = Subtes::find($id);
+        return view('admin/setting-try-out/setting/edit', [
+            'data' => $data
+        ]);
+    }
+
+    public function updateSetting(Request $request, $id) {
+        $request->validate([
+            'durasi' => ['required', 'integer']
+        ]);
+
+        $data = Subtes::find($id);
+        $data->update($request->all());
+        return redirect(route('setting.index'))->with('success', 'Data berhasil di-update');
     }
 
     /**
@@ -155,59 +180,79 @@ class TryoutController extends Controller
 
     // UNTUK PESERTA TRY OUT
     
-    public function showSoal($id_to, $id_subtes, $no)
-    {
-        $data_tryout = DB::table('tryout')
-            ->where('tryout.id', $id_to)
-            ->get();
+    public function showSoal(Request $request, $id_to, $id_subtes, $no)
+    {   
+        $data_peserta = DB::table('peserta_konfirmasi')
+        ->where('id_peserta', $request->session()->get('loginTO')['id'])
+        ->where('id_tryout', $id_to)
+        ->get();
 
-        $data_soal = DB::table('soal')
-            ->where('soal.subtes', $id_subtes)
-            ->join('subtes', 'subtes.id', '=', 'soal.subtes')
-            ->select('soal.*', 'soal.id as id_soal', 'subtes.nama')
-            ->get();
-        
-        $data_jawaban = DB::table('jawaban')
-            ->where('id_soal', $data_soal[$no-1]->id)
-            ->inRandomOrder()
-            ->get();
-
-        $data_jawaban_peserta = DB::table('jawaban_peserta')
-            ->where('jawaban_peserta.id_peserta', session()->get('loginTO')['id'])
-            ->where('jawaban_peserta.id_soal', $data_soal[$no-1]->id)
-            ->get();
-
-        $data_semua_jawaban_peserta = DB::table('jawaban_peserta')
-            ->where('jawaban_peserta.id_peserta', session()->get('loginTO')['id'])
-            ->select('id_soal')
-            ->get();
-
-        $array_jawaban = [];
-        foreach ($data_semua_jawaban_peserta as $data) {
-            array_push($array_jawaban, $data->id_soal);
+        if (strpos($data_peserta[0]->subtes_done, $id_subtes, )) {
+            return redirect()->back()->with('failed', 'Maaf, Anda telah mengerjakan kategori soal ini');
         }
 
-        $data_semua_jawaban_peserta_ragu = DB::table('jawaban_peserta')
-            ->where('jawaban_peserta.id_peserta', session()->get('loginTO')['id'])
-            ->where('ragu', 1)
-            ->select('id_soal')
-            ->get();
+        if ($request->session()->has('subtes')) {
+            if ($request->session()->get('subtes') == $id_subtes) {
+                goto sama_subtesnya;
+            } else {
+                return redirect()->back()->with('failed', 'Maaf, Anda tidak dapat mengerjakan lebih dari satu kategori soal secara bersamaan');
+            }
+        } else {
+            $request->session()->put('subtes', $id_subtes);
 
-        $array_jawaban_ragu = [];
-        foreach ($data_semua_jawaban_peserta_ragu as $data) {
-            array_push($array_jawaban_ragu, $data->id_soal);
+            sama_subtesnya:
+            $data_tryout = DB::table('tryout')
+                ->where('tryout.id', $id_to)
+                ->get();
+    
+            $data_soal = DB::table('soal')
+                ->where('soal.subtes', $id_subtes)
+                ->join('subtes', 'subtes.id', '=', 'soal.subtes')
+                ->select('soal.*', 'soal.id as id_soal', 'subtes.nama')
+                ->get();
+            
+            $data_jawaban = DB::table('jawaban')
+                ->where('id_soal', $data_soal[$no-1]->id)
+                ->inRandomOrder()
+                ->get();
+    
+            $data_jawaban_peserta = DB::table('jawaban_peserta')
+                ->where('jawaban_peserta.id_peserta', session()->get('loginTO')['id'])
+                ->where('jawaban_peserta.id_soal', $data_soal[$no-1]->id)
+                ->get();
+    
+            $data_semua_jawaban_peserta = DB::table('jawaban_peserta')
+                ->where('jawaban_peserta.id_peserta', session()->get('loginTO')['id'])
+                ->select('id_soal')
+                ->get();
+    
+            $array_jawaban = [];
+            foreach ($data_semua_jawaban_peserta as $data) {
+                array_push($array_jawaban, $data->id_soal);
+            }
+    
+            $data_semua_jawaban_peserta_ragu = DB::table('jawaban_peserta')
+                ->where('jawaban_peserta.id_peserta', session()->get('loginTO')['id'])
+                ->where('ragu', 1)
+                ->select('id_soal')
+                ->get();
+    
+            $array_jawaban_ragu = [];
+            foreach ($data_semua_jawaban_peserta_ragu as $data) {
+                array_push($array_jawaban_ragu, $data->id_soal);
+            }
+    
+            // dd($data_tryout, $data_soal, $data_jawaban, $data_jawaban_peserta, $data_semua_jawaban_peserta);
+            return view('to/kerja-to', [
+                'data_tryout' => $data_tryout,
+                'data_soal' => $data_soal,
+                'no' => $no,
+                'data_jawaban' => $data_jawaban,
+                'data_jawaban_peserta' => $data_jawaban_peserta,
+                'array_jawaban' => $array_jawaban,
+                'array_jawaban_ragu' => $array_jawaban_ragu
+                ]);  
         }
-
-        // dd($data_tryout, $data_soal, $data_jawaban, $data_jawaban_peserta, $data_semua_jawaban_peserta);
-        return view('to/kerja-to', [
-            'data_tryout' => $data_tryout,
-            'data_soal' => $data_soal,
-            'no' => $no,
-            'data_jawaban' => $data_jawaban,
-            'data_jawaban_peserta' => $data_jawaban_peserta,
-            'array_jawaban' => $array_jawaban,
-            'array_jawaban_ragu' => $array_jawaban_ragu
-            ]);
     }
     
     public function showKonfirmasiPeserta()
@@ -281,7 +326,7 @@ class TryoutController extends Controller
     public function showLogin(Request $request, $id_to) {
         if ($request->session()->has('loginTO')) {
             if ($request->session()->get('loginTO')['id_to'] == $id_to) {
-                $data = Tryout::find($id_to);
+                // $data = Tryout::find($id_to);
                 return redirect(route('tryout.index', $id_to));
             } 
         } 
@@ -378,6 +423,22 @@ class TryoutController extends Controller
             JawabanPeserta::create($data_input);
             // echo 'berhasil create ragu'. $ragu;
         }
+    }
 
+    public function subtesFinish(Request $request, $id_to, $id_subtes, $id_peserta) {
+        $data_peserta = DB::table('peserta_konfirmasi')
+        ->where('id_peserta', $id_peserta)
+        ->where('id_tryout', $id_to)
+        ->get();
+
+        $peserta = PesertaKonfirmasi::find($data_peserta[0]->id);
+        if ($data_peserta[0]->subtes_done != null) {
+            // dd(array_push($data_peserta[0]->subtes_done, $id_subtes));
+            $peserta->update(['subtes_done' => $peserta->subtes_done .',' .$id_subtes]);
+        } else {
+            $peserta->update(['subtes_done' => $id_subtes]);
+        }
+        $request->session()->forget('subtes');
+        return redirect(route('tryout.index', $id_to));
     }
 }

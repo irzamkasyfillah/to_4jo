@@ -33,6 +33,8 @@ Route::resource('data-tryout', 'App\Http\Controllers\TryoutController');
 
 Route::get('tryout{id_to}/{subtes}/{id_no}', [App\Http\Controllers\TryoutController::class, 'showSoal']);
 
+Route::get('tryout{id_to}/{subtes}/{id_peserta}/finish', [App\Http\Controllers\TryoutController::class, 'subtesFinish'])->name('subtes.finish');
+
 Route::get('tryout{id}/login', [App\Http\Controllers\TryoutController::class, 'showLogin'])->name('tryout.showlogin');
 
 Route::post('tryout{id_to}/login/{id}', [App\Http\Controllers\TryoutController::class, 'login'])->name('tryout.login');
@@ -48,6 +50,12 @@ Route::resource('soal', 'App\Http\Controllers\SoalController');
 Route::post('soal/upload', [App\Http\Controllers\SoalController::class, 'upload'])->name('upload.upload');
 
 Route::get('tryout/konfirmasi-peserta', [App\Http\Controllers\TryoutController::class, 'showKonfirmasiPeserta']);
+
+Route::get('tryout/setting', [App\Http\Controllers\TryoutController::class, 'indexSetting'])->name('setting.index');
+
+Route::get('tryout/setting/{id}/edit', [App\Http\Controllers\TryoutController::class, 'editSetting'])->name('setting.edit');
+
+Route::post('tryout/setting/{id}/update', [App\Http\Controllers\TryoutController::class, 'updateSetting'])->name('setting.update');
 
 Route::resource('kupon', 'App\Http\Controllers\KuponController');
 

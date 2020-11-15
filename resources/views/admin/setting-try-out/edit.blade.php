@@ -81,7 +81,7 @@
                                                                                     @endif
                                                                                     <tr>
                                                                                         <td>
-                                                                                            <input {{$check}} name="soal[]" class="mr-1" type="checkbox" value="{{ $soal->id}}">{{ $soal->deskripsi }}
+                                                                                            <input {{$check}} name="soal[]" class="mr-1" type="checkbox" value="{{ $soal->id}}"><?php echo $soal->deskripsi ?>
                                                                                         </td>
                                                                                     </tr>
                                                                                 @endif

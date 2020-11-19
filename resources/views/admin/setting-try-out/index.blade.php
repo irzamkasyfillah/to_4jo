@@ -41,10 +41,11 @@
                                     <div class="table-responsive">
                                         <table id="data" class="table table-hover table-striped table-bordered zero-configuration">
                                             <thead>
-                                                <tr class="text-center">
-                                                    <th width="30%">Nama Try Out</th>
-                                                    <th width="30%">Waktu (hari/tanggal/jam)</th>
-                                                    <th width="30%">Harga</th>
+                                                <tr class="">
+                                                    <th width="20%">Nama Try Out</th>
+                                                    <th width="20%">Waktu (hari/tanggal/jam)</th>
+                                                    <th width="20%">Batas Pengerjaan</th>
+                                                    <th width="20%">Harga</th>
                                                     <th width="10%">Aksi</th>
                                                 </tr>
                                             </thead>
@@ -54,7 +55,14 @@
                                                     <td>{{ $data->nama }}</td>
                                                     <td>
                                                         @if ($data->waktu != "")
-                                                            {{ date_format(date_create($data->waktu), "l, j F Y - H:i:s") }}
+                                                            {{ date_format(date_create($data->waktu), "l, j F Y - H:i") }}
+                                                        @else
+                                                            {{ "-" }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($data->waktu_selesai != "")
+                                                            {{ date_format(date_create($data->waktu_selesai), "l, j F Y - H:i") }}
                                                         @else
                                                             {{ "-" }}
                                                         @endif
@@ -176,9 +184,10 @@
                                             @endforeach
                                             </tbody>
                                             <tfoot>
-                                                <tr class="text-center" >
+                                                <tr class="" >
                                                     <th>Nama Try Out</th>
                                                     <th>Waktu (hari/tanggal/jam)</th>
+                                                    <th>Batas Pengerjaan</th>
                                                     <th>Harga</th>
                                                     <th>Aksi</th>
                                                 </tr>

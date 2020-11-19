@@ -15,7 +15,8 @@ class Tryout extends Model
         'nama',
         'harga',
         'soal',
-        'waktu'
+        'waktu',
+        'waktu_selesai'
     ];
 
     protected $casts =  [

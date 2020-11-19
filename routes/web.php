@@ -35,6 +35,8 @@ Route::get('tryout{id_to}/{subtes}/{id_no}', [App\Http\Controllers\TryoutControl
 
 Route::get('tryout{id_to}/{subtes}/{id_peserta}/finish', [App\Http\Controllers\TryoutController::class, 'subtesFinish'])->name('subtes.finish');
 
+Route::get('{id_to}/{id_peserta}/finish', [App\Http\Controllers\TryoutController::class, 'ujianFinish'])->name('ujian.finish');
+
 Route::get('tryout{id}/login', [App\Http\Controllers\TryoutController::class, 'showLogin'])->name('tryout.showlogin');
 
 Route::post('tryout{id_to}/login/{id}', [App\Http\Controllers\TryoutController::class, 'login'])->name('tryout.login');
@@ -50,14 +52,18 @@ Route::resource('soal', 'App\Http\Controllers\SoalController');
 Route::post('soal/upload', [App\Http\Controllers\SoalController::class, 'upload'])->name('upload.upload');
 
 Route::get('tryout/konfirmasi-peserta', [App\Http\Controllers\TryoutController::class, 'showKonfirmasiPeserta']);
+Route::get('tryout/peserta-dikonfirmasi', [App\Http\Controllers\TryoutController::class, 'showPesertaDikonfirmasi'])->name('peserta.dikonfirmasi');
 
-Route::get('tryout/setting', [App\Http\Controllers\TryoutController::class, 'indexSetting'])->name('setting.index');
+Route::get('setting-waktu-pengerjaan-subtes', [App\Http\Controllers\TryoutController::class, 'indexSettingWaktu'])->name('setting-waktu-pengerjaan-subtes.index');
 
-Route::get('tryout/setting/{id}/edit', [App\Http\Controllers\TryoutController::class, 'editSetting'])->name('setting.edit');
+Route::get('setting-waktu-pengerjaan-subtes/{id}/edit', [App\Http\Controllers\TryoutController::class, 'editSettingWaktu'])->name('setting-waktu-pengerjaan-subtes.edit');
 
-Route::post('tryout/setting/{id}/update', [App\Http\Controllers\TryoutController::class, 'updateSetting'])->name('setting.update');
+Route::post('setting-waktu-pengerjaan-subtes/{id}/update', [App\Http\Controllers\TryoutController::class, 'updateSettingWaktu'])->name('setting-waktu-pengerjaan-subtes.update');
 
 Route::resource('kupon', 'App\Http\Controllers\KuponController');
+Route::resource('setting-pembayaran', 'App\Http\Controllers\PembayaranController');
+Route::resource('setting-peraturan-try-out', 'App\Http\Controllers\PeraturanTOController');
+Route::resource('history-try-out', 'App\Http\Controllers\HistoryTOController');
 
 Route::get('get_tryout', [App\Http\Controllers\KuponController::class, 'getTryout']);
 

@@ -48,7 +48,7 @@
                                     <div class="table-responsive">
                                         <table id="data" class="table table-hover table-striped table-bordered zero-configuration">
                                             <thead>
-                                                <tr class="text-center">
+                                                <tr class="">
                                                     <th width="30%">Kode Kupon</th>
                                                     <th width="45%">Try Out</th>
                                                     <th width="10%">Persen (%)</th>
@@ -95,7 +95,7 @@
                                                 @endforeach
                                             </tbody>
                                             <tfoot>
-                                                <tr class="text-center">
+                                                <tr class="">
                                                     <th>Kode Kupon</th>
                                                     <th>Try Out</th>
                                                     <th>Persen (%)</th>

@@ -19,13 +19,6 @@
                             </div>
                         </div>
                     @endif
-                    @if(!empty($errors->all())) 
-                        @foreach($errors->all() as $error) 
-                            <div class="alert alert-danger alert-block">
-                                <span style="color:white;" class="text-bold-400">{{ $error }}</span>
-                            </div>
-                        @endforeach 
-                    @endif
                 </div>
                 <div class="row">
                     <div class="col-xl-12 col-lg-12">
@@ -34,7 +27,7 @@
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <h3>
-                                            <span class="text-bold-300">Setting Waktu Pengerjaan Tiap Subtes</strong></span>
+                                            <span class="text-bold-300">Setting Metode Pembayaran</strong></span>
                                         </h3> 
                                     </div>
                                 </div>
@@ -46,29 +39,23 @@
                                         <table id="data" class="table table-hover table-striped table-bordered zero-configuration">
                                             <thead>
                                                 <tr class="">
-                                                    <th width="40%">Subtes</th>
-                                                    <th width="30%">Kategori</th>
-                                                    <th width="20%">Waktu Pengerjaan (Menit)</th>
-                                                    <th class="text-center" width="10%">Aksi</th>
+                                                    <th width="">Pembayaran</th>
+                                                    <th width="10%">Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($data as $data)
                                                 <tr>
-                                                    <td>{{ $data->nama }}</td>
-                                                    <td>{{ $data->kategori }}</td>
-                                                    <td>{{ $data->durasi }}</td>
+                                                    <td><?php echo $data->teks ?></td>
                                                     <td class="text-center">
-                                                        <a data-toggle="tooltip" data-placement="top" title="Edit" href="{{ route('setting-waktu-pengerjaan-subtes.edit', $data->id) }}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i></a>
+                                                        <a data-toggle="tooltip" data-placement="top" title="Edit" href="{{route('setting-pembayaran.edit', $data->id)}}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i></a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
                                             <tfoot>
-                                                <tr class="text-center">
-                                                    <th>Subtes</th>
-                                                    <th>Kategori</th>
-                                                    <th>Waktu Pengerjaan (Menit)</th>
+                                                <tr class="">
+                                                    <th>Pembayaran</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </tfoot>

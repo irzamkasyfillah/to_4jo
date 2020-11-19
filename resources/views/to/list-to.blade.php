@@ -50,12 +50,9 @@
                                 <div class="mb-2">
                                     <div class="ml-2 mr-2 mb-3">
                                         <div class="form-group">
-                                            <?php $i=1; ?>
-                                            <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">PENALARAN UMUM </a>
-                                            <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">PENGETAHUAN DAN PEMAHAMAN UMUM </a>
-                                            <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">PEMAHAMAN BACAAN DAN MENULIS </a>
-                                            <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">PENGETAHUAN KUANTITATIF </a>
-                                            <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">BAHASA INGGRIS </a>
+                                            @foreach ($tps as $tps)
+                                                <a href="tryout{{$data[0]->id_tryout}}/{{$tps->id}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">{{$tps->nama}} </a>
+                                            @endforeach
                                         </div>
                                     </div>
                                     <hr>
@@ -66,10 +63,9 @@
                                         </div>
                                         <div class="ml-2 mr-2">
                                             <div class="form-group">
-                                                <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">MATEMATIKA SAINTEK</a>
-                                                <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">FISIKA</a>
-                                                <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">KIMIA</a>
-                                                <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">BIOLOGI</a>
+                                                @foreach ($saintek as $saintek)
+                                                    <a href="tryout{{$data[0]->id_tryout}}/{{$saintek->id}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">{{$saintek->nama}}</a>
+                                                @endforeach
                                             </div>
                                         </div>
                                     @else
@@ -78,15 +74,14 @@
                                         </div>
                                         <div class="ml-2 mr-2">
                                             <div class="form-group">
-                                                <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">MATEMATIKA SOSHUM</a>
-                                                <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">EKONOMI</a>
-                                                <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">GEOGRAFI</a>
-                                                <a href="tryout{{$data[0]->id_tryout}}/{{$i++}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">SOSIOLOGI DAN SEJARAH</a>
+                                                @foreach ($soshum as $soshum)
+                                                    <a href="tryout{{$data[0]->id_tryout}}/{{$soshum->id}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">{{$soshum->nama}}</a>
+                                                @endforeach
                                             </div>
                                         </div>
                                     @endif
                                     <hr class="mt-3">
-                                    <button class="btn btn-danger btn-min-width">Selesai Ujian</button>
+                                    <button data-toggle="modal" data-target="#selesai" class="btn btn-danger btn-min-width">SELESAI UJIAN</button>
                                 </div>
                             </div>
                         </div>
@@ -95,4 +90,28 @@
             </div>
         </div>
         </div>
+
+        {{-- MODAL HAPUS --}}
+        <div class="modal fade text-left" id="selesai" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="myModalLabel1">SELESAI</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda telah menyelesaikan seluruh paket soal?<br><br>
+                        *Aksi ini tidak dapat dibatalkan
+                    </p>    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Batal</button>
+                    <a href="{{ route('ujian.finish', [$data[0]->id_tryout, session()->get('loginTO')['id']]) }}" class="btn btn-danger">Selesai</a>
+                </div>
+              </div>
+            </div>
+        </div>
+        {{-- END MODAL HAPUS --}}
 @endsection

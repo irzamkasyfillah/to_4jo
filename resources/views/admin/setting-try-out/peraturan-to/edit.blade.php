@@ -17,7 +17,7 @@
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <h3>
-                                            <span class="text-bold-300">Setting <i class="fa fa-caret-right ml-1 mr-1"></i> Edit Subtes</span>
+                                            <span class="text-bold-300">Edit Peraturan Try Out</span>
                                         </h3> 
                                     </div>
                                 </div>
@@ -26,23 +26,18 @@
                             <div class="card-content">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                    <form class="form" action="{{ route('setting-waktu-pengerjaan-subtes.update', $data->id) }}" method="POST">
+                                    <form class="form" action="{{ route('setting-peraturan-try-out.update', $data->id) }}" method="POST">
                                         @csrf
+                                        @method('PUT')
                                         <div class="form-body">
                                             <div class="form-group">
-                                                <label for="subtes">Subtes</label>
-                                                <input readonly value="{{$data->nama}}" class="form-control" type="text" name="subtes" id="subtes">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="subtes">Kategori</label>
-                                                <input readonly value="{{$data->kategori}}" class="form-control" type="text" name="kategori" id="kategori">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="subtes">Waktu Pengerjaan (Menit)</label>
-                                                <input value="{{$data->durasi}}" class="form-control" type="number" min="0" name="durasi" id="durasi">
+                                                <label for="teks">Peraturan</label>
+                                                <textarea required class="ckeditor"" name="teks" id="teks">
+                                                    <?php echo $data->teks ?>
+                                                </textarea>
                                             </div>
                                             <div class="form-actions">
-                                                <a href="{{route('setting-waktu-pengerjaan-subtes.index')}}" type="button" class="btn btn-warning mr-1">
+                                                <a href="{{route('setting-peraturan-try-out.index')}}" type="button" class="btn btn-warning mr-1">
                                                     <i class="ft-x"></i> Cancel
                                                 </a>
                                                 <button type="submit" class="btn btn-primary">
@@ -50,13 +45,14 @@
                                                 </button>
                                             </div>
                                         </div>
-                                    </form>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="height-100"></div>
             </div>
         </div>
     </div>

@@ -90,8 +90,6 @@
                                                 <input {{$ragu}} class="" type="checkbox" id="keraguan"> Ragu-Ragu
                                                 <input type="hidden" id="id_peserta" value="{{session()->get('loginTO')['id']}}">
                                                 <input type="hidden" id="id_soal" value="{{$data_soal[$no-1]->id}}">
-                                                {{-- onchange="insertRagu('{{session()->get('loginTO')['id']}}', '{{$data_soal[$no-1]->id}}', '{{1}}')"  --}}
-                                                
                                             </div>
                                         </div>
                                     </div>

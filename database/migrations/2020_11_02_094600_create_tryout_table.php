@@ -19,6 +19,7 @@ class CreateTryoutTable extends Migration
             $table->integer('harga')->unsigned();
             $table->text('soal')->nullable();
             $table->dateTime('waktu')->nullable();
+            $table->dateTime('waktu_selesai')->nullable();
             $table->timestamps();
         });
     }

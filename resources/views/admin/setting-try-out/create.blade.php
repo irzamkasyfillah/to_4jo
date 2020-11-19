@@ -46,6 +46,10 @@
                                                     <label for="waktu">Waktu Pelaksanaan</label>
                                                     <input id="waktu" type="datetime-local" class="form-control" name="waktu">
                                                 </div>
+                                                <div class="form-group">
+                                                    <label for="waktu_selesai">Batas Waktu Pengerjaan</label>
+                                                    <input id="waktu_selesai" type="datetime-local" class="form-control" name="waktu_selesai">
+                                                </div>
                                                 <hr>
                                                 <h5 class="text-center">Pilih Soal</h5>
                                                 <?php

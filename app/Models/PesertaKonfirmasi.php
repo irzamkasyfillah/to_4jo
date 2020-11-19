@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class PesertaKonfirmasi extends Model
 {
@@ -24,4 +25,10 @@ class PesertaKonfirmasi extends Model
     protected $casts =  [
         'subtes_done' => 'array'
     ];
+
+    // public function getRekap($id_to = null, $id_subtes = null) {
+    //     $data = DB::table('peserta_konfirmasi')
+    //         ->where('peserta_konfirmasi.id_tryout', $id_to)
+    //         ->where()
+    // }
 }

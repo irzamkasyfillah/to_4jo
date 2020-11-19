@@ -35,7 +35,7 @@
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <h3>
-                                            <span class="text-bold-300">Daftar Konfirmasi Peserta Try Out</span>
+                                            <span class="text-bold-300">Daftar Peserta Telah Dikonfirmasi</span>
                                         </h3> 
                                     </div>
                                 </div>
@@ -53,12 +53,11 @@
                                                     <th width="">Kelompok Ujian</th>
                                                     <th width="">Harga</th>
                                                     <th width="">Status</th>
-                                                    <th width="5%">Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php $i = 1; ?>
-                                                @foreach ($data_peserta_konfirmasi as $data)
+                                                @foreach ($data_peserta_dikonfirmasi as $data)
                                                 <tr>
                                                     <td class="">{{$i++}}</td>
                                                     <td>{{ $data->email }}</td>
@@ -66,39 +65,7 @@
                                                     <td>{{ $data->kelompok_ujian }} </td>
                                                     <td>Rp. {{ $data->harga }} </td>
                                                     <td>{{ $data->status }} </td>
-                                                    <td class="text-center">
-                                                        <form class="form" method="POST" action="../tryout/terima-peserta/{{$data->id_peserta_konfirmasi}}">
-                                                            @csrf
-                                                            <button type="submit" class="btn btn-success btn-min-width mb-1"><i class="fa fa-check"></i> Terima</a>
-                                                        </form>
-                                                        <button data-toggle="modal" data-target="#tolak{{$data->id_peserta_konfirmasi}}" class="btn btn-danger btn-min-width"><i class="fa fa-times"></i> Tolak</button>
-                                                    </td>
                                                 </tr>
-
-                                                 {{-- MODAL HAPUS --}}
-                                                    <div class="modal fade text-left" id="tolak{{$data->id_peserta_konfirmasi}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                        <h4 class="modal-title" id="myModalLabel1">Tolak Peserta</h4>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <p>Apakah Anda yakin ingin menolak peserta ini?</p>    
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-warning" data-dismiss="modal">Batal</button>
-                                                            <form class="form" method="POST" action="../tryout/tolak-peserta/{{$data->id_peserta_konfirmasi}}">
-                                                                @csrf
-                                                                <button type="submit" class="btn btn-danger btn-min-width"><i class="fa fa-times"></i> Tolak</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                                {{-- END MODAL HAPUS --}}
                                             @endforeach
                                             </tbody>
                                             <tfoot>
@@ -109,7 +76,6 @@
                                                     <th>Kelompok Ujian</th>
                                                     <th>Harga</th>
                                                     <th>Status</th>
-                                                    <th>Aksi</th>
                                                 </tr>
                                             </tfoot>
                                         </table>

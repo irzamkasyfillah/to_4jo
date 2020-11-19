@@ -27,9 +27,9 @@
                 </li>
                 <li><a class="menu-item" href="../../tryout/konfirmasi-peserta" data-i18n="nav.templates.vert.main">Daftar Konfirmasi Peserta</a>
                 </li>
-                <li><a class="menu-item" href="" data-i18n="nav.templates.vert.main">Daftar Peserta Dikonfirmasi</a>
+                <li><a class="menu-item" href="{{ route('peserta.dikonfirmasi') }}" data-i18n="nav.templates.vert.main">Daftar Peserta Dikonfirmasi</a>
                 </li>
-                <li><a class="menu-item" href="{{ route('setting.index') }}" data-i18n="nav.templates.vert.main">Setting</a>
+                <li><a class="menu-item" href="{{ route('history-try-out.index')}}" data-i18n="nav.templates.vert.main">History Try Out</a>
                 </li>
             </ul>
           </li>
@@ -55,7 +55,7 @@
           @if (Request::segment(1) == "kupon" )
             <li class="active nav-item">
           @else
-            <li class=" nav-item">
+            <li class="nav-item">
           @endif
               <a href="{{route('kupon.index')}}"><i class="fa fa-percent"></i><span class="menu-title" data-i18n="nav.templates.main">Kupon Diskon</span></a>
               {{-- <ul class="menu-content">
@@ -71,22 +71,23 @@
           </li>
           <hr class="m-0">
 
-          @if (Request::segment(1) == "pembayaran" )
+          <?php 
+            $segment = array('setting-pembayaran', 'setting-peraturan-try-out', 'setting-waktu-pengerjaan-subtes')
+          ?>
+          @if (in_array(Request::segment(1), $segment) )
             <li class="active nav-item">
           @else
             <li class=" nav-item">
           @endif
-              <a href="#"><i class="fa fa-money"></i><span class="menu-title" data-i18n="nav.templates.main">Pembayaran</span></a>
-              {{-- <ul class="menu-content">
-                <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">1</a>
+              <a href="#"><i class="fa fa-cogs"></i><span class="menu-title" data-i18n="nav.templates.main">Setting TO</span></a>
+              <ul class="menu-content">
+                <li><a class="menu-item" href="{{ route('setting-pembayaran.index') }}" data-i18n="nav.templates.vert.main">Pembayaran</a>
                 </li>
-                <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">2</a>
+                <li><a class="menu-item" href="{{ route('setting-peraturan-try-out.index') }}" data-i18n="nav.templates.vert.main">Peraturan Try Out</a>
                 </li>
-                <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">3</a>
+                <li><a class="menu-item" href="{{ route('setting-waktu-pengerjaan-subtes.index') }}" data-i18n="nav.templates.vert.main">Waktu Pengerjaan Subtes</a>
                 </li>
-                <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">4</a>
-                </li>
-              </ul> --}}
+              </ul>
           </li>
           <hr class="m-0">
 

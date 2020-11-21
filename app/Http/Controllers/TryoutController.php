@@ -34,16 +34,25 @@ class TryoutController extends Controller
      */
     public function index()
     {
-        $data_tryout = Tryout::all();
+        $data_tryout = DB::table('tryout')
+            // ->where('waktu_selesai', '<', now())
+            ->get();
         $data_subtes = DB::table('subtes')->get()->all();
         $data_soal = DB::table('soal')->get()->all();
 
-        // dd($data_tryout[0]->soal);
-        
+        $jml_peserta = [];
+        foreach ($data_tryout as $data) {
+            $peserta = DB::table('peserta_konfirmasi')
+                ->where('id_tryout', $data->id)
+                ->get();
+            array_push($jml_peserta, count($peserta));
+        }
+
         return view('admin/setting-try-out/index', [
             'data_tryout' => $data_tryout,
             'data_subtes' => $data_subtes,
-            'data_soal' => $data_soal
+            'data_soal' => $data_soal,
+            'jml_peserta' => $jml_peserta
             ]);
     }
 
@@ -63,7 +72,8 @@ class TryoutController extends Controller
 
     public function updateSettingWaktu(Request $request, $id) {
         $request->validate([
-            'durasi' => ['required', 'integer']
+            'durasi' => ['integer'],
+            'jumlah_soal' => ['integer']
         ]);
 
         $data = Subtes::find($id);
@@ -217,29 +227,29 @@ class TryoutController extends Controller
                 ->get();
     
             $data_jawaban_peserta = DB::table('jawaban_peserta')
-                ->where('jawaban_peserta.id_peserta', session()->get('loginTO')['id'])
+                ->where('jawaban_peserta.id_peserta', session()->get('loginTO')['id_peserta'])
                 ->where('jawaban_peserta.id_soal', $data_soal[$no-1]->id)
                 ->get();
     
             $data_semua_jawaban_peserta = DB::table('jawaban_peserta')
-                ->where('jawaban_peserta.id_peserta', session()->get('loginTO')['id'])
+                ->where('jawaban_peserta.id_peserta', session()->get('loginTO')['id_peserta'])
                 ->where('jawaban_peserta.id_jawaban', '<>', 0)
                 ->select('id_soal')
                 ->get();
 
             //input belum dijawab pas pertama
-            $jawaban = DB::table('jawaban_peserta')
-            ->where('id_peserta', $request->session()->get('loginTO')['id'])
-            ->where('id_soal', $data_soal[$no-1]->id)
-            ->get();
+            // $jawaban = DB::table('jawaban_peserta')
+            // ->where('id_peserta', $request->session()->get('loginTO')['id_peserta'])
+            // ->where('id_soal', $data_soal[$no-1]->id)
+            // ->get();
             
-            if (count($jawaban) < 1) {
-                DB::table('jawaban_peserta')->insert([
-                        'id_jawaban' => 0,
-                        'id_peserta' => $request->session()->get('loginTO')['id'],
-                        'id_soal' => $data_soal[$no-1]->id
-                ]);
-            }
+            // if (count($jawaban) < 1) {
+            //     DB::table('jawaban_peserta')->insert([
+            //             'id_jawaban' => 0,
+            //             'id_peserta' => $request->session()->get('loginTO')['id_peserta'],
+            //             'id_soal' => $data_soal[$no-1]->id
+            //     ]);
+            // }
             //batas input kosong
     
             $array_jawaban = [];
@@ -248,7 +258,7 @@ class TryoutController extends Controller
             }
     
             $data_semua_jawaban_peserta_ragu = DB::table('jawaban_peserta')
-                ->where('jawaban_peserta.id_peserta', session()->get('loginTO')['id'])
+                ->where('jawaban_peserta.id_peserta', session()->get('loginTO')['id_peserta'])
                 ->where('ragu', 1)
                 ->select('id_soal')
                 ->get();
@@ -371,15 +381,37 @@ class TryoutController extends Controller
 
     public function login(Request $request, $id_to, $id) {
         $check_kode = DB::table('peserta_konfirmasi')
-        ->where('id_peserta', $id)
-        ->where('id_tryout', $id_to)
-        ->get();
+            ->where('id_peserta', $id)
+            ->where('id_tryout', $id_to)
+            ->get();
         
+        $to = DB::table('tryout')
+            ->where('id', $id_to)
+            ->get();
+
         if ($check_kode->count() > 0) {
             if ($check_kode[0]->kode_unik == $request->kode_unik ) {
                 $request->session()->put('loginTO', [
                     'id' => $id,
+                    'id_peserta' => $check_kode[0]->id,
                     'id_to' => $id_to ]);
+
+                foreach(str_split($to[0]->soal) as $soal) {
+                    if (is_numeric($soal)) {
+                        $check_answered = DB::table('jawaban_peserta')
+                            ->where('id_peserta', $check_kode[0]->id)
+                            ->where('id_soal', $soal)
+                            ->get();
+                        if (count($check_answered) < 1) {
+                            DB::table('jawaban_peserta')->insert([
+                                    'id_peserta' => $check_kode[0]->id,
+                                    'id_jawaban' => 0,
+                                    'id_soal' => $soal
+                                ]);
+                        }
+                    }
+                }
+
                 return redirect(route('tryout.index', $id_to));
             } else {
                 return redirect()->back()->with('failed', 'Kode yang anda masukkan salah');    
@@ -487,7 +519,7 @@ class TryoutController extends Controller
         return redirect(route('tryout.index', $id_to));
     }
 
-    public function ujianFinish($id_to, $id_peserta) {
+    public function ujianFinish(Request $request, $id_to, $id_peserta) {
         $data = DB::table('peserta_konfirmasi')
             ->where('id_tryout', $id_to)
             ->where('id_peserta', $id_peserta)
@@ -499,6 +531,9 @@ class TryoutController extends Controller
 
         $peserta = PesertaKonfirmasi::find($data[0]->id);
         $peserta->update(['status' => 'Telah Ujian']);
+
+        $request->session()->forget('loginTO');
+        $request->session()->forget('subtes');
         return view('to/finish-ujian', [
             'data_to' => $data_to
         ]);

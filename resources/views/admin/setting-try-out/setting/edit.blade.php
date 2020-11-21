@@ -34,12 +34,16 @@
                                                 <input readonly value="{{$data->nama}}" class="form-control" type="text" name="subtes" id="subtes">
                                             </div>
                                             <div class="form-group">
-                                                <label for="subtes">Kategori</label>
+                                                <label for="kategori">Kategori</label>
                                                 <input readonly value="{{$data->kategori}}" class="form-control" type="text" name="kategori" id="kategori">
                                             </div>
                                             <div class="form-group">
+                                                <label for="jumlah_soal">Jumlah Soal</label>
+                                                <input required value="{{$data->jumlah_soal}}" class="form-control" type="number" min="0" name="jumlah_soal" id="jumlah_soal">
+                                            </div>
+                                            <div class="form-group">
                                                 <label for="subtes">Waktu Pengerjaan (Menit)</label>
-                                                <input value="{{$data->durasi}}" class="form-control" type="number" min="0" name="durasi" id="durasi">
+                                                <input required value="{{$data->durasi}}" class="form-control" type="number" min="0" name="durasi" id="durasi">
                                             </div>
                                             <div class="form-actions">
                                                 <a href="{{route('setting-waktu-pengerjaan-subtes.index')}}" type="button" class="btn btn-warning mr-1">

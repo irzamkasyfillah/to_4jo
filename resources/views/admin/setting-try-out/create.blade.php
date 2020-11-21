@@ -76,7 +76,12 @@
                                                                                 @if ($soal->subtes == $subtes->id)
                                                                                     <tr>
                                                                                         <td>
-                                                                                            <input name="soal[]" class="mr-1" type="checkbox" value="{{ $soal->id}}"><?php echo $soal->deskripsi ?>
+                                                                                            <div class="input-group">
+                                                                                                <div class="input-group-prepend">
+                                                                                                    <input name="soal[]" class="mr-1" type="checkbox" value="{{ $soal->id}}">
+                                                                                                    <span><?php echo $soal->deskripsi ?></span>
+                                                                                                </div>
+                                                                                            </div>
                                                                                         </td>
                                                                                     </tr>
                                                                                 @endif

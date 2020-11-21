@@ -50,7 +50,9 @@
                                                 @foreach ($data as $data)
                                                 <tr>
                                                     <td><?php echo $data->nama ?></td>
-                                                    <td><?php echo $data->waktu ?></td>
+                                                    <td class="text-center"><?php echo date_format(date_create($data->waktu), "l, j F Y - H:i") ?>
+                                                        <br>- until -<br> <?php echo date_format(date_create($data->waktu_selesai), "l, j F Y - H:i") ?>
+                                                    </td>
                                                     <td><?php echo $peserta[$i++] ?></td>
                                                     <td class="text-center">
                                                         <a data-toggle="tooltip" data-placement="top" title="Detail" href="{{route('history-try-out.show', $data->id)}}" class="btn btn-info"><i class="fa fa-pencil-square-o"></i></a>

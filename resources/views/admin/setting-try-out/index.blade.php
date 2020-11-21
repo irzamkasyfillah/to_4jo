@@ -42,14 +42,16 @@
                                         <table id="data" class="table table-hover table-striped table-bordered zero-configuration">
                                             <thead>
                                                 <tr class="">
-                                                    <th width="20%">Nama Try Out</th>
-                                                    <th width="20%">Waktu (hari/tanggal/jam)</th>
-                                                    <th width="20%">Batas Pengerjaan</th>
-                                                    <th width="20%">Harga</th>
-                                                    <th width="10%">Aksi</th>
+                                                    <th width="">Nama</th>
+                                                    <th width="">Waktu</th>
+                                                    <th width="">Batas Pengerjaan</th>
+                                                    <th width="">Harga</th>
+                                                    <th width="">Jml Peserta Sementara</th>
+                                                    <th width="">Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <?php $i=0; ?>
                                                 @foreach ($data_tryout as $data)
                                                 <tr class="">
                                                     <td>{{ $data->nama }}</td>
@@ -68,6 +70,7 @@
                                                         @endif
                                                     </td>
                                                     <td>Rp. {{ $data->harga }} </td>
+                                                    <td>{{ $jml_peserta[$i++] }} </td>
                                                     <td class="text-center">
                                                     <!-- Icon Button dropdowns -->
                                                     <div class="btn-group mr-1 mb-1">
@@ -119,7 +122,7 @@
                                                                                                 <?php $no = 1; ?>
                                                                                                 @foreach ($data_soal as $soal)
                                                                                                     @if ($soal->subtes == $subtes->id)
-                                                                                                        @foreach ($data->soal as $soal_check)
+                                                                                                        @foreach (str_split($data->soal) as $soal_check)
                                                                                                             @if ($soal->id == intval($soal_check))
                                                                                                                 <tr>
                                                                                                                     <td class="text-center">
@@ -185,10 +188,11 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr class="" >
-                                                    <th>Nama Try Out</th>
-                                                    <th>Waktu (hari/tanggal/jam)</th>
+                                                    <th>Nama</th>
+                                                    <th>Waktu</th>
                                                     <th>Batas Pengerjaan</th>
                                                     <th>Harga</th>
+                                                    <th>Jml Peserta Sementara</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </tfoot>

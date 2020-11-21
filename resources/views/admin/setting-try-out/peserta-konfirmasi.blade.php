@@ -47,10 +47,11 @@
                                         <table id="data" class="table table-hover table-striped table-bordered zero-configuration">
                                             <thead>
                                                 <tr class="" >
-                                                    <th width="5%">No</th>
-                                                    <th width="">Email Peserta</th>
+                                                    {{-- <th width="">No</th> --}}
+                                                    <th width="">Nama</th>
+                                                    <th width="">Email</th>
                                                     <th width="">Tryout Terdaftar</th>
-                                                    <th width="">Kelompok Ujian</th>
+                                                    <th width="">Klp Ujian</th>
                                                     <th width="">Harga</th>
                                                     <th width="">Status</th>
                                                     <th width="5%">Aksi</th>
@@ -60,9 +61,10 @@
                                                 <?php $i = 1; ?>
                                                 @foreach ($data_peserta_konfirmasi as $data)
                                                 <tr>
-                                                    <td class="">{{$i++}}</td>
+                                                    {{-- <td class="">{{$i++}}</td> --}}
+                                                    <td>{{ ucwords($data->name) }}</td>
                                                     <td>{{ $data->email }}</td>
-                                                    <td>{{ $data->nama }}</td>
+                                                    <td>{{ ucwords($data->nama) }}</td>
                                                     <td>{{ $data->kelompok_ujian }} </td>
                                                     <td>Rp. {{ $data->harga }} </td>
                                                     <td>{{ $data->status }} </td>
@@ -103,10 +105,11 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr class="" >
-                                                    <th>No</th>
-                                                    <th>Email Peserta</th>
+                                                    {{-- <th>No</th> --}}
+                                                    <th>Nama</th>
+                                                    <th>Email</th>
                                                     <th>Tryout terdaftar</th>
-                                                    <th>Kelompok Ujian</th>
+                                                    <th>Klp Ujian</th>
                                                     <th>Harga</th>
                                                     <th>Status</th>
                                                     <th>Aksi</th>

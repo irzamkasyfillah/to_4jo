@@ -27,7 +27,7 @@
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <h3>
-                                            <span class="text-bold-300">Detail History {{$data->nama}}</strong></span>
+                                            <span class="text-bold-300">Detail History <b>{{ucwords($data->nama)}}</b></strong></span>
                                         </h3> 
                                     </div>
                                 </div>
@@ -63,23 +63,42 @@
                                                 <tr class="">
                                                     <th width="">Nama Peserta</th>
                                                     <th width="">Kelas</th>
-                                                    <th width="">Benar</th>
-                                                    <th width="">Salah</th>
-                                                    <th width="">Kosong</th>
-                                                    <th width="">Nilai</th>
+                                                    <th class="text-center" width="">Benar</th>
+                                                    <th class="text-center" width="">Salah</th>
+                                                    <th class="text-center" width="">Kosong</th>
+                                                    <th class="text-center" width="">Nilai</th>
+                                                    <?php $i=1; ?>
+                                                    @foreach ($array_soal as $soal)
+                                                        <th class="text-center">No. {{ $i++ }}</th>
+                                                    @endforeach
                                                     <th width="10%">Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="body">
                                                 @foreach ($data_peserta as $peserta)
                                                 <tr>
-                                                    <td>{{ $peserta->name }}</td>
+                                                    <td>{{ ucwords($peserta->name) }}</td>
                                                     <td>{{ $peserta->kelompok_ujian }}</td>
-                                                    <td>{{ $peserta->benar }}</td>
-                                                    <td>{{ $peserta->salah }}</td>
-                                                    <td>{{ $peserta->kosong }}</td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td class="text-center">{{ $peserta->benar }}</td>
+                                                    <td class="text-center">{{ $peserta->salah }}</td>
+                                                    <td class="text-center">{{ $peserta->kosong }}</td>
+                                                    <td class="text-center">{{ $peserta->nilai }}</td>
+                                                    <?php $i=0; ?>
+                                                    @foreach ($jawaban_peserta as $jawaban)
+                                                        @if ($jawaban->id_peserta == $peserta->id)
+                                                            @if ($jawaban->value == 1) 
+                                                                <?php $bg ="bg-success"; $fa = "fa fa-check" ?>
+                                                            @elseif (is_null($jawaban->value)) 
+                                                                <?php $bg ="bg-grey"; $fa = "fa fa-minus" ?>
+                                                            @elseif ($jawaban->value == 0)
+                                                                <?php $bg ="bg-danger"; $fa = "fa fa-times" ?>
+                                                            @endif
+                                                            <td class="text-center white {{ $bg }}"><i class="mt-1 {{ $fa }}"></i></td>
+                                                        @endif
+                                                    @endforeach
+                                                    <td class="text-center">
+                                                        <a data-toggle="tooltip" data-placement="top" title="Edit Nilai" href="{{ route('edit-nilai.edit', [$data->id, $subtes_now, $peserta->id]) }}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i></a>
+                                                    </td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -103,7 +122,7 @@
                 </div>
             </div>
         </div>
-        <div class="height-100"></div>
+        <div class="height-200"></div>
     </div>
 
     {{-- <script>

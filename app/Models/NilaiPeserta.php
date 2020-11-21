@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Subtes extends Model
+class NilaiPeserta extends Model
 {
     use HasFactory;
 
-    protected $table = "subtes";
+    protected $table = "nilai_peserta";
 
     protected $fillable = [
-        'nama',
-        'kategori',
-        'durasi',
-        'jumlah_soal'
+        'id_peserta',
+        'id_subtes',
+        'nilai'
     ];
 }

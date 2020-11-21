@@ -65,6 +65,9 @@ Route::resource('setting-pembayaran', 'App\Http\Controllers\PembayaranController
 Route::resource('setting-peraturan-try-out', 'App\Http\Controllers\PeraturanTOController');
 Route::resource('history-try-out', 'App\Http\Controllers\HistoryTOController');
 
+Route::get('history-try-out/{id_to}/{id_subtes}/{id_peserta}/edit', [App\Http\Controllers\HistoryTOController::class, 'editNilai'])->name('edit-nilai.edit');
+Route::get('history-try-out/{id_to}/{id_subtes}/{id_peserta}/update', [App\Http\Controllers\HistoryTOController::class, 'updateNilai'])->name('update-nilai.update');
+
 Route::get('get_tryout', [App\Http\Controllers\KuponController::class, 'getTryout']);
 
 Route::get('get_kupon/{id_to}', [App\Http\Controllers\KuponController::class, 'getKupon']);

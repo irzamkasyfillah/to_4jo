@@ -36,7 +36,7 @@
                             
                             <i></i>
                           </span>
-                        <span class="user-name">{{ Auth::user()->name }} <span id="notif1"></span>
+                        <span class="user-name">{{ ucwords(Auth::user()->name) }} <span id="notif1"></span>
                         <input id="id_user" type="text" value="{{Auth::user()->id}}" hidden>
                     </a>
                 <div class="dropdown-menu dropdown-menu-right">

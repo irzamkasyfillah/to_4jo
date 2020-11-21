@@ -48,11 +48,13 @@
                                                     @else
                                                         <?php $checked = '' ?>
                                                     @endif
-                                                    <fieldset>
-                                                        {{-- <span class="mr-1"><b>{{$opsi[$i++]}}</b></span> --}}
-                                                        <input {{$checked}} onclick="insertJawaban('{{session()->get('loginTO')['id']}}', '{{$data_soal[$no-1]->id}}', '{{$jawaban->id}}')" type="radio" name="jawaban[]" id="input-radio">
-                                                        <label class="ml-1" for="input-radio"><?php echo $jawaban->teks ?></label>
-                                                    </fieldset>
+                                                    {{-- <span class="mr-1"><b>{{$opsi[$i++]}}</b></span> --}}
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <input {{$checked}} onclick="insertJawaban('{{session()->get('loginTO')['id_peserta']}}', '{{$data_soal[$no-1]->id}}', '{{$jawaban->id}}')" type="radio" name="jawaban[]" id="input-radio">
+                                                            <span class="row ml-1 mr-2 mb-1" style="margin-top : -4px;"><?php echo $jawaban->teks ?></span>
+                                                        </div>
+                                                    </div>
 
                                                 @endforeach
                                             </div>
@@ -88,7 +90,7 @@
                                         <div class="text-center">
                                             <div class="bg-warning p-1 rounded white">
                                                 <input {{$ragu}} class="" type="checkbox" id="keraguan"> Ragu-Ragu
-                                                <input type="hidden" id="id_peserta" value="{{session()->get('loginTO')['id']}}">
+                                                <input type="hidden" id="id_peserta" value="{{session()->get('loginTO')['id_peserta']}}">
                                                 <input type="hidden" id="id_soal" value="{{$data_soal[$no-1]->id}}">
                                             </div>
                                         </div>

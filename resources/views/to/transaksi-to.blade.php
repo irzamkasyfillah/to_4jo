@@ -29,7 +29,11 @@
                                             </tr>
                                             <tr>
                                                 <td class="text-right">Waktu</td>
-                                                <td>{{date_format(date_create($data_peserta[0]->waktu), "j F Y - H:i")}}</td>
+                                                <td>
+                                                    {{date_format(date_create($data_peserta[0]->waktu), "j F Y - H:i")}}
+                                                    {{-- <br><span class="ml-5">- sampai -</span><br>
+                                                    {{date_format(date_create($data_peserta[0]->waktu_selesai), "j F Y - H:i")}} --}}
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td class="text-right">Harga</td>
@@ -45,21 +49,29 @@
                                             </tr>
                                         </table>
                                         @if (strtolower($data_peserta[0]->status) == "diterima")
-                                            <div class="alert alert-success text-center mb-1">
+                                            <div class="text-center alert alert-success text-center mb-1">
                                                 <span class="font-small-4 ">
                                                     Anda telah terdaftar dalam <b>{{$data_peserta[0]->nama}}</b>. Silakan cek pesan anda untuk info yang lebih detail. Terimakasih.
                                                 </span>
                                             </div>
-                                            <div class="text-center">
-                                                <a href="{{ route('tryout.showlogin', $data_peserta[0]->id_tryout) }}" class="btn btn-danger btn-min-width">Mulai Try Out</a>
+                                            @if ($data_peserta[0]->waktu < now() && $data_peserta[0]->waktu_selesai > now())
+                                                <div class="text-center">
+                                                    <a href="{{ route('tryout.showlogin', $data_peserta[0]->id_tryout) }}" class="btn btn-danger btn-min-width">MULAI TRY OUT</a>
+                                                </div>
+                                            @endif
+                                        @elseif (strtolower($data_peserta[0]->status) == "telah ujian")
+                                            <div class="text-center alert alert-success mb-1">
+                                                <span class="font-small-4 ">
+                                                    Anda telah mengikut ujian ini. Anda akan menerima hasil ujian melalui kotak pesan Anda. Terima Kasih!
+                                                </span>
                                             </div>
                                         @elseif (strtolower($data_peserta[0]->status) == "ditolak")
-                                            <div class="alert alert-danger mb-1">
+                                            <div class="text-center alert alert-danger mb-1">
                                                 <span class="font-small-4 ">
                                                     Maaf, anda telah ditolak untuk menjadi peserta <b>{{$data_peserta[0]->nama}}</b> karena alasan tertentu. Silakan lakukan pendaftaran ulang jika anda tetap ingin mendaftar sebagai peserta try out ini. Terimakasih.
                                                 </span>
                                             </div>
-                                        @else 
+                                        @else  
                                             <div class="text-center">
                                                 <a href="javascript:location.reload();" class="btn btn-info btn-min-width mb-1 mr-1">Cek Status</a>
                                                 <a data-toggle="modal" data-target="#hapus" href="" class="btn btn-danger btn-min-width mb-1">Batal Transaksi</a>

@@ -339,7 +339,6 @@ class TryoutController extends Controller
             //Kirim notifikasi
             $notif = [
                 'pengirim' => 'System',
-                'id_user' => $data_peserta->id_peserta,
                 'id_peserta' => $data_peserta->id,
                 'judul' => 'Kode Unik Peserta Try Out',
                 'isi' => $kode,
@@ -391,6 +390,9 @@ class TryoutController extends Controller
 
         if ($check_kode->count() > 0) {
             if ($check_kode[0]->kode_unik == $request->kode_unik ) {
+                if (strtolower($check_kode[0]->status) == "telah ujian") {
+                    return redirect()->back()->with('failed', 'Anda telah mengikuti ujian ini');    
+                }
                 $request->session()->put('loginTO', [
                     'id' => $id,
                     'id_peserta' => $check_kode[0]->id,

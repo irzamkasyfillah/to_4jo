@@ -46,7 +46,11 @@
                                     <form class="form" action="{{ route('update-nilai.update', [$data->id, $subtes->id, $peserta[0]->id ]) }}">
                                         <div class="form-group">
                                             <label for="nilai">Nilai</label>
-                                            <input class="form-control" type="number" min="0" name="nilai" value="{{ $peserta[0]->nilai }}" id="nilai">
+                                            @if (count($nilai) > 0)
+                                                <input class="form-control" type="number" min="0" name="nilai" value="{{ $nilai[0]->nilai }}" id="nilai">
+                                            @else
+                                                <input class="form-control" type="number" min="0" name="nilai" value="" id="nilai">
+                                            @endif
                                         </div>
                                         <div class="form-actions">
                                             <a href="{{route('history-try-out.index')}}" type="button" class="btn btn-warning mr-1">

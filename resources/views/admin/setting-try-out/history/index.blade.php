@@ -42,7 +42,7 @@
                                                     <th width="">Nama Try Out</th>
                                                     <th width="">Waktu</th>
                                                     <th width="">Jumlah Peserta</th>
-                                                    <th width="10%">Aksi</th>
+                                                    <th width="15%">Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -55,7 +55,8 @@
                                                     </td>
                                                     <td><?php echo $peserta[$i++] ?></td>
                                                     <td class="text-center">
-                                                        <a data-toggle="tooltip" data-placement="top" title="Detail" href="{{route('history-try-out.show', $data->id)}}" class="btn btn-info"><i class="fa fa-pencil-square-o"></i></a>
+                                                        <a data-toggle="tooltip" data-placement="top" title="Detail" href="{{route('show-nilai.show', [$data->id, 1])}}" class="btn btn-info"><i class="fa fa-pencil-square-o"></i></a>
+                                                        <a data-toggle="tooltip" data-placement="top" title="Publish" href="{{route('tryout.publish', $data->id)}}" class="btn btn-warning"><i class="fa fa-share-square-o"></i></a>
                                                     </td>
                                                 </tr>
                                                 @endforeach

@@ -43,8 +43,8 @@
                                     <?php $bg = "";?>
                                 @endif
                                 <tr class="{{$bg}}">
-                                    <td ><a href="../../notifikasi/detail/{{$data->id}}">{{$data->pengirim}}</a></td>
-                                    <td ><a href="../../notifikasi/detail/{{$data->id}}">{{$data->judul}}</a></td>
+                                    <td ><a href="../../notifikasi/detail/{{$data->id_notifikasi}}">{{$data->pengirim}}</a></td>
+                                    <td ><a href="../../notifikasi/detail/{{$data->id_notifikasi}}">{{$data->judul}}</a></td>
                                     <td >{{date_format(date_create($data->created_at), 'd-m-Y')}}</td>
                                 </tr>
                                 @endforeach

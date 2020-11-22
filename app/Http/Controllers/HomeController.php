@@ -25,7 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $data_tryout = DB::table('tryout')->get()->all();
+        $data_tryout = DB::table('tryout')
+            ->where('waktu_selesai', '>', now())
+            ->get();
+
         return view('home', [
             'data_tryout' => $data_tryout
         ]);
@@ -79,7 +82,8 @@ class HomeController extends Controller
             ->where('peserta_konfirmasi.id', $id_transaksi)
             ->join('tryout', 'tryout.id', '=', 'peserta_konfirmasi.id_tryout')
             ->join('users', 'users.id', '=', 'peserta_konfirmasi.id_peserta')
-            ->select( 'peserta_konfirmasi.*', 'tryout.nama', 'tryout.waktu', 'users.*', 'peserta_konfirmasi.id as id_peserta_konfirmasi', 'tryout.id as id_tryout', 'users.id as id_user')
+            ->select( 'peserta_konfirmasi.*', 'tryout.*','users.*', 'peserta_konfirmasi.id as id_peserta_konfirmasi', 'tryout.id as id_tryout', 'users.id as id_user'
+            ,'peserta_konfirmasi.waktu_selesai as waktu_selesai_peserta')
             ->get();
 
         // dd($data_peserta);

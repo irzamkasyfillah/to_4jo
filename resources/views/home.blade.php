@@ -29,7 +29,27 @@
             <div class="card-content">
                 <div class="card-body">
                     <div class="row">
+                        @foreach ($data_tryout as $data)
+                            @if ($data->waktu < now() && $data->waktu_selesai > now())
+                                <div class="col mb-1 ml-1 mr-1">
+                                    <div class="alert alert-warning alert-block">
+                                        <button type="button" class="close" data-dismiss="alert">×</button> 
+                                        <span style="color:white;" class="text-bold-400">
+                                            {{ $data->nama }} sudah dimulai!. Batas Pengerjaan Try Out hingga {{date_format(date_create($data->waktu_selesai), "j F Y")}}, 
+                                            pukul {{date_format(date_create($data->waktu_selesai), "H:i")}}
+                                        </span>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                    <div class="row">
                     @foreach ($data_tryout as $data_tryout)
+                        @if ($data->waktu < now() && $data->waktu_selesai > now())
+                            <?php $mulai = "Mulai / Daftar" ?>
+                        @else
+                            <?php $mulai = "Daftar" ?>
+                        @endif
                         <a href="daftar-to/{{$data_tryout->id}}/{{Auth::user()->id}}" class="col-xl-5 ml-3 mb-3 border-grey border-lighten-3">
                             <div class="card-header border-2 text-center">
                                 <span class="font-small-4 text-muted text-bold-400 "><b>{{strtoupper($data_tryout->nama)}}</b></span>
@@ -37,7 +57,7 @@
                             <span class="font-small-4 text-muted text-left">{{date_format(date_create($data_tryout->waktu), "j F Y")}} </span>
                             <hr>
                             <div class="card-content text-center">
-                                <button type="button" class="btn btn-info round box-shadow-1 btn-min-width mr-1 mb-1"> Daftar <i class="ft-arrow-right ml-1"></i></button>
+                                <button type="button" class="btn btn-info round box-shadow-1 btn-min-width mr-1 mb-1">{{$mulai}}<i class="ft-arrow-right ml-1"></i></button>
                             </div>
                         </a>
                     @endforeach

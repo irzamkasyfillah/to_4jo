@@ -21,7 +21,7 @@ class HistoryTOController extends Controller
     public function index()
     {
         $data = DB::table('tryout')
-            ->where('tryout.waktu_selesai', '>', now())
+            ->where('tryout.waktu_selesai', '<', now())
             ->get();
             
         $peserta = [];
@@ -68,13 +68,17 @@ class HistoryTOController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id_to)
+    public function showNilai(Request $request, $id_to, $id_subtes = null)
     {
         $data = Tryout::find($id_to);
         $data_subtes = Subtes::all();
         
         if ($request->subtes == null) {
-            $request->subtes = '1';
+            if ($id_subtes == null) {
+                $request->subtes = '1';
+            } else {
+                $request->subtes = $id_subtes;
+            }
         }
 
         $array_soal = [];
@@ -139,15 +143,20 @@ class HistoryTOController extends Controller
         $peserta = DB::table('peserta_konfirmasi')
             ->where('peserta_konfirmasi.id', $id_peserta)
             ->join('users', 'users.id', '=', 'peserta_konfirmasi.id_peserta')
-            ->leftJoin('nilai_peserta', 'nilai_peserta.id_peserta', '=', 'peserta_konfirmasi.id')
-            ->select('users.id as id_users', 'users.name', 'peserta_konfirmasi.*', 'nilai_peserta.*', 'nilai_peserta.id as id_nilai_peserta', 'peserta_konfirmasi.id as id')
+            ->select('users.id as id_users', 'users.name', 'peserta_konfirmasi.*')
             ->get();
         
-        // dd($peserta);
+        $nilai = DB::table('nilai_peserta')
+            ->where('nilai_peserta.id_peserta', $id_peserta)
+            ->where('nilai_peserta.id_subtes', $id_subtes)
+            ->get();
+
+        // dd($nilai);
         return view('admin/setting-try-out/history/edit', [
-                'data'=>$data,
-                'subtes'=>$subtes,
-                'peserta'=>$peserta
+                'data'=> $data,
+                'subtes'=> $subtes,
+                'peserta'=> $peserta,
+                'nilai' => $nilai
         ]);
     }
 
@@ -185,7 +194,7 @@ class HistoryTOController extends Controller
                     'nilai' => $request->nilai,
                 ]);
         }
-        return redirect(route('history-try-out.show', $id_to))->with('success', 'Data berhasil di-update');
+        return redirect(route('show-nilai.show', [$id_to, $id_subtes]))->with('success', 'Data berhasil di-update');
     }
 
     /**
@@ -197,5 +206,39 @@ class HistoryTOController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function tryoutPublish($id_to)
+    {
+        $data_peserta = DB::table('peserta_konfirmasi')
+            ->where('id_tryout', $id_to)
+            ->get();
+
+        // dd($data_peserta);
+        $i = 0;
+        foreach ($data_peserta as $data) {
+            $notif = DB::table('notifikasi')
+                ->where('notifikasi.id_peserta', $data->id)
+                ->where('judul', 'Hasil Try Out')
+                ->get();
+
+            if (count($notif) > 0) {
+                ++$i;
+            } else {
+                DB::table('notifikasi')->insert([
+                    'id_peserta' => $data->id,
+                    'pengirim' => 'System',
+                    'judul' => 'Hasil Try Out',
+                    'isi' => '',
+                    'read' => false
+                    ]);
+            }
+        }
+
+        if ($i > 0) {
+            return redirect()->back()->with('success', 'Hasil Try Out ini sudah pernah di-publish');
+        } else {
+            return redirect()->back()->with('success', 'Data Hasil Try Out berhasil di-publish');
+        }
     }
 }

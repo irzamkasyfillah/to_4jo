@@ -16,10 +16,9 @@ class CreateNotifikasiTable extends Migration
         Schema::create('notifikasi', function (Blueprint $table) {
             $table->id();
             $table->string('pengirim');
-            $table->string('id_user');
-            $table->string('id_peserta')->nullable();
+            $table->string('id_peserta');
             $table->string('judul');
-            $table->string('isi');
+            $table->string('isi')->nullable();
             $table->boolean('read');
             $table->timestamps();
         });

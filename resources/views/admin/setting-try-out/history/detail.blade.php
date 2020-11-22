@@ -38,7 +38,7 @@
                                     <div class="mb-2">
                                         <input type="hidden" name="id_to" value="{{$data->id}}" id="id_to">
                                         <label for="id_tryout">Subtes</label>
-                                        <form action="{{ route('history-try-out.show', $data->id)}}" method="GET">
+                                        <form action="{{ route('show-nilai.show', [$data->id, 1])}}" method="GET">
                                             <div class="input-group">
                                                 <select required id="subtes" name="subtes" class="form-control">
                                                     <option value="" selected="" disabled="">Pilih Subtes</option>

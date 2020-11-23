@@ -51,7 +51,31 @@
                                     <div class="ml-2 mr-2 mb-3">
                                         <div class="form-group">
                                             @foreach ($tps as $tps)
-                                                <a href="tryout{{$data[0]->id_tryout}}/{{$tps->id}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">{{$tps->nama}} </a>
+                                                <button data-toggle="modal" data-target="#kerjatps{{$tps->id}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">{{$tps->nama}}</button>
+
+                                                {{-- MODAL KERJA TPS --}}
+                                                <div class="modal fade text-left" id="kerjatps{{$tps->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h4 class="modal-title" id="myModalLabel1">{{$data[0]->nama}}</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Apakah Anda ingin mengerjakan kategori soal <b>{{ ucwords($tps->nama) }}</b> ?<br><br>
+                                                            Waktu pengerjaan soal akan dimulai begitu Anda klik tombol mulai.
+                                                            </p>    
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-warning" data-dismiss="modal">BATAL</button>
+                                                            <a href="tryout{{$data[0]->id_tryout}}/{{$tps->id}}/{{1}}" class="btn btn-danger">MULAI</a>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                {{-- END MODAL KERJA TPS --}}
                                             @endforeach
                                         </div>
                                     </div>
@@ -64,7 +88,32 @@
                                         <div class="ml-2 mr-2">
                                             <div class="form-group">
                                                 @foreach ($saintek as $saintek)
-                                                    <a href="tryout{{$data[0]->id_tryout}}/{{$saintek->id}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">{{$saintek->nama}}</a>
+
+                                                    <button data-toggle="modal" data-target="#kerjasaintek{{$saintek->id}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">{{$saintek->nama}}</button>
+
+                                                    {{-- MODAL KERJA SAINTEK --}}
+                                                    <div class="modal fade text-left" id="kerjasaintek{{$saintek->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                            <h4 class="modal-title" id="myModalLabel1">{{$data[0]->nama}}</h4>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Apakah Anda ingin mengerjakan kategori soal <b>{{ ucwords($saintek->nama) }}</b> ?<br><br>
+                                                                Waktu pengerjaan soal akan dimulai begitu Anda klik tombol mulai.
+                                                                </p>    
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-warning" data-dismiss="modal">BATAL</button>
+                                                                <a href="tryout{{$data[0]->id_tryout}}/{{$saintek->id}}/{{1}}" class="btn btn-danger">MULAI</a>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    {{-- END MODAL KERJA SAINTEK --}}
                                                 @endforeach
                                             </div>
                                         </div>
@@ -75,7 +124,31 @@
                                         <div class="ml-2 mr-2">
                                             <div class="form-group">
                                                 @foreach ($soshum as $soshum)
-                                                    <a href="tryout{{$data[0]->id_tryout}}/{{$soshum->id}}/{{1}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">{{$soshum->nama}}</a>
+                                                    <button data-toggle="modal" data-target="#kerjasoshum{{$soshum->id}}" class="btn  btn-min-width mb-1 btn-outline-info btn-lg btn-block">{{$soshum->nama}}</button>
+
+                                                    {{-- MODAL KERJA SOSHUM --}}
+                                                    <div class="modal fade text-left" id="kerjasoshum{{$soshum->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                            <h4 class="modal-title" id="myModalLabel1">{{$data[0]->nama}}</h4>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Apakah Anda ingin mengerjakan kategori soal <b>{{ ucwords($soshum->nama) }}</b> ?<br><br>
+                                                                Waktu pengerjaan soal akan dimulai begitu Anda klik tombol mulai.
+                                                                </p>    
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-warning" data-dismiss="modal">BATAL</button>
+                                                                <a href="tryout{{$data[0]->id_tryout}}/{{$soshum->id}}/{{1}}" class="btn btn-danger">MULAI</a>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    {{-- END MODAL KERJA SOSHUM --}}
                                                 @endforeach
                                             </div>
                                         </div>

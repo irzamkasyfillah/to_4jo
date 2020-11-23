@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Crypt;
 use App\Models\Tryout;
 use App\Models\Soal;
 use App\Models\Subtes;
+use DateInterval;
+use DateTime;
+use DateTimeZone;
 
 class TryoutController extends Controller
 {
@@ -47,6 +50,7 @@ class TryoutController extends Controller
                 ->get();
             array_push($jml_peserta, count($peserta));
         }
+        // dd($jml_peserta, $data_tryout);
 
         return view('admin/setting-try-out/index', [
             'data_tryout' => $data_tryout,
@@ -57,7 +61,9 @@ class TryoutController extends Controller
     }
 
     public function indexSettingWaktu() {
-        $data = Subtes::all();
+        $data = DB::table('subtes')
+            ->get();
+        // dd($data);
         return view('admin/setting-try-out/setting/index', [
             'data' => $data
         ]);
@@ -166,7 +172,7 @@ class TryoutController extends Controller
             'harga' => ['required', 'integer'],
             'soal' => ['nullable', 'array']
         ]);
-
+        // dd($request);
         $tryout = Tryout::find($id);
         $tryout->update($request->all());
 
@@ -236,21 +242,6 @@ class TryoutController extends Controller
                 ->where('jawaban_peserta.id_jawaban', '<>', 0)
                 ->select('id_soal')
                 ->get();
-
-            //input belum dijawab pas pertama
-            // $jawaban = DB::table('jawaban_peserta')
-            // ->where('id_peserta', $request->session()->get('loginTO')['id_peserta'])
-            // ->where('id_soal', $data_soal[$no-1]->id)
-            // ->get();
-            
-            // if (count($jawaban) < 1) {
-            //     DB::table('jawaban_peserta')->insert([
-            //             'id_jawaban' => 0,
-            //             'id_peserta' => $request->session()->get('loginTO')['id_peserta'],
-            //             'id_soal' => $data_soal[$no-1]->id
-            //     ]);
-            // }
-            //batas input kosong
     
             $array_jawaban = [];
             foreach ($data_semua_jawaban_peserta as $data) {
@@ -266,6 +257,23 @@ class TryoutController extends Controller
             $array_jawaban_ragu = [];
             foreach ($data_semua_jawaban_peserta_ragu as $data) {
                 array_push($array_jawaban_ragu, $data->id_soal);
+            }
+
+            $peserta_konfirmasi = PesertaKonfirmasi::find(session()->get('loginTO')['id_peserta']);
+            $subtes = Subtes::find($id_subtes);
+            if ($peserta_konfirmasi->waktu_mulai == null) {
+                $now = new DateTime();
+                $now->setTimezone(new DateTimeZone('GMT+8'));
+                $peserta_konfirmasi->update([
+                    'waktu_mulai' => $now
+                ]);
+
+                $waktu_selesai = $now;
+                $waktu_selesai->add(new DateInterval('PT'.$subtes->durasi.'M'));
+                $peserta_konfirmasi->update([
+                    'waktu_selesai' => $waktu_selesai
+                ]);
+                // dd($now, $waktu_selesai);
             }
 
             // dd($data_tryout, $data_soal, $data_jawaban, $data_jawaban_peserta, $data_semua_jawaban_peserta);

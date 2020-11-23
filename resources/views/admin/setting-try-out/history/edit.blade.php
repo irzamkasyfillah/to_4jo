@@ -47,7 +47,7 @@
                                         <div class="form-group">
                                             <label for="nilai">Nilai</label>
                                             @if (count($nilai) > 0)
-                                                <input class="form-control" type="number" min="0" name="nilai" value="{{ $nilai[0]->nilai }}" id="nilai">
+                                                <input required class="form-control" type="number" min="0" name="nilai" value="{{ $nilai[0]->nilai }}" id="nilai">
                                             @else
                                                 <input class="form-control" type="number" min="0" name="nilai" value="" id="nilai">
                                             @endif

@@ -46,7 +46,7 @@
                             <div class="card-content">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table id="data" class="table table-hover table-striped table-bordered zero-configuration">
+                                        <table id="data" class="table table-hover table-striped table-bordered default-ordering">
                                             <thead>
                                                 <tr class="">
                                                     <th width="30%">Kode Kupon</th>

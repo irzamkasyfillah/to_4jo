@@ -54,7 +54,12 @@
                                                     Anda telah terdaftar dalam <b>{{$data_peserta[0]->nama}}</b>. Silakan cek pesan anda untuk info yang lebih detail. Terimakasih.
                                                 </span>
                                             </div>
-                                            @if ($data_peserta[0]->waktu < now() && $data_peserta[0]->waktu_selesai > now())
+                                            <?php 
+                                                $time = new DateTime();
+                                                $time->setTimezone(new DateTimeZone('GMT+8'));    
+                                                $now = $time->format('Y-m-d H:i:s');
+                                            ?>
+                                            @if ($data_peserta[0]->waktu < $now && $data_peserta[0]->waktu_selesai > $now)
                                                 <div class="text-center">
                                                     <a href="{{ route('tryout.showlogin', $data_peserta[0]->id_tryout) }}" class="btn btn-danger btn-min-width">MULAI TRY OUT</a>
                                                 </div>

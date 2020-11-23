@@ -19,7 +19,9 @@ class PesertaKonfirmasi extends Model
         'status',
         'subtes_done',
         'kelompok_ujian',
-        'kode_unik'
+        'kode_unik',
+        'waktu_mulai',
+        'waktu_selesai'
     ];
 
     protected $casts =  [

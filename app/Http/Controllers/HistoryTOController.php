@@ -8,6 +8,8 @@ use App\Models\PesertaKonfirmasi;
 use App\Models\Subtes;
 use App\Models\Tryout;
 use App\Models\Soal;
+use DateTime;
+use DateTimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,8 +22,10 @@ class HistoryTOController extends Controller
      */
     public function index()
     {
+        $now = new DateTime();
+        $now->setTimezone(new DateTimeZone('GMT+8'));
         $data = DB::table('tryout')
-            ->where('tryout.waktu_selesai', '<', now())
+            ->where('tryout.waktu_selesai', '<', $now)
             ->get();
             
         $peserta = [];

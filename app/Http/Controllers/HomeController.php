@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\PesertaKonfirmasi;
+use DateTime;
+use DateTimeZone;
 
 class HomeController extends Controller
 {
@@ -25,10 +27,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $data_tryout = DB::table('tryout')
-            ->where('waktu_selesai', '>', now())
-            ->get();
+        $now = new DateTime();
+        $now->setTimezone(new DateTimeZone('GMT+8'));
 
+        $data_tryout = DB::table('tryout')
+            ->where('waktu_selesai', '>', $now)
+            ->get();
+        
         return view('home', [
             'data_tryout' => $data_tryout
         ]);

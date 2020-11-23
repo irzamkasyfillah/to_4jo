@@ -26,17 +26,24 @@
                 </div>
             </div>
             <hr>
+
+            <?php 
+                $time = new DateTime();
+                $time->setTimezone(new DateTimeZone('GMT+8'));    
+                $now = $time->format('Y-m-d H:i:s');
+            ?>
+
             <div class="card-content">
                 <div class="card-body">
                     <div class="row">
                         @foreach ($data_tryout as $data)
-                            @if ($data->waktu < now() && $data->waktu_selesai > now())
+                            @if ($data->waktu < $now && $data->waktu_selesai > $now)
                                 <div class="col mb-1 ml-1 mr-1">
                                     <div class="alert alert-warning alert-block">
                                         <button type="button" class="close" data-dismiss="alert">×</button> 
                                         <span style="color:white;" class="text-bold-400">
                                             {{ $data->nama }} sudah dimulai!. Batas Pengerjaan Try Out hingga {{date_format(date_create($data->waktu_selesai), "j F Y")}}, 
-                                            pukul {{date_format(date_create($data->waktu_selesai), "H:i")}}
+                                            pukul {{date_format(date_create($data->waktu_selesai), "H:i")}} WITA
                                         </span>
                                     </div>
                                 </div>
@@ -45,7 +52,7 @@
                     </div>
                     <div class="row">
                     @foreach ($data_tryout as $data_tryout)
-                        @if ($data->waktu < now() && $data->waktu_selesai > now())
+                        @if ($data->waktu < $now && $data->waktu_selesai > $now)
                             <?php $mulai = "Mulai / Daftar" ?>
                         @else
                             <?php $mulai = "Daftar" ?>

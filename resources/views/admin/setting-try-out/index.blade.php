@@ -39,7 +39,7 @@
                             <div class="card-content">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table id="data" class="table table-hover table-striped table-bordered zero-configuration">
+                                        <table id="data" class="table table-hover table-striped table-bordered default-ordering">
                                             <thead>
                                                 <tr class="">
                                                     <th width="">Nama</th>
@@ -51,7 +51,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php $i=0; ?>
+                                                <?php $j=0; ?>
                                                 @foreach ($data_tryout as $data)
                                                 <tr class="">
                                                     <td>{{ $data->nama }}</td>
@@ -70,7 +70,7 @@
                                                         @endif
                                                     </td>
                                                     <td>Rp. {{ $data->harga }} </td>
-                                                    <td>{{ $jml_peserta[$i++] }} </td>
+                                                    <td>{{ $jml_peserta[$j++] }} </td>
                                                     <td class="text-center">
                                                     <!-- Icon Button dropdowns -->
                                                     <div class="btn-group mr-1 mb-1">
@@ -145,7 +145,6 @@
                                                                             @endforeach
                                                                         </div>
                                                                     </div> 
-                                                                    <?php $i++ ?>   
                                                                 @endforeach 
                                                             </div>
                                                             <div class="modal-footer">

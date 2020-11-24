@@ -19,7 +19,11 @@
                                         <div class="col-xl-6">
                                             <div class="text-right">
                                                 <h4 class="text-bold-400">SISA WAKTU</h4>
-                                                <h4 class="text-bold-400">01:30:30</h4>
+                                                <h4 id="timer" class="text-bold-400"></h4>
+                                                {{-- <input id="end_time" type="text" value="{{$data_peserta[0]->waktu_selesai}}"> --}}
+                                                <input id="id_to" type="hidden" value="{{$data_tryout[0]->id}}">
+                                                <input id="id_subtes" type="hidden" value="{{$data_soal[0]->subtes}}">
+                                                <input id="id_peserta" type="hidden" value="{{session()->get('loginTO')['id_peserta']}}">
                                             </div>
                                         </div>
                                     </div>
@@ -90,7 +94,7 @@
                                         <div class="text-center">
                                             <div class="bg-warning p-1 rounded white">
                                                 <input {{$ragu}} class="" type="checkbox" id="keraguan"> Ragu-Ragu
-                                                <input type="hidden" id="id_peserta" value="{{session()->get('loginTO')['id_peserta']}}">
+                                                <input type="hidden" id="id" value="{{session()->get('loginTO')['id']}}">
                                                 <input type="hidden" id="id_soal" value="{{$data_soal[$no-1]->id}}">
                                             </div>
                                         </div>
@@ -179,7 +183,70 @@
               </div>
             </div>
         </div>
-        {{-- END MODAL HAPUS --}}
+        {{-- END MODAL HAPUS --}}    
+        
+        <script>
+            var id_peserta = $('#id_peserta').val();
+            var id = $('#id').val();
+            var id_to = $('#id_to').val();
+            var id_subtes = $('#id_subtes').val();
+            var base_url = window.location.origin;
+        
+            $.ajax({
+                url: base_url+'/endtime/'+id_peserta,
+                success: function(data){
+                    var obj = JSON.parse(data)
+                    // Set the date we're counting down to
+                    var countDownDate = new Date(obj['waktu_selesai']).getTime();
+                    // Update the count down every 1 second
+                    var x = setInterval(function() {
+                    
+                    // Get today's date and time
+                    var now = new Date().getTime();
+                    
+                    // Find the distance between now and the count down date
+                    var distance = countDownDate - now;
+                    
+                    // Time calculations for days, hours, minutes and seconds
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    
+                    var h, m, s;
+                    if (hours.toString().length > 1) {
+                        h = hours;
+                    } else {
+                        h = "0" + hours;
+                    }
+                    if (minutes.toString().length > 1) {
+                        m = minutes;
+                    } else {
+                        m = "0" + minutes;
+                    }
+                    if (seconds.toString().length > 1)
+                        s = seconds;
+                    else {
+                        s = "0" + seconds;
+                    }
+                    
+                    // Display the result in the element with id="timer"
+                    document.getElementById("timer").innerHTML = h + ":"
+                            + m + ":" + s;
+                    // If the count down is finished, write some text
+                    if (distance < 0) {
+                        clearInterval(x);
+                        document.getElementById("timer").innerHTML = "WAKTU HABIS";
+                        
+                        window.location.assign(base_url+'/tryout'+id_to+'/'+id_subtes+'/'+id+'/finish');
+                    }
+                    }, 1000);
+                },
+                error: function(data){
+                    console.log(data);
+                }
+            });
+        </script>
 
         <script>
             function insertJawaban(id_peserta, id_soal, id_jawaban) {
@@ -213,6 +280,8 @@
                 });
             });
         </script>
+
+
 @endsection
 
 

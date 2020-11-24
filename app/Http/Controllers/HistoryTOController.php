@@ -27,6 +27,8 @@ class HistoryTOController extends Controller
         $data = DB::table('tryout')
             ->where('tryout.waktu_selesai', '<', $now)
             ->get();
+        $data_subtes = DB::table('subtes')->get()->all();
+        $data_soal = DB::table('soal')->get()->all();
             
         $peserta = [];
         foreach ($data as $data_to) {
@@ -41,7 +43,9 @@ class HistoryTOController extends Controller
 
         return view('admin/setting-try-out/history/index', [
             'data' => $data,
-            'peserta' => $peserta
+            'peserta' => $peserta,
+            'data_subtes' => $data_subtes,
+            'data_soal' => $data_soal
         ]);
     }
 
@@ -72,7 +76,7 @@ class HistoryTOController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function showNilai(Request $request, $id_to, $id_subtes = null)
+    public function showNilai(Request $request, $id_to, $id_subtes = null, $download = false)
     {
         $data = Tryout::find($id_to);
         $data_subtes = Subtes::all();
@@ -119,8 +123,12 @@ class HistoryTOController extends Controller
             ->orderBy('jawaban_peserta.id_soal')
             ->select('jawaban.value', 'jawaban_peserta.*', 'soal.subtes')
             ->get();
-        
-        return view('admin/setting-try-out/history/detail', [
+        if ($download) {
+            $view = "download-excel";
+        } else {
+            $view = "detail";
+        }
+        return view('admin/setting-try-out/history/'. $view, [
             'data' => $data,
             'data_subtes' => $data_subtes,
             'data_peserta' => $data_peserta,
@@ -198,7 +206,7 @@ class HistoryTOController extends Controller
                     'nilai' => $request->nilai,
                 ]);
         }
-        return redirect(route('show-nilai.show', [$id_to, $id_subtes]))->with('success', 'Data berhasil di-update');
+        return redirect(route('show-nilai.show', [$id_to, $id_subtes, 0]))->with('success', 'Data berhasil di-update');
     }
 
     /**

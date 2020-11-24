@@ -17,6 +17,7 @@ use App\Models\Subtes;
 use DateInterval;
 use DateTime;
 use DateTimeZone;
+use Illuminate\Support\Facades\Date;
 
 class TryoutController extends Controller
 {
@@ -38,7 +39,7 @@ class TryoutController extends Controller
     public function index()
     {
         $data_tryout = DB::table('tryout')
-            // ->where('waktu_selesai', '<', now())
+            ->where('waktu_selesai', '<', now())
             ->get();
         $data_subtes = DB::table('subtes')->get()->all();
         $data_soal = DB::table('soal')->get()->all();
@@ -197,10 +198,20 @@ class TryoutController extends Controller
     
     public function showSoal(Request $request, $id_to, $id_subtes, $no)
     {   
+        if ($request->session()->has('loginTO')) {
+            if ($request->session()->get('loginTO')['id_to'] == $id_to) {
+                goto sudah_login;
+            } else {
+                return redirect(route('tryout.showlogin', $id_to));    
+            }
+        } else {
+            return redirect(route('tryout.showlogin', $id_to));
+        }
+        sudah_login :
         $data_peserta = DB::table('peserta_konfirmasi')
-        ->where('id_peserta', $request->session()->get('loginTO')['id'])
-        ->where('id_tryout', $id_to)
-        ->get();
+            ->where('id_peserta', $request->session()->get('loginTO')['id'])
+            ->where('id_tryout', $id_to)
+            ->get();
 
 
         if (strpos($data_peserta[0]->subtes_done, $id_subtes, )) {
@@ -268,14 +279,15 @@ class TryoutController extends Controller
                     'waktu_mulai' => $now
                 ]);
 
-                $waktu_selesai = $now;
+                $waktu_selesai = new DateTime($now->format('Y-m-d H:i:s').'GMT+8');
                 $waktu_selesai->add(new DateInterval('PT'.$subtes->durasi.'M'));
                 $peserta_konfirmasi->update([
                     'waktu_selesai' => $waktu_selesai
                 ]);
-                // dd($now, $waktu_selesai);
+                $diff = $peserta_konfirmasi->waktu_mulai->diff($peserta_konfirmasi->waktu_selesai);
+                // dd($diff->format('%h hours %i min %s sec '), $peserta_konfirmasi->waktu_mulai, $peserta_konfirmasi->waktu_selesai);
             }
-
+            
             // dd($data_tryout, $data_soal, $data_jawaban, $data_jawaban_peserta, $data_semua_jawaban_peserta);
             return view('to/kerja-to', [
                 'data_tryout' => $data_tryout,
@@ -284,7 +296,8 @@ class TryoutController extends Controller
                 'data_jawaban' => $data_jawaban,
                 'data_jawaban_peserta' => $data_jawaban_peserta,
                 'array_jawaban' => $array_jawaban,
-                'array_jawaban_ragu' => $array_jawaban_ragu
+                'array_jawaban_ragu' => $array_jawaban_ragu,
+                'data_peserta' => $data_peserta
                 ]);  
         }
     }
@@ -514,9 +527,12 @@ class TryoutController extends Controller
 
     public function subtesFinish(Request $request, $id_to, $id_subtes, $id_peserta) {
         $data_peserta = DB::table('peserta_konfirmasi')
-        ->where('id_peserta', $id_peserta)
-        ->where('id_tryout', $id_to)
-        ->get();
+            ->where('id_peserta', $id_peserta)
+            ->where('id_tryout', $id_to)
+            ->get();
+        
+        
+        $subtes = Subtes::find($id_subtes);
 
         $peserta = PesertaKonfirmasi::find($data_peserta[0]->id);
         if ($data_peserta[0]->subtes_done != null) {
@@ -525,8 +541,12 @@ class TryoutController extends Controller
         } else {
             $peserta->update(['subtes_done' => $id_subtes]);
         }
+        $peserta->update([
+            'waktu_mulai' => null,
+            'waktu_selesai' => null
+        ]);
         $request->session()->forget('subtes');
-        return redirect(route('tryout.index', $id_to));
+        return redirect(route('tryout.index', $id_to))->with('success', 'Anda telah mengerjakan kategori soal '. $subtes->nama);
     }
 
     public function ujianFinish(Request $request, $id_to, $id_peserta) {
@@ -547,5 +567,13 @@ class TryoutController extends Controller
         return view('to/finish-ujian', [
             'data_to' => $data_to
         ]);
-    }   
+    } 
+    
+    public function getEndTime($id_peserta)
+    {
+        $peserta = PesertaKonfirmasi::find($id_peserta);
+
+        echo json_encode($peserta);
+    }
+
 }

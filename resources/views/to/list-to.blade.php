@@ -15,6 +15,12 @@
                                 <span style="color:white;" class="text-bold-400">{{ strtoupper($message) }}</span>
                             </div>
                         @endif
+                        @if ($message = Session::get('success'))
+                            <div class="alert alert-success">
+                                <button type="button" class="close" data-dismiss="alert">×</button> 
+                                <span style="color:white;" class="text-bold-400">{{ strtoupper($message) }}</span>
+                            </div>
+                        @endif
                         <div class="card">
                             <div class="card-header no-border-bottom">
                                 <div class="row ml-1 mr-1">

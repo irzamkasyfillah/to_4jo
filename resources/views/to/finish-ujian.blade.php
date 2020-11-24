@@ -20,7 +20,7 @@
                                     <div class="card-body">
                                         <div class="text-center">
                                             <h4>
-                                                Anda telah mengikuti ujian {{$data_to[0]->nama}}.<br>
+                                                Anda telah mengikuti ujian <b>{{$data_to[0]->nama}}</b>.
                                                 Hasil ujian akan diberitahukan dalam beberapa hari kedepan. Terimakasih.
                                             </h4>
                                             <a href="{{ route('home') }}" class="mt-1 mb-1 btn btn-info btn-min-width">Kembali Ke Halaman Utama</a>

@@ -38,7 +38,7 @@
                                     <div class="mb-2">
                                         <input type="hidden" name="id_to" value="{{$data->id}}" id="id_to">
                                         <label for="id_tryout">Subtes</label>
-                                        <form action="{{ route('show-nilai.show', [$data->id, 1])}}" method="GET">
+                                        <form action="{{ route('show-nilai.show', [$data->id, 1, 0])}}" method="GET">
                                             <div class="input-group">
                                                 <select required id="subtes" name="subtes" class="form-control">
                                                     <option value="" selected="" disabled="">Pilih Subtes</option>
@@ -102,18 +102,9 @@
                                                 </tr>
                                                 @endforeach
                                             </tbody>
-                                            {{-- <tfoot>
-                                                <tr class="">
-                                                    <th>Nama Peserta</th>
-                                                    <th>Kelas</th>
-                                                    <th>Benar</th>
-                                                    <th>Salah</th>
-                                                    <th>Kosong</th>
-                                                    <th>Nilai</th>
-                                                    <th>Aksi</th>
-                                                </tr>
-                                            </tfoot> --}}
                                         </table>
+                                        <hr>
+                                        <a class="btn btn-info btn-min-width float-right" href="{{ route('show-nilai.show', [$data->id, $subtes_now, 1])}}">Download Excel</a>
                                     </div>
                                 </div>
                             </div>
@@ -124,40 +115,6 @@
         </div>
         <div class="height-200"></div>
     </div>
-
-    {{-- <script>
-        $('#subtes').change(function(){
-            var id_to = $('#id_to').val();
-            var subtes = $('#subtes').val();
-    
-            $.ajax({
-                url: '../../get_rekap_peserta/'+id_to+'/'+subtes,
-                datatype: 'json',
-                success: function(data){
-                    var obj = JSON.parse(data);
-                    console.log(obj);
-                    $('#body').empty();
-                    for (i=0; i<=obj.length; i++) {
-                        $('#body').append(`
-                            <tr>
-                                <td>`+obj[i]['name']+`</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        `);
-                    }
-                },
-                error: function(data){
-                    console.log(data);
-                }
-            });
-        });
-    </script> --}}
-
     @endif
 @endsection
     

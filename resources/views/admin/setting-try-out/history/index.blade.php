@@ -41,8 +41,9 @@
                                                 <tr class="">
                                                     <th width="">Nama Try Out</th>
                                                     <th width="">Waktu</th>
+                                                    <th width="">Harga</th>
                                                     <th width="">Jumlah Peserta</th>
-                                                    <th width="15%">Aksi</th>
+                                                    <th width="">Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -53,18 +54,99 @@
                                                     <td class="text-center"><?php echo date_format(date_create($data->waktu), "l, j F Y - H:i") ?>
                                                         <br>- until -<br> <?php echo date_format(date_create($data->waktu_selesai), "l, j F Y - H:i") ?>
                                                     </td>
+                                                    <td>Rp. <?php echo $data->harga ?></td>
                                                     <td><?php echo $peserta[$i++] ?></td>
                                                     <td class="text-center">
-                                                        <a data-toggle="tooltip" data-placement="top" title="Detail" href="{{route('show-nilai.show', [$data->id, 1])}}" class="btn btn-info"><i class="fa fa-pencil-square-o"></i></a>
-                                                        <a data-toggle="tooltip" data-placement="top" title="Publish" href="{{route('tryout.publish', $data->id)}}" class="btn btn-warning"><i class="fa fa-share-square-o"></i></a>
+                                                        <span class="float-right" data-toggle="modal" data-target="#detail{{$data->id}}">
+                                                            <button class="btn btn-secondary" data-placement="top" title="List Soal" data-toggle="tooltip"><i class="fa fa-th-list"></i></button>
+                                                        </span>
+                                                        <a data-toggle="tooltip" data-placement="top" title="Lihat Hasil" href="{{route('show-nilai.show', [$data->id, 1, 0])}}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i></a>
+                                                        <a data-toggle="tooltip" data-placement="top" title="Publish" href="{{route('tryout.publish', $data->id)}}" class="btn btn-info"><i class="fa fa-share-square-o"></i></a>
+
+                                                        {{-- MODAL DETAIL --}}
+                                                        <div class="modal fade text-left" id="detail{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+                                                            <div class="modal-dialog modal-lg" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                <h4 class="modal-title" id="myModalLabel1">Detail Soal {{ $data->nama}}</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <?php
+                                                                        $kategori = array('TPS', 'SAINTEK', 'SOSHUM');
+                                                                        $warna = array('bg-success', 'bg-danger', 'bg-info');
+                                                                        $i = 0;
+                                                                    ?>
+                                                                    @foreach ($kategori as $kategori)
+                                                                        <h6 class=""><i class="fa fa-caret-right"></i> <b>{{ $kategori }}</b></h6>
+                                                                        <hr>
+
+                                                                        <div id="accordionWrap{{ $data->id }}" role="tablist" aria-multiselectable="true">
+                                                                            <div class="card collapse-icon accordion-icon-rotate">
+                                                                                @foreach ($data_subtes as $subtes)
+                                                                                    @if ($subtes->kategori == $kategori)
+                                                                                        <div id="heading{{ $subtes->id }}"  class="card-header {{ $warna[$i] }}" role="tab">
+                                                                                            <a data-toggle="collapse" data-parent="#accordionWrap{{ $data->id }}" href="#subtes{{ $data->id . $subtes->id }}" aria-expanded="false"  class="card-title lead white">{{ $subtes->nama }}</a>
+                                                                                        </div>
+                                                                                        
+                                                                                        <div id="subtes{{ $data->id . $subtes->id }}" role="tabpanel" aria-labelledby="heading{{ $data->id . $subtes->id }}" class="collapse">
+                                                                                            <table class="table  bg-light table-striped table-bordered">
+                                                                                                <thead>
+                                                                                                    <tr>
+                                                                                                        <th width="5%">No.</th>
+                                                                                                        <th class="text-center">Soal</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <?php $no = 1; ?>
+                                                                                                    @foreach ($data_soal as $soal)
+                                                                                                        @if ($soal->subtes == $subtes->id)
+                                                                                                            @foreach (str_split($data->soal) as $soal_check)
+                                                                                                                @if ($soal->id == intval($soal_check))
+                                                                                                                    <tr>
+                                                                                                                        <td class="text-center">
+                                                                                                                            {{$no++}}
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            <?php echo $soal->deskripsi ?>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                @endif
+                                                                                                            @endforeach
+                                                                                                        @endif
+                                                                                                    @endforeach
+                                                                                                    <div class="pl-2 pr-2 pt-1 pb-1 {{ $warna[$i] }} white"> Jumlah soal : {{ $no-1}}</div>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                        <br>            
+                                                                                    @endif
+                                                                                @endforeach
+                                                                            </div>
+                                                                        </div> 
+                                                                    @endforeach 
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                <button type="button" class="btn white btn-secondary" data-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                        {{-- END MODAL DETAIL --}}
                                                     </td>
                                                 </tr>
+                                                
+
+                                                
                                                 @endforeach
                                             </tbody>
                                             <tfoot>
                                                 <tr class="">
                                                     <th>Nama Try Out</th>
                                                     <th>Waktu</th>
+                                                    <th>Harga</th>
                                                     <th>Jumlah Peserta</th>
                                                     <th>Aksi</th>
                                                 </tr>

@@ -63,7 +63,9 @@
                                                     <td>{{ $data->persen }}</td>
                                                     <td class="text-center">
                                                         <a data-toggle="tooltip" data-placement="top" title="Edit" href="{{route('kupon.edit', $data->id)}}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i></a>
-                                                        <button data-toggle="tooltip" data-placement="top" title="Hapus" class="btn btn-danger" href="#" data-toggle="modal" data-target="#hapus{{$data->id}}"><i class="fa fa-trash"></i></button>
+                                                        <span data-toggle="modal" data-target="#hapus{{$data->id}}">
+                                                            <button data-toggle="tooltip" data-placement="top" title="Hapus" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                                        </span>
 
                                                         {{-- MODAL HAPUS --}}
                                                         <div class="modal fade text-left" id="hapus{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">

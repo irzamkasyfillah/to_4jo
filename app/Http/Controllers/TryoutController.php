@@ -39,7 +39,7 @@ class TryoutController extends Controller
     public function index()
     {
         $data_tryout = DB::table('tryout')
-            ->where('waktu_selesai', '<', now())
+            ->where('waktu_selesai', '>', now())
             ->get();
         $data_subtes = DB::table('subtes')->get()->all();
         $data_soal = DB::table('soal')->get()->all();

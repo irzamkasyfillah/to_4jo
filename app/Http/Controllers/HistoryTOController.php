@@ -248,9 +248,32 @@ class HistoryTOController extends Controller
         }
 
         if ($i > 0) {
-            return redirect()->back()->with('success', 'Hasil Try Out ini sudah pernah di-publish');
+            return redirect()->back()->with('success', 'Hasil Try Out sudah di-publish');
         } else {
             return redirect()->back()->with('success', 'Data Hasil Try Out berhasil di-publish');
         }
+    }
+
+    public function showRanking($id_to)
+    {
+        $data_peserta = DB::table('peserta_konfirmasi')
+            ->where('peserta_konfirmasi.id_tryout', $id_to)
+            ->where('peserta_konfirmasi.status', 'Telah Ujian')
+            ->join('users', 'users.id', '=', 'peserta_konfirmasi.id_peserta')
+            ->select('users.*', 'peserta_konfirmasi.kelompok_ujian', 'peserta_konfirmasi.id as id_peserta', 'users.id as id_user')
+            ->get();
+        
+        $data_nilai = DB::table('nilai_peserta')
+            ->get();
+
+        $data_to = Tryout::find($id_to);
+        $data_subtes = Subtes::all();
+        // dd($data_peserta);
+        return view('admin/setting-try-out/history/ranking', [
+                'data_peserta' => $data_peserta,
+                'data_nilai' => $data_nilai,
+                'data_to' => $data_to,
+                'data_subtes' => $data_subtes
+        ]);
     }
 }

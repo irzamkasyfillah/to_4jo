@@ -27,7 +27,7 @@
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <h3>
-                                            <span class="text-bold-300">History Try Out</strong></span>
+                                            <span class="text-bold-300">History Try Out</span>
                                         </h3> 
                                     </div>
                                 </div>
@@ -57,11 +57,15 @@
                                                     <td>Rp. <?php echo $data->harga ?></td>
                                                     <td><?php echo $peserta[$i++] ?></td>
                                                     <td class="text-center">
-                                                        <span class="float-right" data-toggle="modal" data-target="#detail{{$data->id}}">
-                                                            <button class="btn btn-secondary" data-placement="top" title="List Soal" data-toggle="tooltip"><i class="fa fa-th-list"></i></button>
-                                                        </span>
-                                                        <a data-toggle="tooltip" data-placement="top" title="Lihat Hasil" href="{{route('show-nilai.show', [$data->id, 1, 0])}}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i></a>
-                                                        <a data-toggle="tooltip" data-placement="top" title="Publish" href="{{route('tryout.publish', $data->id)}}" class="btn btn-info"><i class="fa fa-share-square-o"></i></a>
+                                                        <div class="btn-group mr-1 mb-1">
+                                                            <button type="button" class="btn btn-icon btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-info"></i></button>
+                                                            <div class="dropdown-menu">
+                                                                <button data-toggle="modal" data-target="#detail{{$data->id}}" class="dropdown-item"><i class="fa fa-book mr-1 ml-1"></i> List Soal</button>                                                        
+                                                                <a href="{{route('show-nilai.show', [$data->id, 1, 0])}}" class="dropdown-item"><i class="fa fa-file-text-o mr-1 ml-1"></i> Rekap Nilai</a>
+                                                                <a href="{{route('show-ranking.show', $data->id)}}" class="dropdown-item"><i class="fa fa-star mr-1 ml-1"></i> Ranking</a>
+                                                                <a href="{{route('tryout.publish', $data->id)}}" class="dropdown-item"><i class="fa fa-share-square-o mr-1 ml-1"></i> Publish</a>
+                                                            </div>
+                                                        </div>
 
                                                         {{-- MODAL DETAIL --}}
                                                         <div class="modal fade text-left" id="detail{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">

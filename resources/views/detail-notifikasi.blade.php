@@ -100,23 +100,19 @@
                                                         <th class="text-center" width="42%">ITEM TES</th>
                                                         <th>NILAI</th>
                                                     </tr>
-                                                    <?php 
-                                                        $rata = 0; 
-                                                        $i = 0;
-                                                    ?>
+                                                    <?php $rata = 0; ?>
                                                     @foreach ($nilai_peserta as $nilai)
                                                         <tr>
                                                             <td class="text-center">{{ $nilai->nama }}</td>
                                                             <td>{{ $nilai->nilai }}</td>
                                                             <?php 
                                                                 $rata += $nilai->nilai;
-                                                                ++$i;
                                                             ?>
                                                         </tr>
                                                     @endforeach
                                                     <tr>
                                                         <th class="text-center" width="42%">RATA - RATA</th>
-                                                        <th>{{ $rata/$i }}</th>
+                                                        <th>{{ round($rata/(count($data_subtes)-4), 2) }}</th>
                                                     </tr>
                                                 </tbody>
                                             </table>

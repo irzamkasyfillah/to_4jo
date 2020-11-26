@@ -67,6 +67,7 @@ Route::resource('setting-peraturan-try-out', 'App\Http\Controllers\PeraturanTOCo
 Route::resource('history-try-out', 'App\Http\Controllers\HistoryTOController');
 
 Route::get('history-try-out/{id_to}/{id_subtes}/show/{download}', [App\Http\Controllers\HistoryTOController::class, 'showNilai'])->name('show-nilai.show');
+Route::get('history-try-out/{id_to}/ranking/', [App\Http\Controllers\HistoryTOController::class, 'showRanking'])->name('show-ranking.show');
 Route::get('history-try-out/{id_to}/{id_subtes}/{id_peserta}/edit', [App\Http\Controllers\HistoryTOController::class, 'editNilai'])->name('edit-nilai.edit');
 Route::get('history-try-out/{id_to}/{id_subtes}/{id_peserta}/update', [App\Http\Controllers\HistoryTOController::class, 'updateNilai'])->name('update-nilai.update');
 Route::get('try-out/{id_to}/publish', [App\Http\Controllers\HistoryTOController::class, 'tryoutPublish'])->name('tryout.publish');

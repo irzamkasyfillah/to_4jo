@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 
 use App\Models\Notifikasi;
+use App\Models\Subtes;
 
 class NotifikasiController extends Controller
 {
@@ -48,10 +49,11 @@ class NotifikasiController extends Controller
             ->select('subtes.nama', 'nilai_peserta.*')
             ->get();
         
-        // dd($nilai_peserta);
+        $data_subtes = Subtes::all();
         return view('detail-notifikasi', [
             'data' => $data,
-            'nilai_peserta' => $nilai_peserta
+            'nilai_peserta' => $nilai_peserta,
+            'data_subtes' => $data_subtes
         ]);
     }
 

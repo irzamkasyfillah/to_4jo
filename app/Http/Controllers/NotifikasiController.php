@@ -15,6 +15,7 @@ class NotifikasiController extends Controller
     {
         $this->middleware('auth');
     }
+    
     public function index($id)
     {
         $data = DB::table('peserta_konfirmasi')

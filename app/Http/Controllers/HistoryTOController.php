@@ -10,8 +10,10 @@ use App\Models\Tryout;
 use App\Models\Soal;
 use DateTime;
 use DateTimeZone;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class HistoryTOController extends Controller
 {
@@ -124,18 +126,50 @@ class HistoryTOController extends Controller
             ->select('jawaban.value', 'jawaban_peserta.*', 'soal.subtes')
             ->get();
         if ($download) {
-            $view = "download-excel";
+            // $column_name = ['nama', 'kelas', 'benar', 'salah', 'kosong', 'nilai'];
+            // for($i=1; $i<=count($array_soal); $i++) {
+            //     array_push($column_name, 'no.' . $i);
+            // }
+            $collect = new Collection();
+            // $collect[0] = (object) $column_name;
+
+            foreach($data_peserta as $peserta) {
+                $array = [
+                    'Nama' => $peserta->name,
+                    'Kelas' => $peserta->kelompok_ujian,
+                    'Benar' => $peserta->benar,
+                    'Salah' => $peserta->salah,
+                    'Kosong' => $peserta->kosong,
+                    'Nilai' => $peserta->nilai
+                ];
+                $j = 1;
+                $rekap = [];
+                foreach($jawaban_peserta as $jawaban) {
+                    if ($jawaban->id_peserta == $peserta->id) {
+                        if ($jawaban->value == 1) {
+                            $bg ="v";
+                        } else if (is_null($jawaban->value)) {
+                            $bg ="-";
+                        } else if ($jawaban->value == 0) {
+                            $bg ="x";
+                        }
+                        $array['No.'.$j++] = $bg;
+                    }
+                }
+                $collect->push($array);
+            }
+            $subtes = Subtes::find($request->subtes);
+            return (new FastExcel($collect))->download('rekap-nilai_' . $data->nama . '_' . $subtes->nama . '.xlsx');
         } else {
-            $view = "detail";
+            return view('admin/setting-try-out/history/detail', [
+                'data' => $data,
+                'data_subtes' => $data_subtes,
+                'data_peserta' => $data_peserta,
+                'subtes_now' => $request->subtes,
+                'array_soal' => $array_soal,
+                'jawaban_peserta' => $jawaban_peserta
+            ]);
         }
-        return view('admin/setting-try-out/history/'. $view, [
-            'data' => $data,
-            'data_subtes' => $data_subtes,
-            'data_peserta' => $data_peserta,
-            'subtes_now' => $request->subtes,
-            'array_soal' => $array_soal,
-            'jawaban_peserta' => $jawaban_peserta
-        ]);
     }
 
     /**

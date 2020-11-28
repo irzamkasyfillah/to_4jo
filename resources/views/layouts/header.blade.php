@@ -27,30 +27,18 @@
             @else
               <li class="nav-item">
                   <a class="nav-link" href="{{ route('home') }}">{{ __('Beranda') }}</a>
-              </li>  
+              </li>
               <li class="dropdown dropdown-user nav-item">
                   <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                      <span class="avatar avatar-online">
-                          
-                            <img src="{{asset('/app-assets/images/portrait/small/avatar-s-1.png')}}" alt="avatar">
-                            
-                            <i></i>
-                          </span>
-                        <span class="user-name">{{ ucwords(Auth::user()->name) }} <span id="notif1"></span>
-                        <input id="id_user" type="text" value="{{Auth::user()->id}}" hidden>
-                    </a>
+                      <span class="nav-link user-name">{{ ucwords(Auth::user()->name) }} <span id="notif1"></span>
+                      <input id="id_user" type="text" value="{{Auth::user()->id}}" hidden>
+                  </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="{{ route('profile.index') }}">
-                        <i class="ft-user"></i> Edit Profile
+                        <i class="ft-user"></i> Edit Profil
                     </a>
                     <a class="dropdown-item" href="../../notifikasi/{{Auth::user()->id}}">
-                        <i class="ft-mail"></i> My Inbox <span id="notif2"></span>
-                    </a>
-                    <a class="dropdown-item" href="user-cards.html">
-                        <i class="ft-check-square"></i> Task
-                    </a>
-                    <a class="dropdown-item" href="chat-application.html">
-                        <i class="ft-message-square"></i> Chats
+                        <i class="ft-mail"></i> Pesan <span id="notif2"></span>
                     </a>
                   <div class="dropdown-divider">
 

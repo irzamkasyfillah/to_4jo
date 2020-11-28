@@ -79,22 +79,41 @@
         <div class="card profile-card-with-cover">
           <div class="card-content">
             <div class="card-image text-center mt-2">
-                <img src="../../../app-assets/images/portrait/small/avatar-s-8.png" class="rounded-circle img-border box-shadow-1" alt="Card image">
+                @if (Auth::user()->foto != "" || Auth::user()->foto != null )
+                    <?php $src = "225_".Auth::user()->foto ?>
+                @else
+                    @if (Auth::user()->jenis_kelamin != "" || Auth::user()->jenis_kelamin != null )
+                        @if (strtolower(Auth::user()->jenis_kelamin) == "laki-laki")
+                            <?php $src = "man-avatar-m.png" ?>
+                        @else
+                            <?php $src = "woman-avatar-m.png" ?>
+                        @endif
+                    @else
+                        <?php $src = "man-avatar-m.png" ?>
+                    @endif
+                @endif
+                <img src="{{ URL::to('/')}}/uploads/{{ $src }}" class="rounded-circle img-border box-shadow-1" alt="Card image">
             </div>
-            <div class="mt-2">
-                <h3 class="text-center m-2">{{ Auth::user()->name }}</h3>
+            <div class="col-12 mt-2">
+                <h3 class="text-center m-2">{{ ucwords(Auth::user()->name) }}</h3>
                 <hr class="m-2">
-                <div class="ml-2">
-                  <li class="mr-2">
-                    <span class="font-small-4 text-muted"><i class="fa fa-envelope mr-1"></i>{{ Auth::user()->email }}</span></li>
-                  <li class="mr-2">
-                    <span class="font-small-4 text-muted"><i class="fa fa-phone mr-1"></i>+6281312341234</span></li>
-                  <li class="mr-2">
-                    <span class="font-small-4 text-muted"><i class="fa fa-graduation-cap mr-1"></i>SMAN 1 Kendari</span></li>
+                <div class="ml-2 text-left">
+                    <li class="mr-2 mb-1">
+                        <i class="fa fa-envelope mr-1"></i>
+                        <span class="font-small-4 text-muted">&nbsp;{{ Auth::user()->email }}</span>
+                    </li>
+                    <li class="mr-2 mb-1">
+                        <i class="fa fa-graduation-cap mr-1"></i>
+                        <span class="font-small-4 text-muted">{{ ucwords(Auth::user()->nama_sekolah) }}</span>
+                    </li>
+                    <li class="mr-2 mb-1">
+                        <i class="fa fa-phone mr-1"></i>
+                        <span class="font-small-4 text-muted">&nbsp;&nbsp;{{ Auth::user()->hp }}</span>
+                    </li>
                     <li class="mr-2">
-                        <span class="font-small-4 text-muted"><i class="fa fa-home mr-1"></i>Kendari</span></li>
-                  <li class="mr-2">
-                    <span class="font-small-4 text-muted"><i class="fa fa-instagram mr-1"></i>irzam.kasyfillah</span></li>
+                        <i class="fa fa-instagram mr-1"></i>
+                        <span class="font-small-4 text-muted">&nbsp;&nbsp;{{ Auth::user()->instagram }}</span>
+                    </li>
                 </div>
                 <div class="card-body text-center">
                     <a href="{{ route('profile.index') }}" class="btn btn-info btn-lg btn-block"><i class="ft-user"></i> Edit Profile</a>

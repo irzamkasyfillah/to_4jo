@@ -23,9 +23,16 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('jenis_kelamin')->nullable();
-            $table->string('tgl_lahir')->nullable();
+            $table->dateTime('tgl_lahir')->nullable();
             $table->string('hp')->nullable();
             $table->string('foto')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('provinsi')->nullable();
+            $table->string('kota')->nullable();
+            $table->string('nama_sekolah')->nullable();
+            $table->string('kelas')->nullable();
+            $table->string('jurusan')->nullable();
+            $table->string('tahun_lulus')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

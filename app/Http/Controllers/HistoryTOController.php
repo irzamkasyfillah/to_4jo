@@ -125,6 +125,7 @@ class HistoryTOController extends Controller
             ->orderBy('jawaban_peserta.id_soal')
             ->select('jawaban.value', 'jawaban_peserta.*', 'soal.subtes')
             ->get();
+            
         if ($download) {
             // $column_name = ['nama', 'kelas', 'benar', 'salah', 'kosong', 'nilai'];
             // for($i=1; $i<=count($array_soal); $i++) {
@@ -143,7 +144,6 @@ class HistoryTOController extends Controller
                     'Nilai' => $peserta->nilai
                 ];
                 $j = 1;
-                $rekap = [];
                 foreach($jawaban_peserta as $jawaban) {
                     if ($jawaban->id_peserta == $peserta->id) {
                         if ($jawaban->value == 1) {
@@ -159,7 +159,7 @@ class HistoryTOController extends Controller
                 $collect->push($array);
             }
             $subtes = Subtes::find($request->subtes);
-            return (new FastExcel($collect))->download('rekap-nilai_' . $data->nama . '_' . $subtes->nama . '.xlsx');
+            return (new FastExcel($collect))->download('Rekap-nilai_' . $data->nama . '_' . $subtes->nama . '.xlsx');
         } else {
             return view('admin/setting-try-out/history/detail', [
                 'data' => $data,

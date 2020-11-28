@@ -22,11 +22,7 @@
               <li class="dropdown dropdown-user nav-item">
                   <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                       <span class="avatar avatar-online">
-                          <!-- if (Auth::user()->foto != '') { -->
-                            <!-- <img src="{{ URL::to('/')}}/uploads/{{ Auth::user()->foto }}" alt="avatar"> -->
-                          <!-- } else { -->
-                            <img src="{{asset('/app-assets/images/portrait/small/avatar-s-1.png')}}" alt="avatar">
-                          <!-- } -->
+                            <img src="{{ URL::to('/')}}/uploads/man-avatar-s.png" alt="avatar">
                           <i></i>
                       </span>
                       <span class="user-name">{{ ucwords(Auth::user()->name) }}</span>
@@ -36,13 +32,7 @@
                         <i class="ft-user"></i> Edit Profile
                     </a>
                     <a class="dropdown-item" href="email-application.html">
-                        <i class="ft-mail"></i> My Inbox
-                    </a>
-                    <a class="dropdown-item" href="user-cards.html">
-                        <i class="ft-check-square"></i> Task
-                    </a>
-                    <a class="dropdown-item" href="chat-application.html">
-                        <i class="ft-message-square"></i> Chats
+                        <i class="ft-mail"></i> Inbox
                     </a>
                   <div class="dropdown-divider">
 

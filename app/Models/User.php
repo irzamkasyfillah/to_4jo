@@ -24,7 +24,14 @@ class User extends Authenticatable
         'tgl_lahir',
         'hp',
         'foto',
-        'level'
+        'level',
+        'instagram',
+        'provinsi',
+        'kelas',
+        'kota',
+        'nama_sekolah',
+        'jurusan',
+        'tahun_lulus'
     ];
 
     /**

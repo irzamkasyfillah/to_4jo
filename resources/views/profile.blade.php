@@ -21,6 +21,16 @@
                             </div>
                         </div>
                     @endif
+                    @if ($errors->any())
+                        <div class="col-xl-12">
+                            <div class="alert alert-danger alert-block">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                @foreach ($errors->all() as $error)
+                                    <span style="color:white;" class="text-bold-400">{{ $error }}</span>
+                                @endforeach 
+                            </div>
+                        </div>
+                    @endif
                 </div>
                 <div class="row">
                     <div class="col-12">
@@ -40,26 +50,14 @@
                                                 @method('PUT')
                                                 <label for="name">Nama Lengkap</label>
                                                 <fieldset class="form-group position-relative has-icon-left">
-                                                    <input id="name" type="text" value="{{ Auth::user()->name }}" class="form-control @error('name') is-invalid @enderror" name="name" required autocomplete="name" autofocus>
-
-                                                    @error('name')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
+                                                    <input id="name" type="text" value="{{ Auth::user()->name }}" class="form-control" name="name" required autocomplete="name" autofocus>
                                                     <div class="form-control-position">
                                                         <i class="ft-user"></i>
                                                     </div>
                                                 </fieldset>
                                                 <label for="email">Email</label>
                                                 <fieldset class="form-group position-relative has-icon-left">
-                                                    <input id="email" type="email" value="{{ Auth::user()->email }}" class="form-control @error('email') is-invalid @enderror" name="email" required autocomplete="email">
-
-                                                    @error('email')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
+                                                    <input id="email" type="email" value="{{ Auth::user()->email }}" class="form-control" name="email" required autocomplete="email">
                                                     <div class="form-control-position">
                                                         <i class="ft-mail"></i>
                                                     </div>
@@ -81,21 +79,11 @@
                                                             $tgl_lahir = "";
                                                         }
                                                     ?>
-                                                    <input required id="tgl_lahir" type="date" value="{{ $tgl_lahir }}"  class="form-control @error('tgl_lahir') is-invalid @enderror" name="tgl_lahir" autocomplete="tanggal lahir">
-                                                    @error('tgl_lahir')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
+                                                    <input required id="tgl_lahir" type="date" value="{{ $tgl_lahir }}"  class="form-control " name="tgl_lahir" autocomplete="tanggal lahir">
                                                 </fieldset>
                                                 <label for="hp">No. HP</label>
                                                 <fieldset class="form-group position-relative">
-                                                    <input required id="hp" type="number" value="{{ Auth::user()->hp }}"  class="form-control @error('hp') is-invalid @enderror" name="hp" autocomplete="No. HP">
-                                                    @error('hp')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
+                                                    <input required id="hp" type="number" value="{{ Auth::user()->hp }}"  class="form-control " name="hp" autocomplete="No. HP">
                                                 </fieldset>
                                                 <label for="hp">Instagram</label>
                                                 <fieldset class="form-group position-relative">
@@ -103,24 +91,32 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">@</span>
                                                         </div>
-                                                        <input required id="instagram" type="text" value="{{ Auth::user()->instagram }}"  class="form-control @error('instagram') is-invalid @enderror" name="instagram" autocomplete="instagram">
+                                                        <input required id="instagram" type="text" value="{{ Auth::user()->instagram }}"  class="form-control " name="instagram" autocomplete="instagram">
                                                     </div>
-                                                    @error('instagram')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
                                                 </fieldset>
                                                 <label for="foto">Foto Profil</label><br>
-                                                <img src="{{ URL::to('/')}}/uploads/{{ Auth::user()->foto }}" class="img-thumbnail" width="50%" alt="Foto"><br><br>
+                                                <div class="text-center">
+                                                    @if (Auth::user()->foto != "" || Auth::user()->foto != null )
+                                                        <?php $src = Auth::user()->foto ?>
+                                                    @else
+                                                        @if (Auth::user()->jenis_kelamin != "" || Auth::user()->jenis_kelamin != null )
+                                                            @if (strtolower(Auth::user()->jenis_kelamin) == "laki-laki")
+                                                                <?php $src = "man-avatar-m.png" ?>
+                                                            @else
+                                                                <?php $src = "woman-avatar-m.png" ?>
+                                                            @endif
+                                                        @else
+                                                            <?php $src = "man-avatar-m.png" ?>
+                                                        @endif
+                                                    @endif
+                                                    
+                                                    <img src="{{ URL::to('/')}}/uploads/{{ $src }}" class="img-thumbnail" width="50%" alt="Foto"><br><br>
+                                                </div>
                                                 <div class="form-group position-relative">
-                                                    <span>Ganti gambar?</span>
-                                                    <input name="foto" type="file" class="@error('foto') is-invalid @enderror" id="foto">
-                                                    @error('foto')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
+                                                    
+                                                    <input name="foto" type="file" class="" id="foto">
+                                                    <br>
+                                                    <span class="font-small-3 text-muted">*Max 5 MB</span>
                                                 </div>
                                             </div>
                                             <div class="col-xl-6 clearfix">
@@ -128,33 +124,15 @@
                                                 <hr class="col-6">
                                                 <label for="provinsi">Provinsi</label>
                                                 <fieldset class="form-group position-relative">
-                                                    <input id="provinsi" type="text" value="{{ Auth::user()->provinsi }}" class="form-control @error('provinsi') is-invalid @enderror" name="provinsi" autocomplete="provinsi" autofocus>
-
-                                                    @error('provinsi')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
+                                                    <input id="provinsi" type="text" value="{{ Auth::user()->provinsi }}" class="form-control" name="provinsi" autocomplete="provinsi" autofocus>
                                                 </fieldset>
                                                 <label for="kota">Kota</label>
                                                 <fieldset class="form-group position-relative">
-                                                    <input id="kota" type="text" value="{{ Auth::user()->kota }}" class="form-control @error('kota') is-invalid @enderror" name="kota" autocomplete="kota" autofocus>
-
-                                                    @error('kota')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
+                                                    <input id="kota" type="text" value="{{ Auth::user()->kota }}" class="form-control" name="kota" autocomplete="kota" autofocus>
                                                 </fieldset>
                                                 <label for="nama_sekolah">Nama Sekolah</label>
                                                 <fieldset class="form-group position-relative">
-                                                    <input id="nama_sekolah" type="text" value="{{ Auth::user()->nama_sekolah }}" class="form-control @error('nama_sekolah') is-invalid @enderror" name="nama_sekolah" required autocomplete="nama_sekolah" autofocus>
-
-                                                    @error('nama_sekolah')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
+                                                    <input id="nama_sekolah" type="text" value="{{ Auth::user()->nama_sekolah }}" class="form-control" name="nama_sekolah" required autocomplete="nama_sekolah" autofocus>
                                                 </fieldset>
                                                 <label for="kelas">Kelas</label>
                                                 <fieldset class="form-group position-relative">
@@ -181,12 +159,6 @@
                                                 <label for="tahun_lulus">Tahun Lulus SMA</label>
                                                 <fieldset class="form-group position-relative">
                                                     <input id="tahun_lulus" type="number" min="0" value="{{  Auth::user()->tahun_lulus }}" class="form-control" name="tahun_lulus" autocomplete="tahun_lulus" autofocus>
-
-                                                    @error('tahun_lulus')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
                                                 </fieldset>
                                             </div>
                                     </div>

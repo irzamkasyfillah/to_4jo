@@ -17,7 +17,7 @@
         <div class="content-body">
          
 <!-- activity charts -->
-<div class="row match-height">
+<div class="row">
     <div class="col-xl-8 col-lg-12">
         <div class="card">
             <div class="card-header no-border-bottom">
@@ -92,7 +92,7 @@
                         <?php $src = "man-avatar-m.png" ?>
                     @endif
                 @endif
-                <img src="{{ URL::to('/')}}/uploads/{{ $src }}" class="rounded-circle img-border box-shadow-1" alt="Card image">
+                <img src="{{ URL::to('/')}}/uploads/{{ $src }}" width="60%" class="rounded-circle img-border box-shadow-1" alt="Foto Profil">
             </div>
             <div class="col-12 mt-2">
                 <h3 class="text-center m-2">{{ ucwords(Auth::user()->name) }}</h3>

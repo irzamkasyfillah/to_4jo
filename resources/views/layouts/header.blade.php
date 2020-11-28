@@ -25,12 +25,28 @@
                     </li>
                 @endif
             @else
-              <li class="nav-item">
+              <li class="nav-item mr-1">
                   <a class="nav-link" href="{{ route('home') }}">{{ __('Beranda') }}</a>
               </li>
               <li class="dropdown dropdown-user nav-item">
                   <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                      <span class="nav-link user-name">{{ ucwords(Auth::user()->name) }} <span id="notif1"></span>
+                      @if (Auth::user()->foto != "" || Auth::user()->foto != null )
+                          <?php $src = "100_".Auth::user()->foto ?>
+                      @else
+                          @if (Auth::user()->jenis_kelamin != "" || Auth::user()->jenis_kelamin != null )
+                              @if (strtolower(Auth::user()->jenis_kelamin) == "laki-laki")
+                                  <?php $src = "man-avatar-s.png" ?>
+                              @else
+                                  <?php $src = "woman-avatar-s.png" ?>
+                              @endif
+                          @else
+                              <?php $src = "man-avatar-s.png" ?>
+                          @endif
+                      @endif
+                      <span class="avatar avatar-online">
+                            <img src="{{ URL::to('/')}}/uploads/{{$src}}" alt="avatar">
+                      </span>
+                      <span class="user-name">{{ ucwords(Auth::user()->name) }} <span id="notif1"></span>
                       <input id="id_user" type="text" value="{{Auth::user()->id}}" hidden>
                   </a>
                 <div class="dropdown-menu dropdown-menu-right">

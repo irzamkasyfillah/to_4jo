@@ -22,8 +22,7 @@
               <li class="dropdown dropdown-user nav-item">
                   <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                       <span class="avatar avatar-online">
-                            <img src="{{ URL::to('/')}}/uploads/man-avatar-s.png" alt="avatar">
-                          <i></i>
+                          <img src="{{ URL::to('/')}}/uploads/man-avatar-s.png" alt="avatar">
                       </span>
                       <span class="user-name">{{ ucwords(Auth::user()->name) }}</span>
                     </a>

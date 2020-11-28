@@ -7,6 +7,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File;
 use App\Models\User;
 use Intervention\Image\ImageManagerStatic as Image;
+use Validator;
 
 class UserProfileController extends Controller
 {
@@ -79,19 +80,21 @@ class UserProfileController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        $request->validate([
+        $valid = Validator::make($request->all(),[
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($id)],
-            'foto' => ['nullable', 'image', 'max:5120']
+            'foto' => ['nullable', 'mimes:jpeg,jpg,png', 'max:5120']  
         ]);
 
+        if ($valid->fails()) {
+            return back()->withErrors($valid)->withInput();
+        }
+
         $photo = $request->file('foto');
-        if ($photo != ''){
+        if ($photo != '' || $photo != null){
             $photo_name = time() . '.' . $photo->getClientOriginalExtension();
             $photo_resize = Image::make($photo->getRealPath());
-            $photo_resize->resize(null, 100, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+            $photo_resize->resize(100, 100);
             $photo_resize->save(public_path('uploads/' . '100_' . $photo_name));
             $photo_resize2 = Image::make($photo->getRealPath());
             $photo_resize2->resize(null, 225,  function ($constraint) {
@@ -99,12 +102,11 @@ class UserProfileController extends Controller
             });
             $photo_resize2->save(public_path('uploads/' . '225_' . $photo_name));
             $photo->move('uploads', $photo_name);
-
             $photo_path = "uploads/$user->foto";
             if (File::exists($photo_path)) {
                 File::delete($photo_path);
-                File::delete('100_'.$photo_path);
-                File::delete('225_'.$photo_path);
+                File::delete('uploads/100_'.$user->foto);
+                File::delete('uploads/225_'.$user->foto);
             }
         } else {
             $photo_name = $user->foto;
@@ -125,6 +127,7 @@ class UserProfileController extends Controller
             'jurusan' => $request->jurusan,
             'tahun_lulus' => $request->tahun_lulus
         ];
+        // dd($data);
         
         $user->update($data);
         return redirect()->route('profile.index')->with('success', 'Data berhasil di-update.');

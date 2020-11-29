@@ -36,19 +36,27 @@
             <div class="card-content">
                 <div class="card-body">
                     <div class="row">
+                        <?php $ada = false; ?>
                         @foreach ($data_tryout as $data)
                             @if ($data->waktu < $now && $data->waktu_selesai > $now)
-                                <div class="col mb-1 ml-1 mr-1">
-                                    <div class="alert alert-warning alert-block">
+                                <?php $ada = true; ?>
+                                <div class="col-12 text-center">
+                                    <div class="text-left alert alert-warning alert-block">
                                         <button type="button" class="close" data-dismiss="alert">×</button> 
                                         <span style="color:white;" class="text-bold-400">
-                                            {{ $data->nama }} sudah dimulai!. Batas Pengerjaan Try Out hingga {{date_format(date_create($data->waktu_selesai), "j F Y")}}, 
-                                            pukul {{date_format(date_create($data->waktu_selesai), "H:i")}} WITA
+                                            <b>{{ ucwords($data->nama) }}</b> sudah dimulai!<br>
+                                            Batas Pengerjaan Try Out sampai dengan <b>{{date_format(date_create($data->waktu_selesai), "j F Y")}}, 
+                                            pukul {{date_format(date_create($data->waktu_selesai), "H:i")}} WITA </b>
                                         </span>
                                     </div>
                                 </div>
                             @endif
                         @endforeach
+                        @if ($ada)
+                            <div class="col-12">
+                                <br class="mb-1">
+                            </div>
+                        @endif
                     </div>
                     <div class="row">
                     @foreach ($data_tryout as $data_tryout)
@@ -70,7 +78,7 @@
                     @endforeach
                     </div>
                     <!-- <div id="weekly-activity-chart" class="height-250"></div> -->
-                    <div class="height-300"></div>
+                    {{-- <div class="height-200"></div> --}}
                 </div>
             </div>
         </div>
@@ -122,62 +130,9 @@
             </div>
           </div>
         </div>
-      </div>
-
-
-      <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-content">
-                <div class="card-body">
-                    <div class="row">
-                    <div class="col-xl-3 col-lg-6 col-md-12 border-right-grey border-right-lighten-3 clearfix">
-                        <div class="float-left pl-2">
-                            <span class="grey darken-1 block">Age</span>
-                            <span class="font-large-3 line-height-1 text-bold-300">25</span>
-                        </div>
-                        <div class="float-left mt-2">
-                            <span class="grey darken-1 block">Years</span>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-6 col-md-12 border-right-grey border-right-lighten-3 clearfix">
-                        <div class="float-left pl-2">
-                            <span class="grey darken-1 block">Height</span>
-                            <span class="font-large-3 line-height-1 text-bold-300">185</span>
-                        </div>
-                        <div class="float-left mt-2">
-                            <span class="grey darken-1 block">cm</span>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-6 col-md-12 border-right-grey border-right-lighten-3 clearfix">
-                        <div class="float-left pl-2">
-                            <span class="grey darken-1 block">Weight</span>
-                            <span class="font-large-3 line-height-1 text-bold-300">64</span>
-                        </div>
-                        <div class="float-left mt-2">
-                            <span class="grey darken-1 block">Kg</span>
-                            <span class="block"><i class="ft-arrow-down deep-orange accent-3"></i></span>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-6 col-md-12 clearfix">
-                        <div class="float-left pl-2">
-                            <span class="grey darken-1 block">Body mass index</span>
-                            <span class="font-large-3 line-height-1 text-bold-300">22.3</span>
-                        </div>
-                        <div class="float-left mt-2">
-                            <span class="grey darken-1 block">Kg/m</span>
-                            <span class="block"><i class="ft-arrow-up success"></i></span>
-                        </div>
-                    </div>
-                </div>
-                    
-                </div>
-            </div>
-        </div>
+      </div>      
     </div>
-</div>
-      
-    </div>
+    <div class="height-200"></div>
 
         </div>
       </div>

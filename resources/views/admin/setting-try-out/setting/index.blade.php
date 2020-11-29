@@ -44,7 +44,7 @@
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table id="data" class="table table-hover table-striped table-bordered default-ordering">
-                                            <thead>
+                                            <thead class="bg-teal bg-lighten-4">
                                                 <tr class="">
                                                     <th width="">Subtes</th>
                                                     <th width="">Kategori</th>
@@ -64,7 +64,7 @@
                                                 </tr>
                                                 @endforeach
                                             </tbody>
-                                            <tfoot>
+                                            <tfoot class="bg-teal bg-lighten-4">
                                                 <tr class="">
                                                     <th>Subtes</th>
                                                     <th>Kategori</th>

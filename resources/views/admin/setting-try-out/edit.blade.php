@@ -84,11 +84,16 @@
                                                                     
                                                                     <div id="subtes{{ $subtes->id }}" role="tabpanel" aria-labelledby="heading{{ $subtes->id }}" class="collapse">
                                                                         <table class="table bg-light table-striped table-bordered">
+                                                                            {{-- @if (count($data_soal) > 0)  --}}
+                                                                            {{-- {{dd(($data_tryout->soal))}} --}}
+                                                                            {{-- @endif --}}
                                                                             @foreach ($data_soal as $soal)
                                                                                 @if ($soal->subtes == $subtes->id)
                                                                                     <?php $check = "" ?>
-                                                                                    @if (in_array($soal->id, $data_tryout->soal))
-                                                                                        <?php $check = "checked" ?>
+                                                                                    @if ($data_tryout->soal != null)
+                                                                                        @if (in_array($soal->id, $data_tryout->soal))
+                                                                                            <?php $check = "checked" ?>
+                                                                                        @endif
                                                                                     @endif
                                                                                     <tr>
                                                                                         <td>

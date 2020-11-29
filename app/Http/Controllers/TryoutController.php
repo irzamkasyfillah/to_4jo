@@ -38,8 +38,10 @@ class TryoutController extends Controller
      */
     public function index()
     {
+        $now = new DateTime();
+        $now->setTimezone(new DateTimeZone('GMT+8'));    
         $data_tryout = DB::table('tryout')
-            ->where('waktu_selesai', '>', now())
+            ->where('waktu_selesai', '>', $now)
             ->get();
         $data_subtes = DB::table('subtes')->get()->all();
         $data_soal = DB::table('soal')->get()->all();
@@ -170,12 +172,15 @@ class TryoutController extends Controller
         $request->validate([
             'nama' => ['required', 'string', 'max:255'],
             'harga' => ['required', 'integer'],
-            'soal' => ['nullable', 'array']
+            'soal' => ['nullable']
         ]);
-        // dd($request);
         $tryout = Tryout::find($id);
+        if ($request->soal == null) {
+            $tryout->update([
+                'soal' => null
+            ]);
+        }
         $tryout->update($request->all());
-
         return redirect(route('data-tryout.index'))->with('success', 'Data Berhasil Di-update.');
     }
 

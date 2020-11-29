@@ -8,6 +8,8 @@ use App\Models\PesertaKonfirmasi;
 use DateTime;
 use DateTimeZone;
 
+use function GuzzleHttp\json_encode;
+
 class HomeController extends Controller
 {
     /**
@@ -32,10 +34,20 @@ class HomeController extends Controller
 
         $data_tryout = DB::table('tryout')
             ->where('waktu_selesai', '>', $now)
+            ->where('waktu', '<', $now)
             ->get();
+
+        $jml_peserta = [];
+        foreach ($data_tryout as $data) {
+            $peserta = DB::table('peserta_konfirmasi')
+                ->where('id_tryout', $data->id)
+                ->get();
+            array_push($jml_peserta, count($peserta));
+        }
         
         return view('home', [
-            'data_tryout' => $data_tryout
+            'data_tryout' => $data_tryout,
+            'jml_peserta' => $jml_peserta
         ]);
     }
 
@@ -103,5 +115,14 @@ class HomeController extends Controller
         $data_peserta->delete();
 
         return redirect('/home');
+    }
+
+    public function getJumlahUser()
+    {
+        $data_user = DB::table('users')
+            ->where('level', '<>', 'admin')
+            ->get();
+        
+        echo json_encode($data_user);
     }
 }

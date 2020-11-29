@@ -37,7 +37,7 @@
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table id="data" class="table table-hover table-striped table-bordered zero-configuration">
-                                            <thead>
+                                            <thead class="bg-teal bg-lighten-4">
                                                 <tr class="">
                                                     <th width="">Peratuan</th>
                                                     <th width="10%">Aksi</th>
@@ -53,7 +53,7 @@
                                                 </tr>
                                                 @endforeach
                                             </tbody>
-                                            <tfoot>
+                                            <tfoot class="bg-teal bg-lighten-4">
                                                 <tr class="">
                                                     <th>Peraturan</th>
                                                     <th>Aksi</th>

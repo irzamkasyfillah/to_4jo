@@ -85,6 +85,7 @@ Route::get('notifikasi/{id}', [App\Http\Controllers\NotifikasiController::class,
 Route::get('notifikasi/detail/{id}', [App\Http\Controllers\NotifikasiController::class, 'show']);
 
 Route::get('jumlah-notifikasi/{id}', [App\Http\Controllers\NotifikasiController::class, 'getJumlahNotif']);
+Route::get('jumlah-user', [App\Http\Controllers\HomeController::class, 'getJumlahUser']);
 
 Route::get('get-jawaban/{id}', [App\Http\Controllers\SoalController::class, 'getJawaban'])->name('soal.get_jawaban');
 

@@ -47,7 +47,7 @@
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table id="data" class="table table-hover table-striped table-bordered default-ordering">
-                                            <thead>
+                                            <thead class="bg-teal bg-lighten-4">
                                                 <tr class="">
                                                     <th width="30%">Kode Kupon</th>
                                                     <th width="45%">Try Out</th>
@@ -96,7 +96,7 @@
                                                 </tr>
                                                 @endforeach
                                             </tbody>
-                                            <tfoot>
+                                            <tfoot class="bg-teal bg-lighten-4">
                                                 <tr class="">
                                                     <th>Kode Kupon</th>
                                                     <th>Try Out</th>

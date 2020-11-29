@@ -40,7 +40,7 @@
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table id="data" class="table table-hover table-striped table-bordered default-ordering">
-                                            <thead>
+                                            <thead class="bg-teal bg-lighten-4">
                                                 <tr class="">
                                                     <th width="">Nama</th>
                                                     <th width="">Waktu</th>
@@ -185,7 +185,7 @@
                                                 </tr>
                                             @endforeach
                                             </tbody>
-                                            <tfoot>
+                                            <tfoot class="bg-teal bg-lighten-4">
                                                 <tr class="" >
                                                     <th>Nama</th>
                                                     <th>Waktu</th>

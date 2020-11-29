@@ -18,7 +18,6 @@ class CreateSubtesTable extends Migration
             $table->id();
             $table->string('nama');
             $table->string('kategori');
-            $table->integer('jumlah_soal')->nullable();
             $table->bigInteger('durasi')->nullable();
             $table->timestamps();
         });

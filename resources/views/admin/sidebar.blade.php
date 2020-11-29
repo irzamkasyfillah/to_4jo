@@ -13,9 +13,25 @@
               <a href="{{ route('home') }}"><i class="fa fa-home">
               </i><span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a>
             </li>
+            <hr class="m-0">
+            
+          @if (Request::segment(1) == "soal" )
+            <li class="active nav-item">
+          @else
+            <li class=" nav-item">
+          @endif
+              <a href=""><i class="fa fa-book"></i><span class="menu-title" data-i18n="nav.templates.main">Bank Soal</span></a>
+              <ul class="menu-content">
+                <li><a class="menu-item" href="../../soal/kategori/tps" data-i18n="nav.templates.vert.main">TPS</a>
+                </li>
+                <li><a class="menu-item" href="../../soal/kategori/saintek" data-i18n="nav.templates.vert.main">TKA SAINTEK</a>
+                </li>
+                <li><a class="menu-item" href="../../soal/kategori/soshum" data-i18n="nav.templates.vert.main">TKA SOSHUM</a>
+                </li>
+            </ul>
+          </li>
           <hr class="m-0">
             
-
           @if (Request::segment(1) == "data-tryout" || Request::segment(1) == "tryout" )
             <li class="active nav-item">
           @else
@@ -35,42 +51,6 @@
           </li>
           <hr class="m-0">
           
-          @if (Request::segment(1) == "soal" )
-            <li class="active nav-item">
-          @else
-            <li class=" nav-item">
-          @endif
-              <a href=""><i class="fa fa-book"></i><span class="menu-title" data-i18n="nav.templates.main">Bank Soal</span></a>
-              <ul class="menu-content">
-                <li><a class="menu-item" href="../../soal/kategori/tps" data-i18n="nav.templates.vert.main">TPS</a>
-                </li>
-                <li><a class="menu-item" href="../../soal/kategori/saintek" data-i18n="nav.templates.vert.main">TKA SAINTEK</a>
-                </li>
-                <li><a class="menu-item" href="../../soal/kategori/soshum" data-i18n="nav.templates.vert.main">TKA SOSHUM</a>
-                </li>
-            </ul>
-          </li>
-          <hr class="m-0">
-
-          @if (Request::segment(1) == "kupon" )
-            <li class="active nav-item">
-          @else
-            <li class="nav-item">
-          @endif
-              <a href="{{route('kupon.index')}}"><i class="fa fa-percent"></i><span class="menu-title" data-i18n="nav.templates.main">Kupon Diskon</span></a>
-              {{-- <ul class="menu-content">
-                <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">1</a>
-                </li>
-                <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">2</a>
-                </li>
-                <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">3</a>
-                </li>
-                <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">4</a>
-                </li>
-              </ul> --}}
-          </li>
-          <hr class="m-0">
-
           <?php 
             $segment = array('setting-pembayaran', 'setting-peraturan-try-out', 'setting-waktu-pengerjaan-subtes')
           ?>
@@ -91,12 +71,31 @@
           </li>
           <hr class="m-0">
 
+          @if (Request::segment(1) == "kupon" )
+            <li class="active nav-item">
+          @else
+            <li class="nav-item">
+          @endif
+              <a href="{{route('kupon.index')}}"><i class="fa fa-percent"></i><span class="menu-title" data-i18n="nav.templates.main">Kupon</span></a>
+              {{-- <ul class="menu-content">
+                <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">1</a>
+                </li>
+                <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">2</a>
+                </li>
+                <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">3</a>
+                </li>
+                <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">4</a>
+                </li>
+              </ul> --}}
+          </li>
+          <hr class="m-0">
+
           @if (Request::segment(1) == "user" )
             <li class="active nav-item">
           @else
             <li class=" nav-item">
           @endif
-              <a href="#"><i class="fa fa-user"></i><span class="menu-title" data-i18n="nav.templates.main">User</span></a>
+              <a href="{{ route('user.index') }}"><i class="fa fa-user"></i><span class="menu-title" data-i18n="nav.templates.main">User</span></a>
               {{-- <ul class="menu-content">
                 <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">1</a>
                 </li>

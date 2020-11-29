@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\File;
 use App\Models\User;
 use Intervention\Image\ImageManagerStatic as Image;
 use Validator;
+use Illuminate\Support\Facades\DB;
 
 class UserProfileController extends Controller
 {
@@ -142,5 +143,16 @@ class UserProfileController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function indexAdmin()
+    {
+        $data_user = DB::table('users')
+            ->where('level', '<>', 'admin')
+            ->get();
+        // dd($data_user);
+        return view('admin/user/index', [
+            'data_user' => $data_user
+        ]);
     }
 }

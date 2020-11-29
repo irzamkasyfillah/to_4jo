@@ -70,7 +70,7 @@
                     @endforeach
                     </div>
                     <!-- <div id="weekly-activity-chart" class="height-250"></div> -->
-                    {{-- <div class="height-100"></div> --}}
+                    <div class="height-300"></div>
                 </div>
             </div>
         </div>

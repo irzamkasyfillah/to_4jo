@@ -46,10 +46,9 @@
                                         <table id="data" class="table table-hover table-striped table-bordered default-ordering">
                                             <thead>
                                                 <tr class="">
-                                                    <th width="40%">Subtes</th>
-                                                    <th width="20%">Kategori</th>
-                                                    <th width="10%">Jumlah Soal</th>
-                                                    <th width="20%">Waktu Pengerjaan (Menit)</th>
+                                                    <th width="">Subtes</th>
+                                                    <th width="">Kategori</th>
+                                                    <th width="">Waktu Pengerjaan (Menit)</th>
                                                     <th class="text-center" width="10%">Aksi</th>
                                                 </tr>
                                             </thead>
@@ -58,7 +57,6 @@
                                                 <tr>
                                                     <td>{{ $data->nama }}</td>
                                                     <td>{{ $data->kategori }}</td>
-                                                    <td>{{ $data->jumlah_soal }}</td>
                                                     <td>{{ $data->durasi }}</td>
                                                     <td class="text-center">
                                                         <a data-toggle="tooltip" data-placement="top" title="Edit" href="{{ route('setting-waktu-pengerjaan-subtes.edit', $data->id) }}" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i></a>
@@ -67,10 +65,9 @@
                                                 @endforeach
                                             </tbody>
                                             <tfoot>
-                                                <tr class="text-center">
+                                                <tr class="">
                                                     <th>Subtes</th>
                                                     <th>Kategori</th>
-                                                    <th>Jumlah Soal</th>
                                                     <th>Waktu Pengerjaan (Menit)</th>
                                                     <th>Aksi</th>
                                                 </tr>

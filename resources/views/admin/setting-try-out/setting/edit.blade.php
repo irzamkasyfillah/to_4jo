@@ -38,10 +38,6 @@
                                                 <input readonly value="{{$data->kategori}}" class="form-control" type="text" name="kategori" id="kategori">
                                             </div>
                                             <div class="form-group">
-                                                <label for="jumlah_soal">Jumlah Soal</label>
-                                                <input required value="{{$data->jumlah_soal}}" class="form-control" type="number" min="0" name="jumlah_soal" id="jumlah_soal">
-                                            </div>
-                                            <div class="form-group">
                                                 <label for="subtes">Waktu Pengerjaan (Menit)</label>
                                                 <input required value="{{$data->durasi}}" class="form-control" type="number" min="0" name="durasi" id="durasi">
                                             </div>

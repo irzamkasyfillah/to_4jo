@@ -14,7 +14,6 @@ class Subtes extends Model
     protected $fillable = [
         'nama',
         'kategori',
-        'durasi',
-        'jumlah_soal'
+        'durasi'
     ];
 }

@@ -50,10 +50,10 @@
                       <input id="id_user" type="text" value="{{Auth::user()->id}}" hidden>
                   </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="{{ route('profile.index') }}">
+                    <a class="dropdown-item" target="_blank" href="{{ route('profile.index') }}">
                         <i class="ft-user"></i> Edit Profil
                     </a>
-                    <a class="dropdown-item" href="../../notifikasi/{{Auth::user()->id}}">
+                    <a class="dropdown-item" target="_blank" href="../../notifikasi/{{Auth::user()->id}}">
                         <i class="ft-mail"></i> Pesan <span id="notif2"></span>
                     </a>
                   <div class="dropdown-divider">

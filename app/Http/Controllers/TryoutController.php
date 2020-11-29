@@ -79,8 +79,7 @@ class TryoutController extends Controller
 
     public function updateSettingWaktu(Request $request, $id) {
         $request->validate([
-            'durasi' => ['integer'],
-            'jumlah_soal' => ['integer']
+            'durasi' => ['integer']
         ]);
 
         $data = Subtes::find($id);

@@ -91,3 +91,5 @@ Route::get('get-jawaban/{id}', [App\Http\Controllers\SoalController::class, 'get
 Route::get('insert-jawaban/{id_peserta}/{id_soal}/{id_jawaban}', [App\Http\Controllers\TryoutController::class, 'insertJawabanPeserta']);
 
 Route::get('insert-ragu/{id_peserta}/{id_soal}/{ragu}', [App\Http\Controllers\TryoutController::class, 'insertRagu']);
+
+Route::get('data-user', [App\Http\Controllers\UserProfileController::class, 'indexAdmin'])->name('user.index');

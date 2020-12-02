@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\PesertaKonfirmasi;
+use App\Models\User;
 use DateTime;
 use DateTimeZone;
 
@@ -32,6 +34,7 @@ class HomeController extends Controller
         $now = new DateTime();
         $now->setTimezone(new DateTimeZone('GMT+8'));
 
+        
         $data_tryout = DB::table('tryout')
             ->where('waktu_selesai', '>', $now)
             ->where('waktu', '<', $now)
@@ -103,10 +106,12 @@ class HomeController extends Controller
             ,'peserta_konfirmasi.waktu_selesai as waktu_selesai_peserta')
             ->get();
 
+        $pembayaran = Pembayaran::all();
         // dd($data_peserta);
 
         return view('to/transaksi-to', [
-            'data_peserta' => $data_peserta
+            'data_peserta' => $data_peserta,
+            'pembayaran' => $pembayaran
         ]);
     }
 

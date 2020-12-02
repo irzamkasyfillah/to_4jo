@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>TRYOUT FISPEDIA</title>
     {{-- <script type="text/javascript" src="ckeditor/ckeditor.js"></script> --}}
 
     @yield('css')

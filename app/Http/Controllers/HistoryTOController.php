@@ -26,6 +26,7 @@ class HistoryTOController extends Controller
     {
         $now = new DateTime();
         $now->setTimezone(new DateTimeZone('GMT+8'));
+        
         $data = DB::table('tryout')
             ->where('tryout.waktu_selesai', '<', $now)
             ->get();

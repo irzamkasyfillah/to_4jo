@@ -94,3 +94,7 @@ Route::get('insert-jawaban/{id_peserta}/{id_soal}/{id_jawaban}', [App\Http\Contr
 Route::get('insert-ragu/{id_peserta}/{id_soal}/{ragu}', [App\Http\Controllers\TryoutController::class, 'insertRagu']);
 
 Route::get('data-user', [App\Http\Controllers\UserProfileController::class, 'indexAdmin'])->name('user.index');
+
+Route::get('edit-password/{id}', [App\Http\Controllers\UserProfileController::class, 'editPassword'])->name('pw.edit');
+Route::get('update-password/{id}/{pw_baru}/{email}', [App\Http\Controllers\UserProfileController::class, 'updatePassword'])->name('pw.update');
+Route::get('check-password/{id}/{pw_lama}', [App\Http\Controllers\UserProfileController::class, 'checkPassword']);

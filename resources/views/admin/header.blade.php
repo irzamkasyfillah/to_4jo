@@ -27,12 +27,9 @@
                       <span class="user-name">{{ ucwords(Auth::user()->name) }}</span>
                     </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    {{-- <a class="dropdown-item" href="{{ route('profile.index') }}">
-                        <i class="ft-user"></i> Edit Profile
+                    <a class="dropdown-item" href="{{ route('pw.edit', Auth::user()->id) }}">
+                        <i class="ft-user"></i> Ganti password
                     </a>
-                    <a class="dropdown-item" href="email-application.html">
-                        <i class="ft-mail"></i> Inbox
-                    </a> --}}
                   {{-- <div class="dropdown-divider">
 
                   </div> --}}

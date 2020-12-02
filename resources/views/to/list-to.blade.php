@@ -30,17 +30,11 @@
                             <hr>
                             <div class="card-content">
                                 <div class="card-body">
-                                    <div class="row ml-1 mr-1">
-                                        <span class="mb-1">Peraturan</span>
-                                        <li class="mr-2">
-                                            <span class="font-small-4 text-muted">1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam blandit, enim at dictum auctor, mi sapien porttitor diam, a lacinia purus leo sed quam.</span></li>
-                                        <li class="mr-2">
-                                            <span class="font-small-4 text-muted">2. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam blandit, enim at dictum auctor, mi sapien porttitor diam, a lacinia purus leo sed quam.</span></li>
-                                        <li class="mr-2">
-                                            <span class="font-small-4 text-muted">3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam blandit, enim at dictum auctor, mi sapien porttitor diam, a lacinia purus leo sed quam.</span></li>
-                                        <li class="mr-2">
-                                            <span class="font-small-4 text-muted">4. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam blandit, enim at dictum auctor, mi sapien porttitor diam, a lacinia purus leo sed quam.</span></li>
-                                        <span class="mt-1">Selamat Mengerjakan! :D</span>    
+                                    <div class="col-12">
+                                        {{-- <h4 class="mb-1">Peraturan</h4> --}}
+                                        <p>
+                                            <?php echo $peraturan[0]->teks; ?>    
+                                        </p>   
                                     </div>
                                     <div class="height-100"></div>
                                 </div>

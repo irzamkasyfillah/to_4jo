@@ -4,8 +4,7 @@
 @section('header') @include('layouts.header') @endsection
 
 @section('content')
-<br>
-<body class="horizontal-layout horizontal-top-icon-menu 1-column  bg-full-screen-image menu-expanded blank-page blank-page" data-open="hover" data-menu="horizontal-menu" data-col="1-column">
+<body class="horizontal-layout horizontal-top-icon-menu 1-column   menu-expanded blank-page blank-page" data-open="hover" data-menu="horizontal-menu" data-col="1-column">
     <!-- ////////////////////////////////////////////////////////////////////////////-->
     <div class="app-content content">
       <div class="content-wrapper">
@@ -18,7 +17,7 @@
             <div class="card border-grey border-lighten-3 px-1 py-1 m-0">
                 <div class="card-header border-0 pb-0">
                     <div class="card-title text-center">
-                        <img src="../../../app-assets/images/logo/logo-dark.png" alt="branding logo">
+                        {{-- <img src="../../../app-assets/images/logo/logo-dark.png" alt="branding logo"> --}}
                     </div>
                     
                 </div>
@@ -69,17 +68,18 @@
                                 </div>
                             </fieldset>
                             <div class="form-group row">
-                                <div class="col-md-6 col-12 text-center text-sm-left">
+                                {{-- <div class="col-md-6 col-12 text-center text-sm-left">
                                     <fieldset>
                                         <input type="checkbox" id="remember-me" class="chk-remember">
                                         <label for="remember-me"> Remember Me</label>
                                     </fieldset>
                                 </div>
-                                <div class="col-md-6 col-12 float-sm-left text-center text-sm-right"><a href="recover-password.html" class="card-link">Forgot Password?</a></div>
+                                <div class="col-md-6 col-12 float-sm-left text-center text-sm-right"><a href="recover-password.html" class="card-link">Forgot Password?</a></div> --}}
                             </div>
                             <button type="submit" class="btn btn-outline-info btn-block"><i class="ft-user"></i> Register</button>
                         </form>
                     </div>
+                    <p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2 my-1"><span>Sudah punya akun?</span></p>
                     <div class="card-body">
                         <a href="{{ route('login') }}" class="btn btn-outline-danger btn-block"><i class="ft-unlock"></i> Login</a>
                     </div>

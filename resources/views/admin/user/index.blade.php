@@ -105,27 +105,27 @@
                                                                         <table class="table bg-transparent table-bordered table-striped">
                                                                             <tbody>
                                                                                 <tr>
-                                                                                    <td><b>Provinsi</b></td>
+                                                                                    <td width="20%"><b>Provinsi</b></td>
                                                                                     <td>{{ $data->provinsi }}</td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td><b>Kota</b></td>
+                                                                                    <td width="20%"><b>Kota</b></td>
                                                                                     <td>{{ $data->kota }}</td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td><b>Nama Sekolah</b></td>
+                                                                                    <td width="20%"><b>Nama Sekolah</b></td>
                                                                                     <td>{{ $data->nama_sekolah }}</td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td><b>Kelas</b></td>
+                                                                                    <td width="20%"><b>Kelas</b></td>
                                                                                     <td>{{ $data->kelas }}</td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td><b>Jurusan</b></td>
+                                                                                    <td width="20%"><b>Jurusan</b></td>
                                                                                     <td>{{ $data->jurusan }}</td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td><b>Tahun Lulus</b></td>
+                                                                                    <td width="20%"><b>Tahun Lulus</b></td>
                                                                                     <td>{{ $data->tahun_lulus }}</td>
                                                                                 </tr>
                                                                             </tbody>

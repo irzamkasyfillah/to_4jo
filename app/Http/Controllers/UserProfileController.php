@@ -9,6 +9,9 @@ use App\Models\User;
 use Intervention\Image\ImageManagerStatic as Image;
 use Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+
+use function GuzzleHttp\json_encode;
 
 class UserProfileController extends Controller
 {
@@ -154,5 +157,34 @@ class UserProfileController extends Controller
         return view('admin/user/index', [
             'data_user' => $data_user
         ]);
+    }
+
+    public function editPassword($id) {
+        $data = User::find($id);
+
+        return view('admin/ganti-pw/edit', [
+            'data' => $data
+        ]);
+    }
+
+    public function updatePassword($id, $pw_baru, $email_baru) {
+        $data = User::find($id);
+
+        $data->update([
+            'password' => Hash::make($pw_baru),
+            'email' => $email_baru
+        ]);
+
+        return redirect()->back()->with('success', 'Password berhasil di-update');
+    }
+
+    public function checkPassword($id, $pw_lama)
+    {
+        $data = User::find($id);
+        if (Hash::check($pw_lama, $data->password)) {
+            echo "true";
+        } else {
+            echo "false";
+        }
     }
 }

@@ -82,11 +82,11 @@
                                                 <a data-toggle="modal" data-target="#hapus" href="" class="btn btn-danger btn-min-width mb-1">Batal Transaksi</a>
                                             </div>
 
-                                            <h4 class="mb-1">Metode Pembayaran</h4>
+                                            <h4 class="mb-2 mt-2">Metode Pembayaran</h4>
                                             
-                                            <li><span class="font-small-4 text-muted"><i class="fa fa-caret-right"></i> ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pretium tincidunt turpis. Nullam at mattis nulla, ac venenatis leo. Sed nec ante sit amet tellus lobortis faucibus at quis enim.</span</li>
-                                            <li><span class="font-small-4 text-muted"><i class="fa fa-caret-right"></i> ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pretium tincidunt turpis. Nullam at mattis nulla, ac venenatis leo. Sed nec ante sit amet tellus lobortis faucibus at quis enim.</span</li>
-                                            <li><span class="font-small-4 text-muted"><i class="fa fa-caret-right"></i> ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pretium tincidunt turpis. Nullam at mattis nulla, ac venenatis leo. Sed nec ante sit amet tellus lobortis faucibus at quis enim.</span</li>
+                                            <p>
+                                                <?php echo $pembayaran[0]->teks; ?>
+                                            </p>
                                         @endif
 
                                         {{-- MODAL HAPUS --}}

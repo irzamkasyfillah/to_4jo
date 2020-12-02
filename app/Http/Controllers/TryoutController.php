@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\JawabanPeserta;
 use App\Models\Notifikasi;
+use App\Models\PeraturanTO;
 use App\Models\PesertaKonfirmasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -468,13 +469,16 @@ class TryoutController extends Controller
                 $soshum = DB::table('subtes')
                     ->where('kategori', 'SOSHUM')
                     ->get();
+
+                $peraturan = PeraturanTO::all();
                     
-                // dd($data);
+                // dd($peraturan);
                 return view('to/list-to', [
                     'data' => $data,
                     'tps' => $tps,
                     'saintek' => $saintek,
-                    'soshum' => $soshum
+                    'soshum' => $soshum,
+                    'peraturan' => $peraturan
                 ]);
             } else {
                 return redirect(route('tryout.showlogin', $id_to));    

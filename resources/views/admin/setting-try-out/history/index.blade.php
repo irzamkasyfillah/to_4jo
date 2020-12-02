@@ -47,7 +47,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php $i = 0; ?>
+                                                <?php $j = 0; ?>
                                                 @foreach ($data as $data)
                                                 <tr>
                                                     <td><?php echo $data->nama ?></td>
@@ -55,7 +55,7 @@
                                                         <br>- until -<br> <?php echo date_format(date_create($data->waktu_selesai), "l, j F Y - H:i") ?>
                                                     </td>
                                                     <td>Rp. <?php echo $data->harga ?></td>
-                                                    <td><?php echo $peserta[$i++] ?></td>
+                                                    <td><?php echo $peserta[$j++] ?></td>
                                                     <td class="text-center">
                                                         <div class="btn-group mr-1 mb-1">
                                                             <button type="button" class="btn btn-icon btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-info"></i></button>

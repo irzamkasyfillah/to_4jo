@@ -137,18 +137,16 @@
                                             @endfor
                                         </div>
                                     </div>
-                                    <div class="col-12 ml-1 mb-1">
-                                        <span style="min-width:80px;" class="btn btn-success font-small-4">Hijau</span><span class="ml-1 font-small-4">= Sudah dijawab</span>
-                                    </div>
-                                    <div class="col-12 ml-1 mb-1">
-                                        <span style="min-width:80px;" class="btn btn-warning font-small-4">Kuning</span><span class="ml-1 font-small-4">= Ragu-ragu</span>
-                                    </div>
-                                    <div class="col-12 ml-1">
-                                        <span style="min-width:80px;" class="btn btn-secondary font-small-4">Hitam</span><span class="ml-1 font-small-4">= Belum dijawab</span>
-                                    </div>
-                                    <hr>
-                                    <div class="form-group text-center mt-1">
-                                        <button data-toggle="modal" data-target="#selesai" class="btn btn-danger">SELESAI</button>
+                                    <div class="card-footer">
+                                        <div class="col-12 ml-1 mb-1">
+                                            <span style="min-width:80px;" class="btn btn-success font-small-4">Hijau</span><span class="ml-1 font-small-4">= Sudah dijawab</span>
+                                        </div>
+                                        <div class="col-12 ml-1 mb-1">
+                                            <span style="min-width:80px;" class="btn btn-warning font-small-4">Kuning</span><span class="ml-1 font-small-4">= Ragu-ragu</span>
+                                        </div>
+                                        <div class="col-12 ml-1">
+                                            <span style="min-width:80px;" class="btn btn-secondary font-small-4">Hitam</span><span class="ml-1 font-small-4">= Belum dijawab</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -157,33 +155,6 @@
                 </div>
             </div>
         </div>
-
-        {{-- MODAL HAPUS --}}
-        <div class="modal fade text-left" id="selesai" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title" id="myModalLabel1">Selesai</h4>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                    <p>Apakah Anda telah selesai mengerjakan paket soal ini?<br><br>
-                        *Aksi ini tidak dapat dibatalkan
-                    </p>    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-warning" data-dismiss="modal">Batal</button>
-                    <form action="{{ route('subtes.finish', [$data_tryout[0]->id, $data_soal[0]->subtes, session()->get('loginTO')['id']]) }}" method="GET">
-                        @csrf
-                        <button type="submit" class="btn btn-danger">Selesai</button>
-                    </form>
-                </div>
-              </div>
-            </div>
-        </div>
-        {{-- END MODAL HAPUS --}}    
         
         <script>
             var id_peserta = $('#id_peserta').val();
@@ -238,7 +209,7 @@
                         clearInterval(x);
                         document.getElementById("timer").innerHTML = "WAKTU HABIS";
                         
-                        window.location.assign(base_url+'/tryout'+id_to+'/'+id_subtes+'/'+id+'/finish');
+                        window.location.assign(base_url+'/next/'+id_peserta+'/'+id_subtes);
                     }
                     }, 1000);
                 },
@@ -280,8 +251,4 @@
                 });
             });
         </script>
-
-
 @endsection
-
-

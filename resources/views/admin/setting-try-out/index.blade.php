@@ -72,90 +72,15 @@
                                                     <td>Rp. {{ $data->harga }} </td>
                                                     <td>{{ $jml_peserta[$j++] }} </td>
                                                     <td class="text-center">
-                                                    <!-- Icon Button dropdowns -->
-                                                    <div class="btn-group mr-1 mb-1">
-                                                        <button type="button" class="btn btn-icon btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-info"></i></button>
-                                                        <div class="dropdown-menu">
-                                                            <button class="dropdown-item" href="#" data-toggle="modal" data-target="#detail{{$data->id}}"><i class="fa mr-1 ml-1 fa-book"></i> List Soal</button>
-                                                            <a class="dropdown-item" href="{{ route('data-tryout.edit',  $data->id) }}"><i class="ft-edit mr-1 ml-1"></i> Edit</a>
-                                                            <button class="dropdown-item" href="#" data-toggle="modal" data-target="#hapus{{$data->id}}"><i class="ft-delete mr-1 ml-1"></i> Delete</button>
-                                                        </div>
-                                                    </div>
-
-                                                    {{-- MODAL DETAIL --}}
-                                                    <div class="modal fade text-left" id="detail{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-                                                        <div class="modal-dialog modal-lg" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                            <h4 class="modal-title" id="myModalLabel1">Detail Soal {{ $data->nama}}</h4>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <?php
-                                                                    $kategori = array('TPS', 'SAINTEK', 'SOSHUM');
-                                                                    $warna = array('bg-success', 'bg-danger', 'bg-info');
-                                                                    $i = 0;
-                                                                ?>
-                                                                @foreach ($kategori as $kategori)
-                                                                    <h6 class=""><i class="fa fa-caret-right"></i> <b>{{ $kategori }}</b></h6>
-                                                                    <hr>
-
-                                                                    <div id="accordionWrap{{ $data->id }}" role="tablist" aria-multiselectable="true">
-                                                                        <div class="card collapse-icon accordion-icon-rotate">
-                                                                            @foreach ($data_subtes as $subtes)
-                                                                                @if ($subtes->kategori == $kategori)
-                                                                                    <div id="heading{{ $subtes->id }}"  class="card-header {{ $warna[$i] }}" role="tab">
-                                                                                        <a data-toggle="collapse" data-parent="#accordionWrap{{ $data->id }}" href="#subtes{{ $data->id . $subtes->id }}" aria-expanded="false"  class="card-title lead white">{{ $subtes->nama }}</a>
-                                                                                    </div>
-                                                                                    
-                                                                                    <div id="subtes{{ $data->id . $subtes->id }}" role="tabpanel" aria-labelledby="heading{{ $data->id . $subtes->id }}" class="collapse">
-                                                                                        <table class="table  bg-light table-striped table-bordered">
-                                                                                            <thead>
-                                                                                                <tr>
-                                                                                                    <th width="5%">No.</th>
-                                                                                                    <th class="text-center">Soal</th>
-                                                                                                </tr>
-                                                                                            </thead>
-                                                                                            <tbody>
-                                                                                                <?php $no = 1; ?>
-                                                                                                @foreach ($data_soal as $soal)
-                                                                                                    @if ($soal->subtes == $subtes->id)
-                                                                                                        @foreach (str_split($data->soal) as $soal_check)
-                                                                                                            @if ($soal->id == intval($soal_check))
-                                                                                                                <tr>
-                                                                                                                    <td class="text-center">
-                                                                                                                        {{$no++}}
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        <?php echo $soal->deskripsi ?>
-                                                                                                                    </td>
-                                                                                                                </tr>
-                                                                                                            @endif
-                                                                                                        @endforeach
-                                                                                                    @endif
-                                                                                                @endforeach
-                                                                                                <div class="pl-2 pr-2 pt-1 pb-1 {{ $warna[$i] }} white"> Jumlah soal : {{ $no-1}}</div>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
-                                                                                    <br>            
-                                                                                @endif
-                                                                            @endforeach
-                                                                        </div>
-                                                                    </div> 
-                                                                @endforeach 
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                            <button type="button" class="btn white btn-secondary" data-dismiss="modal">Close</button>
+                                                        <!-- Icon Button dropdowns -->
+                                                        <div class="btn-group mr-1 mb-1">
+                                                            <button type="button" class="btn btn-icon btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-info"></i></button>
+                                                            <div class="dropdown-menu">
+                                                                <a class="dropdown-item" href="{{ route('data-tryout.show',  $data->id) }}" ><i class="fa mr-1 ml-1 fa-book"></i> List Soal</button>
+                                                                <a class="dropdown-item" href="{{ route('data-tryout.edit',  $data->id) }}"><i class="ft-edit mr-1 ml-1"></i> Edit</a>
+                                                                <button class="dropdown-item" href="#" data-toggle="modal" data-target="#hapus{{$data->id}}"><i class="ft-delete mr-1 ml-1"></i> Delete</button>
                                                             </div>
                                                         </div>
-                                                        </div>
-                                                    </div>
-                                                    {{-- END MODAL DETAIL --}}
-                                                    
-
                                                         {{-- MODAL HAPUS --}}
                                                         <div class="modal fade text-left" id="hapus{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
                                                             <div class="modal-dialog" role="document">

@@ -137,7 +137,15 @@ class TryoutController extends Controller
      */
     public function show($id)
     {
-        //
+        $data_tryout = Tryout::find($id);
+        $data_subtes = DB::table('subtes')->get()->all();
+        $data_soal = DB::table('soal')->get()->all();
+        
+        return view('admin/setting-try-out/show', [
+            'data_tryout' => $data_tryout,
+            'data_soal' => $data_soal,
+            'data_subtes' => $data_subtes
+        ]);
     }
 
     /**
@@ -218,17 +226,27 @@ class TryoutController extends Controller
             ->where('id_tryout', $id_to)
             ->get();
 
-
-        if (strpos($data_peserta[0]->subtes_done, $id_subtes, )) {
-            return redirect()->back()->with('failed', 'Maaf, Anda telah mengerjakan kategori soal ini');
-        }
-
-        if ($request->session()->has('subtes')) {
-            if ($request->session()->get('subtes') == $id_subtes) {
-                goto sama_subtesnya;
-            } else {
-                return redirect()->back()->with('failed', 'Maaf, Anda tidak dapat mengerjakan lebih dari satu kategori soal secara bersamaan');
+        // dd($id_subtes, session());
+        // CEK IF PAKET SOAL SUDAH DIKERJAKAN ATAU BELUM
+        $subtes_done = $data_peserta[0]->subtes_done;
+        if ($id_subtes < 6) {
+            if (strpos($subtes_done, '1') && strpos($subtes_done, '2') && strpos($subtes_done, '3') && strpos($subtes_done, '4') && strpos($subtes_done, '5')) {
+                return redirect()->back()->with('failed', 'Maaf, Anda telah mengerjakan kategori soal TPS');
             }
+        } else if ($id_subtes < 10) {
+            if (strpos($subtes_done, '6') && strpos($subtes_done, '7') && strpos($subtes_done, '8') && strpos($subtes_done, '9')) {
+                return redirect()->back()->with('failed', 'Maaf, Anda telah mengerjakan kategori soal TKA SAINTEK');
+            }
+        } else {
+            if (strpos($subtes_done, '10') && strpos($subtes_done, '11') && strpos($subtes_done, '12') && strpos($subtes_done, '13')) {
+                return redirect()->back()->with('failed', 'Maaf, Anda telah mengerjakan kategori soal TKA SOSHUM');
+            }
+        }
+        
+        // CHECK SUBTES-URL WITH SESSION-SUBTES
+        if ($request->session()->has('subtes')) {
+            $id_subtes = session()->get('subtes');
+            goto sama_subtesnya;
         } else {
             $request->session()->put('subtes', $id_subtes);
 
@@ -423,20 +441,21 @@ class TryoutController extends Controller
                     'id' => $id,
                     'id_peserta' => $check_kode[0]->id,
                     'id_to' => $id_to ]);
-
-                foreach(str_split($to[0]->soal) as $soal) {
-                    if (is_numeric($soal)) {
-                        $check_answered = DB::table('jawaban_peserta')
-                            ->where('id_peserta', $check_kode[0]->id)
-                            ->where('id_soal', $soal)
-                            ->get();
-                        if (count($check_answered) < 1) {
-                            DB::table('jawaban_peserta')->insert([
-                                    'id_peserta' => $check_kode[0]->id,
-                                    'id_jawaban' => 0,
-                                    'id_soal' => $soal
-                                ]);
-                        }
+                
+                $array_soal = str_replace(["\"", "[", "]"], "", $to[0]->soal);
+                $array_soal = explode(",", $array_soal);
+                // dd($array_soal);
+                foreach($array_soal as $soal) {
+                    $check_answered = DB::table('jawaban_peserta')
+                        ->where('id_peserta', $check_kode[0]->id)
+                        ->where('id_soal', $soal)
+                        ->get();
+                    if (count($check_answered) < 1) {
+                        DB::table('jawaban_peserta')->insert([
+                                'id_peserta' => $check_kode[0]->id,
+                                'id_jawaban' => 0,
+                                'id_soal' => $soal
+                            ]);
                     }
                 }
 
@@ -533,30 +552,6 @@ class TryoutController extends Controller
         }
     }
 
-    public function subtesFinish(Request $request, $id_to, $id_subtes, $id_peserta) {
-        $data_peserta = DB::table('peserta_konfirmasi')
-            ->where('id_peserta', $id_peserta)
-            ->where('id_tryout', $id_to)
-            ->get();
-        
-        
-        $subtes = Subtes::find($id_subtes);
-
-        $peserta = PesertaKonfirmasi::find($data_peserta[0]->id);
-        if ($data_peserta[0]->subtes_done != null) {
-            // dd(array_push($data_peserta[0]->subtes_done, $id_subtes));
-            $peserta->update(['subtes_done' => $peserta->subtes_done .',' .$id_subtes]);
-        } else {
-            $peserta->update(['subtes_done' => $id_subtes]);
-        }
-        $peserta->update([
-            'waktu_mulai' => null,
-            'waktu_selesai' => null
-        ]);
-        $request->session()->forget('subtes');
-        return redirect(route('tryout.index', $id_to))->with('success', 'Anda telah mengerjakan kategori soal '. $subtes->nama);
-    }
-
     public function ujianFinish(Request $request, $id_to, $id_peserta) {
         $data = DB::table('peserta_konfirmasi')
             ->where('id_tryout', $id_to)
@@ -583,5 +578,40 @@ class TryoutController extends Controller
 
         echo json_encode($peserta);
     }
-
+    
+    public function resetTime(Request $request, $id_peserta, $id_subtes)
+    {
+        $peserta = PesertaKonfirmasi::find($id_peserta);
+        if ($peserta->subtes_done != null) {
+            $peserta->update(['subtes_done' => $peserta->subtes_done .',' .$id_subtes]);
+        } else {
+            $peserta->update(['subtes_done' => $id_subtes]);
+        }
+        $peserta->update([
+            'waktu_mulai' => null,
+            'waktu_selesai' => null,
+        ]);
+        $request->session()->forget('subtes');
+        if ($id_subtes < 6) {
+            if ($id_subtes == 5) {
+                return redirect(route('tryout.index', $peserta->id_tryout))->with('success', 'Anda telah mengerjakan kategori soal TPS');
+            } else {
+                return redirect(route('showSoal', [$peserta->id_tryout, $id_subtes+1, 1]));
+            }
+        } else if ($id_subtes < 10) {
+            if ($id_subtes == 9) {
+                return redirect(route('ujian.finish', [$peserta->id_tryout, $request->session()->get('loginTO')['id']]));
+                // return redirect(route('tryout.index', $peserta->id_tryout))->with('success', 'Anda telah mengerjakan kategori soal TKA SAINTEK');
+            } else {
+                return redirect(route('showSoal', [$peserta->id_tryout, $id_subtes+1, 1]));
+            }
+        } else {
+            if ($id_subtes == 13) {
+                return redirect(route('ujian.finish', [$peserta->id_tryout, $request->session()->get('loginTO')['id']]));
+                // return redirect(route('tryout.index', $peserta->id_tryout))->with('success', 'Anda telah mengerjakan kategori soal TKA SOSHUM');
+            } else {
+                return redirect(route('showSoal', [$peserta->id_tryout, $id_subtes+1, 1]));
+            }
+        }
+    }
 }

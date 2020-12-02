@@ -31,9 +31,7 @@ Route::resource('/profile', 'App\Http\Controllers\UserProfileController');
 
 Route::resource('data-tryout', 'App\Http\Controllers\TryoutController');
 
-Route::get('tryout{id_to}/{subtes}/{id_no}', [App\Http\Controllers\TryoutController::class, 'showSoal']);
-
-Route::get('tryout{id_to}/{subtes}/{id_peserta}/finish', [App\Http\Controllers\TryoutController::class, 'subtesFinish'])->name('subtes.finish');
+Route::get('tryout{id_to}/{subtes}/{id_no}', [App\Http\Controllers\TryoutController::class, 'showSoal'])->name('showSoal');
 
 Route::get('{id_to}/{id_peserta}/finish', [App\Http\Controllers\TryoutController::class, 'ujianFinish'])->name('ujian.finish');
 
@@ -47,6 +45,7 @@ Route::get('soal/kategori/{kategori}', [App\Http\Controllers\SoalController::cla
 
 Route::get('soal/get_subtes/{kategori}', [App\Http\Controllers\SoalController::class, 'getSubtes']);
 Route::get('endtime/{id_peserta}', [App\Http\Controllers\TryoutController::class, 'getEndTime']);
+Route::get('next/{id_peserta}/{id_subtes}', [App\Http\Controllers\TryoutController::class, 'resetTime']);
 
 Route::resource('soal', 'App\Http\Controllers\SoalController');
 
